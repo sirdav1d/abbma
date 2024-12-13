@@ -1,13 +1,18 @@
 /** @format */
 
-import React from 'react';
-import vantagensImage from '@/assets/vantagensImage.png';
-import telemedicinaImage from '@/assets/telemedicinaImage.png';
-import segurosImage from '@/assets/segurosImage.png';
-import Image from 'next/image';
 import RetCrossDark from '@/assets/ret-cross-dark';
-import RetStairs from '@/assets/ret-stairs';
 import RetCuboidDark from '@/assets/ret-cuboid-dark';
+import RetStairs from '@/assets/ret-stairs';
+import segurosImage from '@/assets/segurosImage.png';
+import telemedicinaImage from '@/assets/telemedicinaImage.png';
+import vantagensImage from '@/assets/vantagensImage.png';
+import { ArrowDown } from 'lucide-react';
+import Image from 'next/image';
+import FeatureImage from '../feature-image';
+import BlurIn from '../ui/blur-in';
+import { Button } from '../ui/button';
+import { FadeText } from '../ui/fade-text';
+import Link from 'next/link';
 
 export default function Features() {
 	const features = [
@@ -41,38 +46,65 @@ export default function Features() {
 						<div
 							id={f.id}
 							key={index}
-							className={`flex items-center gap-20 py-14  w-full h-full ${
+							className={`flex items-center gap-20 py-10  w-full h-full ${
 								index == 1 && 'flex-row-reverse'
 							}`}>
 							<div className='flex flex-col gap-5 w-full'>
-								<h2 className='text-3xl font-bold'>{f.title}</h2>
-								<p className='text-balance text-lg'>{f.description}</p>
+								<FadeText
+									framerProps={{
+										show: { transition: { delay: 0.2 } },
+									}}>
+									<h2 className='text-3xl font-bold'>{f.title}</h2>
+								</FadeText>
+								<FadeText
+									framerProps={{
+										show: { transition: { delay: 0.4 } },
+									}}>
+									<p className='text-balance text-lg'>{f.description}</p>
+								</FadeText>
+								<FadeText
+									framerProps={{
+										show: { transition: { delay: 0.4 } },
+									}}>
+									<Button
+										asChild
+										className='bg-blue-700 hover:bg-blue-600 font-semibold'>
+										<Link href={'#price'}>
+											Saiba mais
+											<ArrowDown className='w-5 h-5 size-full scale-125' />
+										</Link>
+									</Button>
+								</FadeText>
 							</div>
 							<div className='w-full z-20'>
-								<Image
-									src={f.src}
-									alt={f.title}
-									height={480}
-									width={720}></Image>
+								<FeatureImage delay={index * 0.2}>
+									<>
+										<Image
+											src={f.src}
+											alt={f.title}
+											height={480}
+											width={720}></Image>
+									</>
+								</FeatureImage>
 							</div>
 						</div>
 					);
 				})}
-				<div className='absolute -right-40 -top-40 z-10'>
+				<BlurIn className='absolute -right-40 -top-40 z-10'>
 					<RetStairs />
-				</div>
-				<div className='absolute -left-72 top-40 z-10 rotate-180'>
+				</BlurIn>
+				<BlurIn className='absolute -left-72 top-40 z-10 rotate-180'>
 					<RetStairs />
-				</div>
-				<div className='absolute left-[400px] top-80 z-10 scale-75'>
+				</BlurIn>
+				<BlurIn className='absolute left-[400px] top-80 z-10 scale-75'>
 					<RetCrossDark />
-				</div>
-				<div className='absolute -left-[200px] bottom-64 z-10 scale-75'>
+				</BlurIn>
+				<BlurIn className='absolute -left-[200px] bottom-64 z-10 scale-75'>
 					<RetCrossDark />
-				</div>
-				<div className='absolute -right-[200px] bottom-64 z-10 '>
+				</BlurIn>
+				<BlurIn className='absolute -right-[200px] bottom-64 z-10 '>
 					<RetCuboidDark />
-				</div>
+				</BlurIn>
 			</div>
 		</div>
 	);

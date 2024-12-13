@@ -15,7 +15,7 @@ export default function DektopHeader() {
 	];
 
 	return (
-		<div className='flex w-full fixed py-4  mx-auto bg-slate-50/60 backdrop-blur-md z-50'>
+		<div className='flex w-full fixed py-4  mx-auto bg-slate-50/80 backdrop-blur-md z-50'>
 			<div className='flex items-center justify-between w-full max-w-7xl mx-auto'>
 				<Link href='/'>
 					<Image
@@ -51,7 +51,7 @@ export default function DektopHeader() {
 					<Button
 						variant={'outline'}
 						asChild
-						className='border-blue-700 border-2 text-blue-700  font-semibold hover:text-slate-100 hover:bg-blue-600 '>
+						className='border-blue-600 border-2 text-blue-600  font-semibold hover:text-slate-100 hover:bg-blue-600 bg-transparent'>
 						<Link
 							href={'/register'}
 							prefetch>
