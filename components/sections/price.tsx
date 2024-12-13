@@ -62,12 +62,12 @@ export default function Price() {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<ul className='flex flex-col gap-3 w-full'>
+							<ul className='flex flex-col gap-3 w-full '>
 								{associado.map((item, index) => {
 									return (
 										<li
 											key={index}
-											className='flex w-full gap-2 items-center'>
+											className='flex w-full gap-2 items-center '>
 											<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
 											<span className='text-xs w-full'>{item}</span>
 										</li>

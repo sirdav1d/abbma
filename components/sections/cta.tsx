@@ -10,7 +10,7 @@ export default function CTA() {
 	return (
 		<div
 			className='p-10 w-full rounded-xl bg-gradient-to-b max-w-7xl mx-auto relative
-     from-blue-800 to-blue-500 flex flex-col items-center justify-center gap-5 my-10'>
+     from-blue-800 to-blue-500 flex flex-col items-center justify-center gap-5 my-20'>
 			<FadeText
 				framerProps={{
 					show: { transition: { delay: 0.2 } },

@@ -1,8 +1,10 @@
 /** @format */
 
 import DektopHeader from '@/components/desktop-header';
+import Footer from '@/components/footer';
 import About from '@/components/sections/about';
 import CTA from '@/components/sections/cta';
+import Faq from '@/components/sections/faq';
 import Features from '@/components/sections/features';
 import Hero from '@/components/sections/hero';
 import Price from '@/components/sections/price';
@@ -16,7 +18,9 @@ export default function Home() {
 				<About />
 				<Features />
 				<Price />
+				<Faq />
 				<CTA />
+				<Footer />
 			</div>
 		</main>
 	);
