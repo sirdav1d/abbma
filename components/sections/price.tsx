@@ -50,8 +50,8 @@ export default function Price() {
 							show: { transition: { delay: 0.4 } },
 						}}>
 						<p className='max-w-xl text-balance text-center'>
-							Nossos planos foram criados para atender às suas necessidades
-							específicas. Descubra o que cada um oferece e comece hoje mesmo
+							Descubra um novo jeito de investir em sua
+							saúde e bem-estar!
 						</p>{' '}
 					</FadeText>
 				</div>
