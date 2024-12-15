@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 export default function ForgotPassPage() {
 	return (
-		<div className='grid min-h-svh  lg:grid-cols-2 bg-slate-100'>
+		<div className='grid min-h-svh  lg:grid-cols-2 bg-slate-200'>
 			<div className='flex flex-col gap-4 p-6 md:p-10 w-full h-full'>
 				<div className='flex justify-center gap-2'>
 					<Link

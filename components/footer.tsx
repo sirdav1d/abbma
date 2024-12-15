@@ -16,18 +16,19 @@ export default function Footer() {
 							src={logo}
 							alt='logo ABBMA'
 							width={140}
-							height={140}></Image>
+							height={140}
+							className='max-w-[324px]  mx-auto md:mx-0'></Image>
 					</Link>
 					<div></div>
 				</div>
 
 				<Separator className='dark' />
-				<div className='flex justify-between w-full'>
+				<div className='flex justify-between w-full flex-col md:flex-row gap-5'>
 					<p className=' text-xs text-muted-foreground'>
 						2024 &copy; Associação Brasileira de Benefícios para Militares e
-						Autônomos - ABBMA
+						Autônomos - ABBMA. Todos os direitos reservados
 					</p>
-					<div className='text-xs text-muted-foreground flex gap-10'>
+					<div className='text-xs text-muted-foreground flex gap-5 md:gap-10 flex-col md:flex-row'>
 						<Link
 							className='hover:text-red-600 transition-all  ease-linear duration-200'
 							href={'/politica'}>

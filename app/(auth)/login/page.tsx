@@ -10,7 +10,7 @@ import MotionImage from '@/components/feature-image';
 
 export default function LoginPage() {
 	return (
-		<div className='grid min-h-svh  lg:grid-cols-2 bg-slate-100'>
+		<div className='grid min-h-svh  lg:grid-cols-2 bg-slate-200'>
 			<div className='flex flex-col gap-4 p-6 md:p-10 w-full h-full'>
 				<div className='flex justify-center gap-2'>
 					<Link
