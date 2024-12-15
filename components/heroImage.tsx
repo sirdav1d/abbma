@@ -11,14 +11,14 @@ export default function HeroImage() {
 		<motion.div
 			initial={{ opacity: 0 }}
 			whileInView={{ opacity: 1 }}
-			viewport={{ once: false }}
+			viewport={{ once: false, amount: 'some' }}
 			transition={{ duration: 1, delay: 0.2 }}>
 			<Image
 				src={heroImage}
 				alt='Mulher sorrindo olhando para celular'
 				width={1280}
 				height={800}
-				className='w-[680px] object-contain absolute bottom-0 '
+				className=' w-full md:w-[680px] object-contain md:absolute md:bottom-0 mt-auto'
 			/>
 		</motion.div>
 	);

@@ -17,7 +17,7 @@ export default function About() {
 					<RetCrossDark />
 				</BlurIn>
 				<FadeText framerProps={{ show: { transition: { delay: 0.2 } } }}>
-					<h2 className='font-bold text-4xl max-w-2xl mx-auto'>
+					<h2 className='font-bold text-3xl md:text-4xl max-w-2xl mx-auto'>
 						Associação Brasileira de Benefícios para Militares e Autônomos
 					</h2>
 				</FadeText>

@@ -48,7 +48,7 @@ export default function Faq() {
 	return (
 		<div className='w-full px-4 '>
 			<div className='mx-auto max-w-7xl py-20 items-center flex flex-col gap-10 relative lg:flex-row w-full'>
-				<div className='w-1/2'>
+				<div className='md:w-1/2'>
 					<BlurIn className='absolute -right-96 -top-56 scale-75'>
 						<RetCrossDark />
 					</BlurIn>
@@ -61,7 +61,7 @@ export default function Faq() {
 						</h2>
 					</FadeText>
 				</div>
-				<div className='w-1/2'>
+				<div className='md:w-1/2'>
 					<FadeText
 						framerProps={{ show: { transition: { delay: 0.2 } } }}
 						className='w-1/2'>
@@ -72,8 +72,10 @@ export default function Faq() {
 									key={index}
 									type='single'
 									collapsible>
-									<AccordionItem value='item-1'>
-										<AccordionTrigger>{f.question}</AccordionTrigger>
+									<AccordionItem value={`item-${index}`}>
+										<AccordionTrigger className='text-left'>
+											{f.question}
+										</AccordionTrigger>
 										<AccordionContent>{f.answer}</AccordionContent>
 									</AccordionItem>
 								</Accordion>

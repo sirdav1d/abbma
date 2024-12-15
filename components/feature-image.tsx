@@ -3,11 +3,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-interface FeatureImageProps {
+interface MotionImageProps {
 	children: React.ReactNode;
 	delay?: number;
 }
-export default function FeatureImage({ children, delay }: FeatureImageProps) {
+export default function MotionImage({ children, delay }: MotionImageProps) {
 	return (
 		<motion.div
 			initial={{ x: 80 }}

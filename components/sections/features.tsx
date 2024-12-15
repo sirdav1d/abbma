@@ -46,8 +46,8 @@ export default function Features() {
 						<div
 							id={f.id}
 							key={index}
-							className={`flex items-center gap-20 py-10  w-full h-full ${
-								index == 1 && 'flex-row-reverse'
+							className={`flex flex-col items-center gap-20 py-10  w-full h-full ${
+								index == 1 && 'md:flex-row-reverse'
 							}`}>
 							<div className='flex flex-col gap-5 w-full'>
 								<FadeText
@@ -99,7 +99,7 @@ export default function Features() {
 				<BlurIn className='absolute left-[400px] top-80 z-10 scale-75'>
 					<RetCrossDark />
 				</BlurIn>
-				<BlurIn className='absolute -left-[200px] bottom-64 z-10 scale-75'>
+				<BlurIn className='absolute invisible md:visible lg:-left-[200px] bottom-64 z-10 scale-75'>
 					<RetCrossDark />
 				</BlurIn>
 				<BlurIn className='absolute -right-[200px] bottom-64 z-10 '>

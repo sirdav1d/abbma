@@ -15,7 +15,7 @@ export default function DektopHeader() {
 	];
 
 	return (
-		<div className='flex w-full fixed py-4  mx-auto bg-slate-50/80 backdrop-blur-md z-50'>
+		<div className='hidden md:flex w-full fixed py-4  mx-auto bg-slate-50/80 backdrop-blur-md z-50'>
 			<div className='flex items-center justify-between w-full max-w-7xl mx-auto'>
 				<Link href='/'>
 					<Image

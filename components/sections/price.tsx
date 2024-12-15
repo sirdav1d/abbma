@@ -18,6 +18,8 @@ export default function Price() {
 		'Desconto de até 60% em medicamentos em diversas farmácias',
 		'Desconto de até 30% em diversos restaurantes em Delivery',
 		'Descontos em diversas lojas de Pet',
+		'Descontos em seguros e palnos de saúde',
+		'Descontos em telemedicina',
 		'Desconto de até 60% em cinema, teatro e shows',
 		'Cursos gratuitos na FGV',
 		'Cursos gratuitos na Fundação Bradesco',
@@ -40,7 +42,7 @@ export default function Price() {
 							show: { transition: { delay: 0.2 } },
 						}}>
 						<h2 className='text-3xl lg:text-5xl font-bold'>
-							Escolha o Plano Ideal para Você
+							Seja um Associado
 						</h2>
 					</FadeText>
 					<FadeText
@@ -53,8 +55,8 @@ export default function Price() {
 						</p>{' '}
 					</FadeText>
 				</div>
-				<div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mx-auto gap-5 mt-20'>
-					<Card className='border-red-500'>
+				<div className='mx-auto gap-5 mt-20'>
+					<Card className='border-red-500 max-w-2xl mx-auto'>
 						<CardHeader>
 							<CardTitle>6,99 Mensais</CardTitle>
 							<CardDescription className='text-red-500 font-semibold'>
@@ -62,14 +64,14 @@ export default function Price() {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<ul className='flex flex-col gap-3 w-full '>
+							<ul className='grid grid-cols-1 md:grid-cols-2  gap-3 w-full '>
 								{associado.map((item, index) => {
 									return (
 										<li
 											key={index}
 											className='flex w-full gap-2 items-center '>
 											<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
-											<span className='text-xs w-full'>{item}</span>
+											<span className='text-sm w-full'>{item}</span>
 										</li>
 									);
 								})}
@@ -81,7 +83,7 @@ export default function Price() {
 							</Button>
 						</CardFooter>
 					</Card>
-					<Card className='border-blue-800'>
+					{/* <Card className='border-blue-800'>
 						<CardHeader>
 							<CardTitle>24,99 Mensais</CardTitle>
 							<CardDescription className='text-blue-800 font-semibold'>
@@ -167,7 +169,7 @@ export default function Price() {
 								Assinar <ArrowRight />
 							</Button>
 						</CardFooter>
-					</Card>
+					</Card> */}
 				</div>
 			</div>
 		</div>
