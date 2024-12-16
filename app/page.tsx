@@ -19,7 +19,7 @@ export default function Home() {
 		<main className='bg-slate-50 overflow-x-hidden'>
 			<div className='relative w-full h-full'>
 				<a
-					className='fixed bottom-5 right-5 hover:scale-110 transition-all ease-linear duration-200'
+					className='fixed z-50 md:bottom-5 md:right-5 hover:scale-110 transition-all ease-linear duration-200 scale-75 bottom-0 right-0 md:scale-100'
 					href='https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda'
 					target='_blank'
 					rel='noopener noreferrer'>
