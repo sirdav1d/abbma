@@ -17,19 +17,13 @@ export default function Price() {
 	const associado = [
 		'Desconto de até 60% em medicamentos em diversas farmácias',
 		'Desconto de até 30% em diversos restaurantes em Delivery',
-		'Descontos em diversas lojas de Pet',
-		'Descontos em seguros e palnos de saúde',
+		'Desconto em produtos para  PET ',
+		'Descontos em diversas Lojas',
+		'Descontos em diversos seguros',
 		'Descontos em telemedicina',
+		'Descontos em Planos de Saúde',
 		'Desconto de até 60% em cinema, teatro e shows',
-		'Cursos gratuitos na FGV',
-		'Cursos gratuitos na Fundação Bradesco',
-		'Cursos gratuitos na Unicamp',
-		'Cursos de idiomas',
-		'Cursos para Enem',
-		'Cursos reforço escolar',
-		'Cursos de Gastronomia',
-		'Conteúdo de atividade física',
-		'Revistas online e muito mais',
+		'Acesso a diversos cursos',
 	];
 	return (
 		<div
@@ -50,15 +44,14 @@ export default function Price() {
 							show: { transition: { delay: 0.4 } },
 						}}>
 						<p className='max-w-xl text-balance text-center'>
-							Descubra um novo jeito de investir em sua
-							saúde e bem-estar!
+							Descubra um novo jeito de investir em sua saúde e bem-estar!
 						</p>{' '}
 					</FadeText>
 				</div>
 				<div className='mx-auto gap-5 mt-20'>
 					<Card className='border-red-500 max-w-2xl mx-auto'>
 						<CardHeader>
-							<CardTitle>6,99 Mensais</CardTitle>
+							<CardTitle className='font-bold'>6,99 Mensais</CardTitle>
 							<CardDescription className='text-red-500 font-semibold'>
 								Associado
 							</CardDescription>

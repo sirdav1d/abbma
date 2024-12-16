@@ -13,24 +13,26 @@ export default function Hero() {
 		<div className='w-full h-full md:h-screen min-h-screen bg-gradient-to-r from-blue-700 to-blue-950 px-4'>
 			<div className='flex items-center gap-10 flex-col md:flex-row justify-center h-full max-w-7xl mx-auto'>
 				<div className='flex flex-col justify-center gap-10 lg:w-2/3 relative h-full '>
-					<div>
+					<div className='mt-20  max-w-2xl'>
 						<FadeText
-							className='font-bold text-3xl lg:text-5xl text-yellow-500 md:text-balance leading-normal '
+							className='font-bold text-3xl  lg:text-4xl text-yellow-500 md:text-balance leading-normal '
 							direction='up'
 							framerProps={{
 								show: { transition: { delay: 0.2 } },
 							}}>
-							<h2 className='md:leading-normal'>Por que pagar mais?</h2>
+							<h2 className='md:leading-normal'>Mais Benefícios Com A ABBMA</h2>
 						</FadeText>
 						<FadeText
-							className='font-bold text-3xl lg:text-5xl text-slate-50 md:text-balance leading-normal '
+							className='font-bold text-3xl lg:text-4xl text-slate-50 md:text-balance leading-normal '
 							direction='up'
 							framerProps={{
 								show: { transition: { delay: 0.4 } },
 							}}>
 							<h1 className='md:leading-normal'>
-								Simplifique sua vida com nosso clube de vantagens e descontos em
-								telemedicina
+								Tem Clube de Vantagens! <br />
+								Tem Telemedicina!
+								<br /> Tem Seguros! <br /> Tem Plano de Saúde!
+								<br /> Tem muito mais pra você e para quem você ama!
 							</h1>
 						</FadeText>
 					</div>

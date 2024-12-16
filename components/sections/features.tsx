@@ -20,7 +20,7 @@ export default function Features() {
 			title: 'Clube de Vantagens',
 			id: 'club',
 			description:
-				'O clube de vantagens oferece descontos exclusivos em diversos seguimentos, em todo Brasil',
+				'O clube de vantagens oferece descontos exclusivos em diversos segmentos, incluindo cursos gratuitos em todo o Brasil',
 			src: vantagensImage,
 		},
 		{
