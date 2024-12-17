@@ -75,12 +75,7 @@ export default function Footer() {
 						<Link
 							className='hover:text-red-600 transition-all  ease-linear duration-200'
 							href={'/politica'}>
-							Políticas de Privacidade
-						</Link>
-						<Link
-							className='hover:text-red-600 transition-all  ease-linear duration-200'
-							href={'/termos'}>
-							Termos de Uso
+							Políticas de Privacidade e Termos de Uso
 						</Link>
 					</div>
 				</div>

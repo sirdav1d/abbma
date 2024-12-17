@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import logo from '@/public/abbma-favicon.png';
+import logo from '@/assets/logo-principal.png';
 import Link from 'next/link';
 import { Button } from './ui/button';
 

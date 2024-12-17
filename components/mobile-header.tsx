@@ -5,6 +5,7 @@
 import React from 'react';
 import {
 	Drawer,
+	DrawerClose,
 	DrawerContent,
 	DrawerDescription,
 	DrawerFooter,
@@ -15,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import Image from 'next/image';
-import logo from '@/public/abbma-favicon.png';
+import logo from '@/assets/logo-principal.png';
 import Link from 'next/link';
 
 export default function MobileHeader() {
@@ -32,7 +33,7 @@ export default function MobileHeader() {
 				className='md:hidden'>
 				<Button variant={'ghost'}>
 					<Menu
-						size={48}
+						size={60}
 						className='scale-150'
 					/>
 				</Button>
@@ -44,8 +45,8 @@ export default function MobileHeader() {
 							<Image
 								src={logo}
 								alt='logo ABBMA'
-								width={80}
-								height={80}></Image>
+								width={120}
+								height={120}></Image>
 						</Link>
 					</DrawerTitle>
 					<DrawerDescription className='text-balance'>
@@ -59,7 +60,9 @@ export default function MobileHeader() {
 								<li
 									key={index}
 									className='hover:text-red-600 transition-all ease-linear duration-200'>
-									<a href={l.href}>{l.label}</a>
+									<a href={l.href}>
+										<DrawerClose>{l.label}</DrawerClose>
+									</a>
 								</li>
 							);
 						})}
