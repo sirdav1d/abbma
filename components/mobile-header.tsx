@@ -27,7 +27,7 @@ export default function MobileHeader() {
 		{ href: '/#price', label: 'Preços' },
 	];
 	return (
-		<Drawer>
+		<Drawer modal={false}>
 			<DrawerTrigger
 				asChild
 				className='md:hidden'>
@@ -38,7 +38,7 @@ export default function MobileHeader() {
 					/>
 				</Button>
 			</DrawerTrigger>
-			<DrawerContent>
+			<DrawerContent onCloseAutoFocus={(e) => e.preventDefault()}>
 				<DrawerHeader>
 					<DrawerTitle className='flex items-center justify-center gap-5'>
 						<Link href='/'>
