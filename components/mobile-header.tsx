@@ -21,10 +21,10 @@ import Link from 'next/link';
 
 export default function MobileHeader() {
 	const links = [
-		{ href: '#club', label: 'Clube de Vantagens' },
-		{ href: '#tele', label: 'Telemedicina' },
-		{ href: '#seg', label: 'Saúde e Seguros' },
-		{ href: '#price', label: 'Preços' },
+		{ href: '/#club', label: 'Clube de Vantagens' },
+		{ href: '/#tele', label: 'Telemedicina' },
+		{ href: '/#seg', label: 'Saúde e Seguros' },
+		{ href: '/#price', label: 'Preços' },
 	];
 	return (
 		<Drawer>
@@ -60,9 +60,9 @@ export default function MobileHeader() {
 								<li
 									key={index}
 									className='hover:text-red-600 transition-all ease-linear duration-200'>
-									<a href={l.href}>
-										<DrawerClose>{l.label}</DrawerClose>
-									</a>
+									<DrawerClose>
+										<a href={l.href}>{l.label}</a>
+									</DrawerClose>
 								</li>
 							);
 						})}

@@ -12,7 +12,7 @@ import Image from 'next/image';
 import wppLogo from '@/assets/whatsapp-logo.png';
 import MobileHeader from '@/components/mobile-header';
 import Link from 'next/link';
-import logo from '@/public/abbma-favicon.png';
+import logo from '@/assets/logo-principal.png';
 
 export default function Home() {
 	return (
@@ -29,14 +29,14 @@ export default function Home() {
 						width={64}
 						height={64}></Image>
 				</a>
-				<div className='flex z-50 px-4 py-2 items-center justify-between md:hidden'>
+				<div className='flex z-50 px-4 py-4 items-center justify-between md:hidden'>
 					<MobileHeader />
 					<Link href='/'>
 						<Image
 							src={logo}
 							alt='logo ABBMA'
 							width={48}
-							height={48}></Image>
+							height={60}></Image>
 					</Link>
 				</div>
 				<DektopHeader />
