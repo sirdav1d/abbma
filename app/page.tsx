@@ -16,7 +16,7 @@ import logo from '@/assets/logo-principal.png';
 
 export default function Home() {
 	return (
-		<main className='bg-slate-50 overflow-x-hidden'>
+		<main className='bg-slate-100 overflow-x-hidden'>
 			<div className='relative w-full h-full'>
 				<a
 					className='fixed z-50 md:bottom-5 md:right-5 hover:scale-110 transition-all ease-linear duration-200 scale-75 bottom-0 right-0 md:scale-100'

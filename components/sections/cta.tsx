@@ -1,15 +1,13 @@
 /** @format */
 
-import React from 'react';
-import { Button } from '../ui/button';
-import { ArrowRight } from 'lucide-react';
-import RetroGrid from '../ui/retro-grid';
+import BuyButton from '../buy-button';
 import { FadeText } from '../ui/fade-text';
+import RetroGrid from '../ui/retro-grid';
 
 export default function CTA() {
 	return (
 		<div
-			className='md:p-10 p-5 w-full rounded-xl bg-gradient-to-b max-w-7xl mx-auto relative
+			className='md:p-10 px-4 py-8 w-full rounded-lg bg-gradient-to-b max-w-7xl mx-auto relative
      from-blue-800  to-blue-950 flex flex-col items-center justify-center gap-5 my-20'>
 			<FadeText
 				framerProps={{
@@ -22,12 +20,7 @@ export default function CTA() {
 				</h2>
 			</FadeText>
 
-			<Button
-				size={'lg'}
-				className='bg-red-700 text-lg w-fit z-20  hover:bg-red-600 font-semibold mx-auto'>
-				<p>Assinar Agora</p>
-				<ArrowRight className='scale-150' />
-			</Button>
+			<BuyButton full={false} />
 
 			<RetroGrid />
 		</div>

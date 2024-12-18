@@ -2,11 +2,10 @@
 
 import RetCross from '@/assets/ret-cross';
 import RetCuboid from '@/assets/ret-cuboid';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import BuyButton from '../buy-button';
 import HeroImage from '../heroImage';
-import { FadeText } from '../ui/fade-text';
 import BlurIn from '../ui/blur-in';
+import { FadeText } from '../ui/fade-text';
 
 export default function Hero() {
 	return (
@@ -42,12 +41,7 @@ export default function Hero() {
 							framerProps={{
 								show: { transition: { delay: 0.6 } },
 							}}>
-							<Button
-								size={'lg'}
-								className='bg-red-700 text-lg w-fit  hover:bg-red-600 font-semibold'>
-								<p>Assinar Agora</p>
-								<ArrowRight className='scale-125' />
-							</Button>
+							<BuyButton full={false} />
 						</FadeText>
 						<FadeText
 							direction='up'

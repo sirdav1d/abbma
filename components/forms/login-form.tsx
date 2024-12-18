@@ -24,6 +24,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
 	email: z.string().email(),
@@ -40,11 +43,30 @@ export default function LoginForm() {
 			password: '',
 		},
 	});
+	const router = useRouter();
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const { email, password } = values;
+	try {
+		const response = await signIn('credentials', {
+			email,
+			password,
+			redirect: false,
+		});
+
+		if (!response?.error) {
+			router.refresh();
+			router.push('/');
+			toast.success('Usuário Logado com sucesso');
+		} else {
+			toast.error('E-mail ou senha inválidos');
+		}
+	} catch (error) {
+		console.log(error);
+		toast.error('E-mail ou senha inválidos');
+	} finally {
+		form.reset();
+	}
 	}
 
 	return (

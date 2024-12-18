@@ -1,6 +1,7 @@
 /** @format */
 
-import React from 'react';
+import { CircleCheckBig } from 'lucide-react';
+import BuyButton from '../buy-button';
 import {
 	Card,
 	CardContent,
@@ -9,8 +10,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from '../ui/card';
-import { Button } from '../ui/button';
-import { ArrowRight, CircleCheckBig } from 'lucide-react';
 import { FadeText } from '../ui/fade-text';
 
 export default function Price() {
@@ -49,11 +48,11 @@ export default function Price() {
 					</FadeText>
 				</div>
 				<div className='mx-auto gap-5 mt-20'>
-					<Card className='border-red-500 max-w-2xl mx-auto'>
+					<Card className='border-red-500 max-w-2xl mx-auto bg-slate-50'>
 						<CardHeader>
 							<CardTitle className='font-bold'>6,99 Mensais</CardTitle>
 							<CardDescription className='text-red-500 font-semibold'>
-								Associado
+								Seja Um Associado
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
@@ -71,9 +70,7 @@ export default function Price() {
 							</ul>
 						</CardContent>
 						<CardFooter>
-							<Button className='bg-red-700 w-full  hover:bg-red-600 font-semibold '>
-								Assinar <ArrowRight />
-							</Button>
+							<BuyButton full />
 						</CardFooter>
 					</Card>
 					{/* <Card className='border-blue-800'>
