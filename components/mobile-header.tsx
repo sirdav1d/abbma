@@ -14,10 +14,12 @@ import {
 	DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
-import { Menu } from 'lucide-react';
+import { AppWindow, Menu } from 'lucide-react';
 import Image from 'next/image';
 import logo from '@/assets/logo-principal.png';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import SignOutBtn from './sign-out';
 
 export default function MobileHeader() {
 	const links = [
@@ -26,6 +28,8 @@ export default function MobileHeader() {
 		{ href: '/#seg', label: 'Saúde e Seguros' },
 		{ href: '/#price', label: 'Preços' },
 	];
+
+	const session = useSession();
 	return (
 		<Drawer modal={false}>
 			<DrawerTrigger
@@ -69,27 +73,46 @@ export default function MobileHeader() {
 					</ul>
 				</nav>
 				<DrawerFooter>
-					<div className='flex flex-col items-center gap-3'>
-						<Button
-							asChild
-							className='bg-blue-700 hover:bg-blue-600 font-semibold w-full'>
-							<Link
-								href={'/login'}
-								prefetch>
-								Entrar
-							</Link>
-						</Button>
-						<Button
-							variant={'outline'}
-							asChild
-							className='border-blue-600 border-2 w-full text-blue-600  font-semibold hover:text-slate-100 hover:bg-blue-600 bg-transparent'>
-							<Link
-								href={'/register'}
-								prefetch>
-								Cadastrar
-							</Link>
-						</Button>
-					</div>
+					{!session.data?.user ? (
+						<div className='flex flex-col items-center gap-3'>
+							<Button
+								asChild
+								className='bg-blue-700 hover:bg-blue-600 font-semibold w-full'>
+								<Link
+									href={'/login'}
+									prefetch>
+									Entrar
+								</Link>
+							</Button>
+							<Button
+								variant={'outline'}
+								asChild
+								className='border-blue-600 border-2 w-full text-blue-600  font-semibold hover:text-slate-100 hover:bg-blue-600 bg-transparent'>
+								<Link
+									href={'/register'}
+									prefetch>
+									Cadastrar
+								</Link>
+							</Button>
+						</div>
+					) : (
+						<div className='flex flex-col items-center gap-3 '>
+							<Button
+								asChild
+								className='bg-blue-700 w-full hover:bg-blue-600 font-semibold'>
+								<Link
+									href={'/dashboard'}
+									prefetch>
+									<AppWindow
+										size={40}
+										className='scale-125 mr-1.5'
+									/>
+									Área Do Cliente
+								</Link>
+							</Button>
+							<SignOutBtn />
+						</div>
+					)}
 				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>

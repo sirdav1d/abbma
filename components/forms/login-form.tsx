@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { signIn } from 'next-auth/react';
@@ -47,26 +47,26 @@ export default function LoginForm() {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		const { email, password } = values;
-	try {
-		const response = await signIn('credentials', {
-			email,
-			password,
-			redirect: false,
-		});
+		try {
+			const response = await signIn('credentials', {
+				email,
+				password,
+				redirect: false,
+			});
 
-		if (!response?.error) {
-			router.refresh();
-			router.push('/');
-			toast.success('Usuário Logado com sucesso');
-		} else {
+			if (!response?.error) {
+				router.refresh();
+				router.push('/');
+				toast.success('Usuário Logado com sucesso');
+			} else {
+				toast.error('E-mail ou senha inválidos');
+			}
+		} catch (error) {
+			console.log(error);
 			toast.error('E-mail ou senha inválidos');
+		} finally {
+			form.reset();
 		}
-	} catch (error) {
-		console.log(error);
-		toast.error('E-mail ou senha inválidos');
-	} finally {
-		form.reset();
-	}
 	}
 
 	return (
@@ -125,9 +125,18 @@ export default function LoginForm() {
 						/>
 
 						<Button
+							disabled={form.formState.isLoading || form.formState.isSubmitting}
 							type='submit'
 							className='w-full'>
-							Entrar <ArrowRight />
+							{form.formState.isLoading || form.formState.isSubmitting ? (
+								<>
+									Entrar <Loader2 className='animae-spin' />
+								</>
+							) : (
+								<>
+									Entrar <ArrowRight />
+								</>
+							)}
 						</Button>
 					</form>
 				</CardContent>
