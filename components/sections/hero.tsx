@@ -6,8 +6,13 @@ import BuyButton from '../buy-button';
 import HeroImage from '../heroImage';
 import BlurIn from '../ui/blur-in';
 import { FadeText } from '../ui/fade-text';
+import { getServerSession } from 'next-auth';
+import { Button } from '../ui/button';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Hero() {
+export default async function Hero() {
+	const session = await getServerSession();
 	return (
 		<div className='w-full h-full md:h-screen min-h-screen bg-gradient-to-r from-blue-700 to-blue-950 px-4'>
 			<div className='flex items-center gap-10 flex-col md:flex-row justify-center h-full max-w-7xl mx-auto'>
@@ -35,25 +40,37 @@ export default function Hero() {
 							</h1>
 						</FadeText>
 					</div>
-					<div className='flex flex-col gap-5 w-full'>
-						<FadeText
-							direction='up'
-							framerProps={{
-								show: { transition: { delay: 0.6 } },
-							}}>
-							<BuyButton full={false} />
-						</FadeText>
-						<FadeText
-							direction='up'
-							framerProps={{
-								show: { transition: { delay: 0.8 } },
-							}}>
-							<p className='text-zinc-50 max-w-xs'>
-								Descubra um mundo de possibilidades por{' '}
-								<span className='font-bold'>apenas R$ 6,99</span>{' '}
-							</p>
-						</FadeText>
-					</div>
+					{session?.user ? (
+						<Button
+							asChild
+							size={'lg'}
+							className='w-fit text-lg z-20 bg-blue-700 hover:bg-blue-600'>
+							<Link href='/dashboard'>
+								Ir para Dahsboard <ArrowRight className='scale-150' />
+							</Link>
+						</Button>
+					) : (
+						<div className='flex flex-col gap-5 w-full'>
+							<FadeText
+								direction='up'
+								framerProps={{
+									show: { transition: { delay: 0.6 } },
+								}}>
+								<BuyButton full={false} />
+							</FadeText>
+							<FadeText
+								direction='up'
+								framerProps={{
+									show: { transition: { delay: 0.8 } },
+								}}>
+								<p className='text-zinc-50 max-w-xs'>
+									Descubra um mundo de possibilidades por{' '}
+									<span className='font-bold'>apenas R$ 6,99</span>{' '}
+								</p>
+							</FadeText>
+						</div>
+					)}
+
 					<BlurIn className='absolute hidden md:block lg:-left-80 lg:-top-10 -top-80 left-40'>
 						<RetCuboid />
 					</BlurIn>

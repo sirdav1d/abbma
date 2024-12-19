@@ -2,6 +2,9 @@
 
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcrypt';
 
 export const options: AuthOptions = {
 	providers: [
@@ -21,18 +24,22 @@ export const options: AuthOptions = {
 			},
 			type: 'credentials',
 			async authorize(credentials) {
-				const user = {
-					id: '1',
-					name: 'Usuário Teste',
-					email: 'ddavid.diniz@gmail.com',
-					password: 'bzg3xp7yt',
-				};
+				const user = await prisma.user.findUnique({
+					where: { email: credentials?.email },
+				});
 
-				if (
-					credentials?.email === user.email &&
-					credentials?.password === user.password
-				) {
-					return user;
+				if (user && credentials) {
+					const isValid = await bcrypt.compare(
+						credentials?.password,
+						user?.password,
+					);
+
+					if (isValid) {
+						return user;
+					} else {
+						return null;
+					}
+
 					// Any object returned will be saved in `user` property of the JWT
 				}
 				// If you return null then an error will be displayed advising the user to check their details.
@@ -42,6 +49,8 @@ export const options: AuthOptions = {
 			},
 		}),
 	],
+	adapter: PrismaAdapter(prisma),
+	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
 		jwt: async ({ token, user, session, account, profile }) => {
 			if (user) {

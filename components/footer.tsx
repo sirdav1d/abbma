@@ -65,7 +65,7 @@ export default function Footer() {
 					</div>
 				</div>
 
-				<Separator className='dark' />
+				<Separator className='opacity-10 bg-slate-500 rounded-full' />
 				<div className='flex justify-between w-full flex-col md:flex-row gap-5'>
 					<p className=' text-xs text-muted-foreground'>
 						2024 &copy; Associação Brasileira de Benefícios para Militares e

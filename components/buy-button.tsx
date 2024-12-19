@@ -42,7 +42,7 @@ export default function BuyButton({ full }: { full: boolean }) {
 			disabled={isCreatingCheckout}
 			className={`px-4 py-2 disabled:opacity-50 z-20 bg-red-700  max-w-xs w-full ${
 				full && 'w-full max-w-full'
-			}  hover:bg-red-600 font-semibold text-lg`}
+			}  hover:bg-red-600 font-semibold text-lg text-slate-50`}
 			onClick={() => handleClick('123')}>
 			{isCreatingCheckout ? (
 				<>

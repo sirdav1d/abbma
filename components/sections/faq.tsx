@@ -56,7 +56,7 @@ export default function Faq() {
 						<RetStairs />
 					</BlurIn>
 					<FadeText framerProps={{ show: { transition: { delay: 0.2 } } }}>
-						<h2 className='font-bold text-3xl lg:text-5xl max-w-2xl mx-auto'>
+						<h2 className='font-bold text-3xl lg:text-5xl max-w-2xl mx-auto text-slate-950'>
 							Perguntas Frequentes
 						</h2>
 					</FadeText>
@@ -72,11 +72,13 @@ export default function Faq() {
 									key={index}
 									type='single'
 									collapsible>
-									<AccordionItem value={`item-${index}`}>
-										<AccordionTrigger className='text-left'>
+									<AccordionItem value={`item-${index} `}>
+										<AccordionTrigger className='text-left text-slate-800'>
 											{f.question}
 										</AccordionTrigger>
-										<AccordionContent>{f.answer}</AccordionContent>
+										<AccordionContent className='text-slate-800'>
+											{f.answer}
+										</AccordionContent>
 									</AccordionItem>
 								</Accordion>
 							);

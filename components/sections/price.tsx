@@ -34,7 +34,7 @@ export default function Price() {
 						framerProps={{
 							show: { transition: { delay: 0.2 } },
 						}}>
-						<h2 className='text-3xl lg:text-5xl font-bold'>
+						<h2 className='text-3xl lg:text-5xl font-bold text-slate-950'>
 							Seja um Associado
 						</h2>
 					</FadeText>
@@ -42,7 +42,7 @@ export default function Price() {
 						framerProps={{
 							show: { transition: { delay: 0.4 } },
 						}}>
-						<p className='max-w-xl text-balance text-center'>
+						<p className='max-w-xl text-balance text-center text-slate-800'>
 							Descubra um novo jeito de investir em sua saúde e bem-estar!
 						</p>{' '}
 					</FadeText>
@@ -50,7 +50,9 @@ export default function Price() {
 				<div className='mx-auto gap-5 mt-20'>
 					<Card className='border-red-500 max-w-2xl mx-auto bg-slate-50'>
 						<CardHeader>
-							<CardTitle className='font-bold'>6,99 Mensais</CardTitle>
+							<CardTitle className='font-bold text-slate-950'>
+								6,99 Mensais
+							</CardTitle>
 							<CardDescription className='text-red-500 font-semibold'>
 								Seja Um Associado
 							</CardDescription>
@@ -61,7 +63,7 @@ export default function Price() {
 									return (
 										<li
 											key={index}
-											className='flex w-full gap-2 items-center '>
+											className='flex w-full gap-2 items-center text-slate-700 '>
 											<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
 											<span className='text-sm w-full'>{item}</span>
 										</li>

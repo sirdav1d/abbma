@@ -54,13 +54,17 @@ export default function Features() {
 									framerProps={{
 										show: { transition: { delay: 0.2 } },
 									}}>
-									<h2 className='text-3xl font-bold'>{f.title}</h2>
+									<h2 className='text-3xl font-bold text-slate-950'>
+										{f.title}
+									</h2>
 								</FadeText>
 								<FadeText
 									framerProps={{
 										show: { transition: { delay: 0.4 } },
 									}}>
-									<p className='text-balance text-lg'>{f.description}</p>
+									<p className='text-balance text-lg text-slate-800'>
+										{f.description}
+									</p>
 								</FadeText>
 								<FadeText
 									framerProps={{
@@ -68,7 +72,7 @@ export default function Features() {
 									}}>
 									<Button
 										asChild
-										className='bg-blue-700 hover:bg-blue-600 font-semibold'>
+										className='bg-blue-700 hover:bg-blue-600 font-semibold text-slate-50'>
 										<Link href={'#price'}>
 											Saiba mais
 											<ArrowDown className='w-5 h-5 size-full scale-125' />

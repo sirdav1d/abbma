@@ -19,7 +19,7 @@ export default async function DektopHeader() {
 
 	const session = await getServerSession();
 	return (
-		<div className='hidden md:flex w-full fixed py-4  mx-auto bg-slate-50/80 backdrop-blur-md z-50'>
+		<div className='hidden md:flex w-full fixed py-4   mx-auto bg-slate-50/80 backdrop-blur-md z-50'>
 			<div className='flex items-center justify-between w-full max-w-7xl mx-auto'>
 				<Link href='/'>
 					<Image
@@ -35,7 +35,7 @@ export default async function DektopHeader() {
 							return (
 								<li
 									key={index}
-									className='hover:text-red-600 transition-all ease-linear duration-200'>
+									className='hover:text-red-600 text-slate-950 transition-all ease-linear duration-200'>
 									<a href={l.href}>{l.label}</a>
 								</li>
 							);
@@ -46,7 +46,7 @@ export default async function DektopHeader() {
 					<div className='flex items-center gap-3 '>
 						<Button
 							asChild
-							className='bg-blue-700 hover:bg-blue-600 font-semibold'>
+							className='bg-blue-700 hover:bg-blue-600 font-semibold text-slate-50'>
 							<Link
 								href={'/login'}
 								prefetch>
@@ -68,7 +68,7 @@ export default async function DektopHeader() {
 					<div className='flex items-center gap-3 '>
 						<Button
 							asChild
-							className='bg-blue-700 hover:bg-blue-600 font-semibold'>
+							className='bg-blue-700 hover:bg-blue-600 font-semibold text-slate-50'>
 							<Link
 								href={'/dashboard'}
 								prefetch>

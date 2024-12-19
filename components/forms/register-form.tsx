@@ -2,6 +2,7 @@
 
 'use client';
 
+import { createUserAction } from '@/actions/user/create';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
@@ -21,11 +22,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 import { Checkbox } from '../ui/checkbox';
-import Link from 'next/link';
 
 const formSchema = z
 	.object({
@@ -34,12 +37,11 @@ const formSchema = z
 		password: z
 			.string()
 			.min(4, { message: 'A senha deve conter no mínimo 4 dígitos' }),
-		tel: z
+		phone: z
 			.string()
-			.regex(
-				/^(\+?\d{1,3})?\s?\(?\d{2,3}\)?\s?\d{4,5}-?\d{4}$/,
-				'O número de telefone celular não é válido',
-			),
+			.regex(/^(\+?\d{1,3})?\s?\(?\d{2,3}\)?\s?\d{4,5}-?\d{4}$/, {
+				message: 'O número de telefone celular não é válido',
+			}),
 		confirmPass: z
 			.string()
 			.min(4, { message: 'A senha deve conter no mínimo 4 dígitos' }),
@@ -57,16 +59,29 @@ export default function RegisterForm() {
 			email: '',
 			password: '',
 			name: '',
-			tel: '',
+			phone: '',
 			confirmPass: '',
 			terms: false,
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
+	const router = useRouter();
+
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const { email, name, password, phone } = values;
+
+		try {
+			const response = await createUserAction({ email, name, password, phone });
+			if (!response.success) {
+				toast.error(response.message);
+			} else {
+				toast.success(response.message);
+				router.push('/login');
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error('Algo deu errado. não foi possível cadastrar usuário');
+		}
 	}
 
 	return (
@@ -101,14 +116,14 @@ export default function RegisterForm() {
 						/>
 						<FormField
 							control={form.control}
-							name='tel'
+							name='phone'
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Telefone/Celular</FormLabel>
 									<FormControl>
 										<Input
-											type='text'
-											placeholder='99 99999 9999'
+											type='tel'
+											placeholder='(00) 00000 0000'
 											{...field}
 										/>
 									</FormControl>
@@ -192,9 +207,23 @@ export default function RegisterForm() {
 						/>
 
 						<Button
+							disabled={
+								form.formState.isLoading ||
+								form.formState.isSubmitting ||
+								!form.formState.isValid ||
+								form.getValues('terms') == false
+							}
 							type='submit'
-							className='w-full'>
-							Entrar <ArrowRight />
+							className='w-full disabled:opacity-80'>
+							{form.formState.isLoading || form.formState.isSubmitting ? (
+								<>
+									Cadastrar <Loader2 className='animae-spin' />
+								</>
+							) : (
+								<>
+									Cadastrar <ArrowRight />
+								</>
+							)}
 						</Button>
 					</form>
 				</CardContent>

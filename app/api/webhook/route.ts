@@ -1,5 +1,6 @@
 /** @format */
 
+import { createUserAction } from '@/actions/user/create';
 import stripe from '@/lib/stripe';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -16,13 +17,24 @@ export async function POST(req: Request) {
 		}
 
 		const event = stripe.webhooks.constructEvent(body, signature, secret);
-		console.log(body);
+
 		switch (event.type) {
 			case 'checkout.session.completed':
 				if (event.data.object.payment_status === 'paid') {
 					// pagagamento por cartão com sucesso
 					const testeId = event.data.object.metadata?.testeId;
 					console.log('pagamento por cartão com sucesso', testeId);
+					const email = event.data.object.customer_details?.email;
+					const phone = event.data.object.customer_details?.phone;
+					const name = event.data.object.customer_details?.name;
+					const password = Math.random().toString(36).slice(2);
+
+					if (email && phone && name) {
+						await createUserAction({ email, phone, name, password: password });
+						console.log('usuário criado');
+					} else {
+						console.log('usuário não criado');
+					}
 				}
 
 			case 'checkout.session.expired':

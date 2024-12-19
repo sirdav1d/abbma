@@ -2,9 +2,9 @@
 
 import { AppSidebar } from '@/components/app-sidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import React from 'react';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import React from 'react';
 
 export default async function DashLayout({
 	children,
@@ -13,7 +13,7 @@ export default async function DashLayout({
 }) {
 	const session = await getServerSession();
 
-	if (!session) {
+	if (!session?.user) {
 		redirect('/login');
 	}
 	return (

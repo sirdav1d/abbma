@@ -1,10 +1,15 @@
 /** @format */
 
+import { getServerSession } from 'next-auth';
 import BuyButton from '../buy-button';
 import { FadeText } from '../ui/fade-text';
 import RetroGrid from '../ui/retro-grid';
+import { Button } from '../ui/button';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
-export default function CTA() {
+export default async function CTA() {
+	const session = await getServerSession();
 	return (
 		<div
 			className='md:p-10 px-4 py-8 w-full rounded-lg bg-gradient-to-b max-w-7xl mx-auto relative
@@ -19,8 +24,18 @@ export default function CTA() {
 					<span className='font-bold'>custo mais acessível</span>
 				</h2>
 			</FadeText>
-
-			<BuyButton full={false} />
+			{session?.user ? (
+				<Button
+					asChild
+					size={'lg'}
+					className='w-fit text-lg z-20 bg-blue-700 hover:bg-blue-600'>
+					<Link href='/dashboard'>
+						Ir para Dahsboard <ArrowRight className='scale-150' />
+					</Link>
+				</Button>
+			) : (
+				<BuyButton full={false} />
+			)}
 
 			<RetroGrid />
 		</div>

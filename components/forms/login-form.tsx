@@ -54,7 +54,7 @@ export default function LoginForm() {
 				redirect: false,
 			});
 
-			if (!response?.error) {
+			if (response?.ok) {
 				router.refresh();
 				router.push('/');
 				toast.success('Usuário Logado com sucesso');
@@ -125,9 +125,13 @@ export default function LoginForm() {
 						/>
 
 						<Button
-							disabled={form.formState.isLoading || form.formState.isSubmitting}
+							disabled={
+								form.formState.isLoading ||
+								form.formState.isSubmitting ||
+								!form.formState.isValid
+							}
 							type='submit'
-							className='w-full'>
+							className='w-full disabled:opacity-80'>
 							{form.formState.isLoading || form.formState.isSubmitting ? (
 								<>
 									Entrar <Loader2 className='animae-spin' />

@@ -17,12 +17,12 @@ export default function About() {
 					<RetCrossDark />
 				</BlurIn>
 				<FadeText framerProps={{ show: { transition: { delay: 0.2 } } }}>
-					<h2 className='font-bold text-3xl md:text-4xl max-w-2xl mx-auto'>
+					<h2 className='font-bold text-3xl md:text-4xl max-w-2xl mx-auto text-slate-950'>
 						Associação Brasileira de Benefícios para Militares e Autônomos
 					</h2>
 				</FadeText>
 				<FadeText framerProps={{ show: { transition: { delay: 0.35 } } }}>
-					<p className='max-w-2xl mx-auto leading-relaxed text-balance text-lg'>
+					<p className='max-w-2xl mx-auto leading-relaxed text-balance text-lg text-slate-800'>
 						Na ABBMA, nosso compromisso é proporcionar aos seus associados e
 						dependentes, acesso a uma{' '}
 						<span className='font-bold'>ampla gama de benefícios</span>, através

@@ -5,6 +5,7 @@ import { Poppins } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import AuthProvider from '@/providers/auth-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
 
 const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -28,12 +29,17 @@ export default function RootLayout({
 			lang='pt-BR'
 			suppressHydrationWarning>
 			<body className={`${poppins.className}  antialiased`}>
-				<AuthProvider>
-					<>
-						{children}
-						<Toaster />
-					</>
-				</AuthProvider>
+				<ThemeProvider
+					attribute='class'
+					defaultTheme='light'
+					disableTransitionOnChange>
+					<AuthProvider>
+						<>
+							{children}
+							<Toaster />
+						</>
+					</AuthProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
