@@ -31,9 +31,9 @@ export const KoalaWelcomeEmail = ({
 		<Body style={main}>
 			<Container style={container}>
 				<Img
-					src={`${baseUrl}/logo-principal.png`}
-					width='170'
-					height='50'
+					src={`${baseUrl}/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo-principal.42e61726.png&w=640&q=75`}
+					width='200'
+					height='200'
 					alt='logo abbma'
 					style={logo}
 				/>

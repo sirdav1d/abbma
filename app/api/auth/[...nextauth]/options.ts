@@ -1,10 +1,9 @@
 /** @format */
 
-import { AuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcrypt';
+import { AuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const options: AuthOptions = {
 	providers: [
@@ -24,35 +23,31 @@ export const options: AuthOptions = {
 			},
 			type: 'credentials',
 			async authorize(credentials) {
-				if (credentials) {
-					const user = await prisma.user.findUnique({
-						where: { email: credentials?.email },
-					});
-					if (user && credentials) {
-						const isValid = await bcrypt.compare(
-							credentials?.password,
-							user?.password,
-						);
+				const user = await prisma.user.findUnique({
+					where: { email: credentials?.email },
+				});
+				if (user && credentials) {
+					const isValid = await bcrypt.compare(
+						credentials?.password,
+						user?.password,
+					);
 
-						if (isValid) {
-							return user;
-						} else {
-							return null;
-						}
-
-						// Any object returned will be saved in `user` property of the JWT
+					if (isValid) {
+						return user;
+					} else {
+						return null;
 					}
+					// Any object returned will be saved in `user` property of the JWT
+				} else {
+					return null;
 				}
 
 				// If you return null then an error will be displayed advising the user to check their details.
-				return null;
 
 				// You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
 			},
 		}),
 	],
-	adapter: PrismaAdapter(prisma),
-	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
 		jwt: async ({ token, user, session, account, profile }) => {
 			if (user) {
@@ -64,22 +59,19 @@ export const options: AuthOptions = {
 					...profile,
 				};
 			}
-			return null;
+			return token;
 		},
 		session: async ({ session, token, newSession, user }) => {
-			if (token) {
-				return {
-					...token,
-					...user,
-					...session,
-					...newSession,
-				};
-			}
-			return session;
+			return {
+				...token,
+				...user,
+				...session,
+				...newSession,
+			};
 		},
 	},
 	pages: {
-		error: '/login',
+		error: '/',
 		signIn: '/login',
 		signOut: '/',
 	},

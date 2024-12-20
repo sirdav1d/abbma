@@ -9,7 +9,7 @@ declare module 'next-auth' {
 			email: string;
 			name?: string;
 			image?: string;
-
+			readonly;
 			// Adicione outros campos personalizados aqui, se necessário
 		};
 	}

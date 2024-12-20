@@ -17,6 +17,7 @@ import { getServerSession } from 'next-auth';
 
 export default async function Home() {
 	const session = await getServerSession();
+
 	return (
 		<main className='bg-slate-100 overflow-x-hidden '>
 			<div className='relative w-full h-full'>
