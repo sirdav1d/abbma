@@ -29,6 +29,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { Checkbox } from '../ui/checkbox';
+import WelcomeEmailAction from '@/actions/email/welcome';
 
 const formSchema = z
 	.object({
@@ -72,6 +73,8 @@ export default function RegisterForm() {
 
 		try {
 			const response = await createUserAction({ email, name, password, phone });
+			const resp = await WelcomeEmailAction();
+			console.log(resp);
 			if (!response.success) {
 				toast.error(response.message);
 			} else {
