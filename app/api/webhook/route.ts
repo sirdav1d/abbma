@@ -1,5 +1,6 @@
 /** @format */
 
+import WelcomeEmailAction from '@/actions/email/welcome';
 import { createUserAction } from '@/actions/user/create';
 import stripe from '@/lib/stripe';
 import { headers } from 'next/headers';
@@ -32,6 +33,7 @@ export async function POST(req: Request) {
 
 					if (email && phone && name) {
 						await createUserAction({ email, phone, name, password: password });
+						await WelcomeEmailAction();
 						console.log('Usuário criado');
 					} else {
 						console.log('Usuário não foi criado');
