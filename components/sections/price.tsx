@@ -1,7 +1,7 @@
 /** @format */
 
 import { CircleCheckBig } from 'lucide-react';
-import BuyButton from '../buy-button';
+import BuyModal from '../buy-modal';
 import {
 	Card,
 	CardContent,
@@ -71,8 +71,8 @@ export default function Price() {
 								})}
 							</ul>
 						</CardContent>
-						<CardFooter>
-							<BuyButton full />
+						<CardFooter className='w-full flex items-center justify-center'>
+							<BuyModal full={true} />
 						</CardFooter>
 					</Card>
 					{/* <Card className='border-blue-800'>

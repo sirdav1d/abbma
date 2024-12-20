@@ -6,11 +6,13 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { ArrowRight, Loader2 } from 'lucide-react';
-
-export default function BuyButton({ full }: { full: boolean }) {
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+export default function BuyButton({ email }: { email: string }) {
 	const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
 
-	async function handleClick(testeId: string) {
+	const router = useRouter();
+	async function handleClick(email: string) {
 		try {
 			setIsCreatingCheckout(true);
 			const checkoutResponse = await fetch('/api/create-checkout', {
@@ -18,7 +20,7 @@ export default function BuyButton({ full }: { full: boolean }) {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ testeId }),
+				body: JSON.stringify({ email }),
 			});
 
 			const stripeClient = await loadStripe(
@@ -27,10 +29,15 @@ export default function BuyButton({ full }: { full: boolean }) {
 
 			if (!stripeClient) throw new Error('Stripe failed to initialize.');
 
-			const { sessionId } = await checkoutResponse.json();
-			await stripeClient.redirectToCheckout({ sessionId });
+			const { sessionId, message, ok } = await checkoutResponse.json();
+			if (ok) {
+				await stripeClient.redirectToCheckout({ sessionId });
+			} else {
+				toast.error(String(message));
+				router.push('/sub-duplicate');
+			}
 		} catch (error) {
-			console.error(error);
+			console.log(error);
 		} finally {
 			setIsCreatingCheckout(false);
 		}
@@ -40,10 +47,8 @@ export default function BuyButton({ full }: { full: boolean }) {
 		<Button
 			size={'lg'}
 			disabled={isCreatingCheckout}
-			className={`px-4 py-2 disabled:opacity-50 z-20 bg-red-700  max-w-xs w-full ${
-				full && 'w-full max-w-full'
-			}  hover:bg-red-600 font-semibold text-lg text-slate-50`}
-			onClick={() => handleClick('123')}>
+			className={`px-4 py-2 disabled:opacity-50 z-20 bg-red-700  max-w-xs w-full hover:bg-red-600 font-semibold text-lg text-slate-50`}
+			onClick={() => handleClick(email)}>
 			{isCreatingCheckout ? (
 				<>
 					Assinar <Loader2 className='animate-spin' />

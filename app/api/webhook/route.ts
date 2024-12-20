@@ -17,10 +17,11 @@ export async function POST(req: Request) {
 		}
 
 		const event = stripe.webhooks.constructEvent(body, signature, secret);
-
+		console.log(body);
 		switch (event.type) {
 			case 'checkout.session.completed':
 				if (event.data.object.payment_status === 'paid') {
+					console.log('Nova assinatura foi criada com sucesso');
 					// pagagamento por cartão com sucesso
 					const testeId = event.data.object.metadata?.testeId;
 					console.log('pagamento por cartão com sucesso', testeId);
@@ -31,9 +32,9 @@ export async function POST(req: Request) {
 
 					if (email && phone && name) {
 						await createUserAction({ email, phone, name, password: password });
-						console.log('usuário criado');
+						console.log('Usuário criado');
 					} else {
-						console.log('usuário não criado');
+						console.log('Usuário não foi criado');
 					}
 				}
 
@@ -52,7 +53,7 @@ export async function POST(req: Request) {
 
 		return NextResponse.json({ result: event, ok: true });
 	} catch (error) {
-		console.error(error);
+		console.log(error);
 		return NextResponse.json(
 			{
 				message: `Webhook error: ${error}`,

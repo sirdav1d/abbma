@@ -2,14 +2,14 @@
 
 import RetCross from '@/assets/ret-cross';
 import RetCuboid from '@/assets/ret-cuboid';
-import BuyButton from '../buy-button';
+import { ArrowRight } from 'lucide-react';
+import { getServerSession } from 'next-auth';
+import Link from 'next/link';
+import BuyModal from '../buy-modal';
 import HeroImage from '../heroImage';
 import BlurIn from '../ui/blur-in';
-import { FadeText } from '../ui/fade-text';
-import { getServerSession } from 'next-auth';
 import { Button } from '../ui/button';
-import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { FadeText } from '../ui/fade-text';
 
 export default async function Hero() {
 	const session = await getServerSession();
@@ -44,7 +44,7 @@ export default async function Hero() {
 						<Button
 							asChild
 							size={'lg'}
-							className='w-fit text-lg z-20 bg-blue-700 hover:bg-blue-600'>
+							className='w-fit text-lg z-20 bg-blue-700 hover:bg-blue-600 border-slate-50 border'>
 							<Link href='/dashboard'>
 								Ir para Dahsboard <ArrowRight className='scale-150' />
 							</Link>
@@ -56,7 +56,7 @@ export default async function Hero() {
 								framerProps={{
 									show: { transition: { delay: 0.6 } },
 								}}>
-								<BuyButton full={false} />
+								<BuyModal full={false} />
 							</FadeText>
 							<FadeText
 								direction='up'

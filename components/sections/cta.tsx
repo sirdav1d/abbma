@@ -1,12 +1,12 @@
 /** @format */
 
+import { ArrowRight } from 'lucide-react';
 import { getServerSession } from 'next-auth';
-import BuyButton from '../buy-button';
+import Link from 'next/link';
+import BuyModal from '../buy-modal';
+import { Button } from '../ui/button';
 import { FadeText } from '../ui/fade-text';
 import RetroGrid from '../ui/retro-grid';
-import { Button } from '../ui/button';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 
 export default async function CTA() {
 	const session = await getServerSession();
@@ -28,13 +28,13 @@ export default async function CTA() {
 				<Button
 					asChild
 					size={'lg'}
-					className='w-fit text-lg z-20 bg-blue-700 hover:bg-blue-600'>
+					className='w-fit text-lg z-20 border border-slate-50 bg-blue-700 hover:bg-blue-600'>
 					<Link href='/dashboard'>
 						Ir para Dahsboard <ArrowRight className='scale-150' />
 					</Link>
 				</Button>
 			) : (
-				<BuyButton full={false} />
+				<BuyModal full={false} />
 			)}
 
 			<RetroGrid />
