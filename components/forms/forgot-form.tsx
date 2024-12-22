@@ -61,9 +61,11 @@ export default function ForgotForm() {
 
 			toast.success('E-mail de recuperação de senha enviado');
 			router.push('/login');
+			form.reset();
 		} catch (error) {
 			console.log(error);
 			toast.error('Algo deu errado');
+			form.reset();
 		}
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
