@@ -73,7 +73,7 @@ export default function RegisterForm() {
 
 		try {
 			const response = await createUserAction({ email, name, password, phone });
-			const resp = await WelcomeEmailAction();
+			const resp = await WelcomeEmailAction({ email, name, password });
 			console.log(resp);
 			if (!response.success) {
 				toast.error(response.message);

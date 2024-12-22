@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Button } from '@/components/ui/button';
+import RecoveryPassAction from '@/actions/email/recovery-password';
 import {
 	Card,
 	CardContent,
@@ -21,9 +21,22 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '../ui/dialog';
+
+import { ArrowRight, Loader2 } from 'lucide-react';
+import { Button } from '../ui/button';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
 	email: z.string().email(),
@@ -37,7 +50,21 @@ export default function ForgotForm() {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
+	const router = useRouter();
+
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const { email } = values;
+
+		try {
+			const resp = await RecoveryPassAction({ email });
+			console.log(resp);
+
+			toast.success('E-mail de recuperação de senha enviado');
+			router.push('/login');
+		} catch (error) {
+			console.log(error);
+			toast.error('Algo deu errado');
+		}
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
 		console.log(values);
@@ -73,12 +100,47 @@ export default function ForgotForm() {
 								</FormItem>
 							)}
 						/>
-
-						<Button
-							type='submit'
-							className='w-full'>
-							Resetar Senha <ArrowRight />
-						</Button>
+						<Dialog>
+							<DialogTrigger asChild>
+								<Button className='w-full'>
+									Resetar Senha <ArrowRight />
+								</Button>
+							</DialogTrigger>
+							<DialogContent className='sm:max-w-md'>
+								<DialogHeader>
+									<DialogTitle>Tem certeza?</DialogTitle>
+								</DialogHeader>
+								Essa ação não poderá ser desfeita, caso deseje prosseguir,
+								clique no botão abaixo para resetar sua senha.
+								<DialogFooter className='sm:justify-start'>
+									<DialogClose asChild>
+										<Button
+											disabled={
+												form.formState.isLoading ||
+												form.formState.isSubmitting ||
+												!form.formState.isValid
+											}
+											onClick={() =>
+												onSubmit({ email: String(form.getValues('email')) })
+											}
+											type='submit'
+											className='w-full disabled:opacity-80'>
+											{form.formState.isLoading ||
+											form.formState.isSubmitting ? (
+												<>
+													Resetar Senha Agora{' '}
+													<Loader2 className='animae-spin' />
+												</>
+											) : (
+												<>
+													Resetar Senha Agora <ArrowRight />
+												</>
+											)}
+										</Button>
+									</DialogClose>
+								</DialogFooter>
+							</DialogContent>
+						</Dialog>
 					</form>
 				</CardContent>
 				<CardFooter>

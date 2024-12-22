@@ -32,10 +32,11 @@ export default function SuccessPage() {
 							<CheckCircle className='text-green-500 w-12 h-12' />
 						</div>
 						<CardTitle className='text-3xl lg:text-5xl font-bold text-center'>
-							Obrigado por aderir ao nosso plano!
+							Obrigado por se tornar um associado!
 						</CardTitle>
 						<CardDescription className='text-center text-lg'>
-							Sua assinatura foi confirmada e seus benefícios já estão ativos.
+							Sua assinatura foi confirmada e em breve seus benefícios estarão
+							ativos.
 						</CardDescription>
 					</CardHeader>
 					<CardContent>

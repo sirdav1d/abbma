@@ -1,10 +1,12 @@
 /** @format */
 
+import SendInvoiceLinkAction from '@/actions/email/invoice-link';
 import WelcomeEmailAction from '@/actions/email/welcome';
-import { createUserAction } from '@/actions/user/create';
+import { createUserWithPaymentAction } from '@/actions/user/create-with-payment';
 import stripe from '@/lib/stripe';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
 
 const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -18,25 +20,60 @@ export async function POST(req: Request) {
 		}
 
 		const event = stripe.webhooks.constructEvent(body, signature, secret);
-		console.log(body);
+
 		switch (event.type) {
 			case 'checkout.session.completed':
-				if (event.data.object.payment_status === 'paid') {
+				const session = event.data.object as Stripe.Checkout.Session;
+
+				if (!session.customer) {
+					return NextResponse.json(
+						{ error: 'Sessão sem cliente associado.' },
+						{ status: 400 },
+					);
+				}
+
+				if (session.payment_status === 'paid') {
 					console.log('Nova assinatura foi criada com sucesso');
 					// pagagamento por cartão com sucesso
-					const testeId = event.data.object.metadata?.testeId;
-					console.log('pagamento por cartão com sucesso', testeId);
-					const email = event.data.object.customer_details?.email;
-					const phone = event.data.object.customer_details?.phone;
-					const name = event.data.object.customer_details?.name;
+
+					const email = session.customer_details?.email;
+					const phone = session.customer_details?.phone;
+					const name = session.customer_details?.name;
 					const password = Math.random().toString(36).slice(2);
 
 					if (email && phone && name) {
-						await createUserAction({ email, phone, name, password: password });
-						await WelcomeEmailAction();
+						await createUserWithPaymentAction({
+							email,
+							phone,
+							name,
+							password: password,
+						});
 						console.log('Usuário criado');
+						await WelcomeEmailAction({ email, name, password });
+						console.log('E-mail de bem vindo enviado');
 					} else {
 						console.log('Usuário não foi criado');
+					}
+
+					// ID do cliente no Stripe
+
+					// Recuperar informações adicionais da fatura ou pagamento
+					const invoiceId = session.invoice as string;
+
+					if (invoiceId) {
+						const invoice = await stripe.invoices.retrieve(invoiceId);
+
+						// Obter a URL da fatura
+						const invoiceUrl = invoice.hosted_invoice_url;
+
+						if (email && invoiceUrl) {
+							console.log(`Enviando fatura para ${email}: ${invoiceUrl}`);
+							await SendInvoiceLinkAction({
+								email: email,
+								link: invoiceUrl,
+								name: name!,
+							});
+						}
 					}
 				}
 

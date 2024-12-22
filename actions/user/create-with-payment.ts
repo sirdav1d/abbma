@@ -13,7 +13,7 @@ interface CreateUserProps {
 	phone: string | null;
 }
 
-export async function createUserAction({
+export async function createUserWithPaymentAction({
 	email,
 	name,
 	phone,
@@ -33,6 +33,16 @@ export async function createUserAction({
 				phone,
 				name,
 				password: await bcrypt.hash(password, 10),
+				role: 'CLIENT',
+				tickets: {
+					create: {
+						title: 'Liberar acesso a Clube de Vantagens',
+						description:
+							'usuário já fez o pagamento e aguarda acesso ao clube de vantagens',
+						status: 'OPEN',
+						type: 'CLUB_VANTAGES',
+					},
+				},
 			},
 		});
 		console.log('cadastrado');
