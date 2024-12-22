@@ -12,6 +12,8 @@ interface RecoveryPassActionProps {
 export default async function RecoveryPassAction({
 	email,
 }: RecoveryPassActionProps) {
+	const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
 	const user = await prisma.user.findUnique({
 		where: { email },
 	});
@@ -27,18 +29,15 @@ export default async function RecoveryPassAction({
 			},
 		});
 
-		const resp = await fetch(
-			'http://localhost:3000/api/forgot-password-route',
-			{
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					email,
-					name: user?.name,
-					password: newPassword,
-				}),
-			},
-		);
+		const resp = await fetch(`${API_ENDPOINT}/api/forgot-password-route`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				email,
+				name: user?.name,
+				password: newPassword,
+			}),
+		});
 		return resp.json();
 	} catch (error) {
 		console.log(error);

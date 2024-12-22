@@ -13,7 +13,9 @@ export default async function WelcomeEmailAction({
 	name,
 	password,
 }: WelcomeEmailActionProps) {
-	const response = await fetch(`http://localhost:3000/api/welcome-route`, {
+	const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
+	const response = await fetch(`${API_ENDPOINT}/api/welcome-route`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({

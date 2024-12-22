@@ -13,8 +13,9 @@ export default async function SendInvoiceLinkAction({
 	link,
 	name,
 }: RecoveryPassActionProps) {
+	const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	try {
-		const resp = await fetch('http://localhost:3000/api/invoice-link-route', {
+		const resp = await fetch(`${API_ENDPOINT}/api/invoice-link-route`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
