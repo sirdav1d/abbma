@@ -12,7 +12,7 @@ import logo from '@/assets/logo-principal.png';
 export default function HeaderDash() {
 	const routeTitles: { [key: string]: string } = {
 		'/dashboard': 'Visão Geral',
-		'/dashboard/benefits': 'Meus Benefícios',
+		'/dashboard/benefits': 'Benefícios',
 		'/dashboard/dependents': 'Dependentes',
 		'/dashboard/billing': 'Planos e Pagamentos',
 		'/dashboard/tickets': 'Meus Chamados',
@@ -23,16 +23,16 @@ export default function HeaderDash() {
 	const pathname = usePathname();
 	const title = routeTitles[pathname] || 'Dashboard';
 	return (
-		<div className=' w-full max-w-7xl mx-auto flex flex-col gap-5'>
-			<div className='w-full flex items-center gap-3'>
+		<div className=' w-full max-w-7xl mx-auto flex flex-col gap-5 items-center '>
+			<div className='w-fit md:w-full flex items-center gap-3 justify-center mx-auto '>
 				<Image
 					src={logo}
 					alt='logo ABBMA'
 					width={400}
 					height={400}
-					className='w-20 object-contain'></Image>
+					className='md:w-20 w-12 object-contain'></Image>
 				<h2 className='font-bold text-3xl lg:text-5xl w-full'> {title}</h2>
-				<div>
+				<div className='hidden md:flex'>
 					<SignOutBtn />
 				</div>
 			</div>
