@@ -107,8 +107,8 @@ export default function ProfilePage() {
 	}
 
 	return (
-		<div className='container mx-auto px-4 py-8'>
-			<Card className='w-full max-w-4xl mx-auto'>
+		<div className='container mx-auto px-4 py-8 w-full'>
+			<Card className='w-full mx-auto'>
 				<CardHeader>
 					<CardTitle className='text-2xl font-bold'>Seu Perfil</CardTitle>
 					<CardDescription>
@@ -222,13 +222,12 @@ export default function ProfilePage() {
 											render={({ field }) => (
 												<FormItem className='flex flex-col'>
 													<FormLabel>Data de Nascimento</FormLabel>
-
 													<FormControl>
 														<div className='relative'>
 															<CalendarIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
 															<Input
 																type='date'
-																className='pl-8'
+																className='pl-8 w-full'
 																{...field}
 															/>
 														</div>
