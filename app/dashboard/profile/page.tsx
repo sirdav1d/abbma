@@ -21,8 +21,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar } from '@/components/ui/calendar';
-import { toast } from 'sonner';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	Briefcase,
@@ -34,14 +33,8 @@ import {
 	User,
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import * as z from 'zod';
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
 
 const profileFormSchema = z.object({
 	fullName: z.string().min(2, {
@@ -56,8 +49,13 @@ const profileFormSchema = z.object({
 	cpf: z.string().length(11, {
 		message: 'O CPF deve ter 11 dígitos.',
 	}),
-	birthDate: z.date({
-		message: 'Data de aniversário é obrigatório',
+	birthDate: z.string().refine((date) => {
+		const parsedDate = new Date(date);
+		return (
+			!isNaN(parsedDate.getTime()) &&
+			parsedDate < new Date() &&
+			parsedDate > new Date('1900-01-01')
+		);
 	}),
 	address: z.string().min(5, {
 		message: 'O endereço deve ter pelo menos 5 caracteres.',
@@ -85,7 +83,7 @@ const defaultValues: Partial<ProfileFormValues> = {
 	email: '',
 	phone: '',
 	cpf: '',
-	birthDate: new Date(),
+	birthDate: '',
 	address: '',
 	neighborhood: '',
 	city: '',
@@ -224,39 +222,18 @@ export default function ProfilePage() {
 											render={({ field }) => (
 												<FormItem className='flex flex-col'>
 													<FormLabel>Data de Nascimento</FormLabel>
-													<Popover>
-														<PopoverTrigger asChild>
-															<FormControl>
-																<Button
-																	variant={'outline'}
-																	className={cn(
-																		'w-[240px] pl-3 text-left font-normal',
-																		!field.value && 'text-muted-foreground',
-																	)}>
-																	{field.value ? (
-																		format(field.value, 'PPP')
-																	) : (
-																		<span>Selecione uma data</span>
-																	)}
-																	<CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-																</Button>
-															</FormControl>
-														</PopoverTrigger>
-														<PopoverContent
-															className='w-auto p-0'
-															align='start'>
-															<Calendar
-																mode='single'
-																selected={field.value}
-																onSelect={field.onChange}
-																disabled={(date) =>
-																	date > new Date() ||
-																	date < new Date('1900-01-01')
-																}
-																initialFocus
+
+													<FormControl>
+														<div className='relative'>
+															<CalendarIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+															<Input
+																type='date'
+																className='pl-8'
+																{...field}
 															/>
-														</PopoverContent>
-													</Popover>
+														</div>
+													</FormControl>
+
 													<FormMessage />
 												</FormItem>
 											)}
