@@ -104,7 +104,13 @@ export default function ForgotForm() {
 						/>
 						<Dialog>
 							<DialogTrigger asChild>
-								<Button className='w-full'>
+								<Button
+									disabled={
+										form.formState.isLoading ||
+										form.formState.isSubmitting ||
+										!form.formState.isValid
+									}
+									className='w-full disabled:opacity-50'>
 									Resetar Senha <ArrowRight />
 								</Button>
 							</DialogTrigger>
@@ -126,7 +132,7 @@ export default function ForgotForm() {
 												onSubmit({ email: String(form.getValues('email')) })
 											}
 											type='submit'
-											className='w-full disabled:opacity-80'>
+											className='w-full disabled:opacity-50'>
 											{form.formState.isLoading ||
 											form.formState.isSubmitting ? (
 												<>

@@ -11,6 +11,7 @@ interface CreateUserProps {
 	password: string;
 	name: string;
 	phone: string | null;
+	cpf: string | null | undefined;
 }
 
 export async function createUserWithPaymentAction({
@@ -18,6 +19,7 @@ export async function createUserWithPaymentAction({
 	name,
 	phone,
 	password,
+	cpf,
 }: CreateUserProps) {
 	try {
 		const existUser = await prisma.user.findUnique({
@@ -32,6 +34,7 @@ export async function createUserWithPaymentAction({
 				email,
 				phone,
 				name,
+				cpf: cpf ?? null,
 				password: await bcrypt.hash(password, 10),
 				role: 'CLIENT',
 				tickets: {

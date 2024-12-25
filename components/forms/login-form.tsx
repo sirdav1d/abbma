@@ -131,7 +131,7 @@ export default function LoginForm() {
 								!form.formState.isValid
 							}
 							type='submit'
-							className='w-full disabled:opacity-80'>
+							className='w-full disabled:opacity-50'>
 							{form.formState.isLoading || form.formState.isSubmitting ? (
 								<>
 									Entrar <Loader2 className='animae-spin' />

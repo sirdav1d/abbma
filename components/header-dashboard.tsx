@@ -23,15 +23,15 @@ export default function HeaderDash() {
 	const pathname = usePathname();
 	const title = routeTitles[pathname] || 'Dashboard';
 	return (
-		<div className=' w-full max-w-7xl mx-auto flex flex-col gap-5 items-center '>
-			<div className='w-fit md:w-full flex items-center gap-3 justify-center mx-auto '>
+		<div className=' w-full max-w-7xl mx-auto flex flex-col gap-5 items-center px-4 xl:px-0 '>
+			<div className='w-fit md:w-full mt-5 flex items-center gap-3 justify-center mx-auto '>
 				<Image
 					src={logo}
 					alt='logo ABBMA'
 					width={400}
 					height={400}
-					className='md:w-20 w-12 object-contain'></Image>
-				<h2 className='font-bold text-3xl lg:text-5xl w-full'> {title}</h2>
+					className='xl:w-20 w-12 object-contain'></Image>
+				<h2 className='font-bold text-3xl xl:text-5xl w-full'> {title}</h2>
 				<div className='hidden md:flex'>
 					<SignOutBtn />
 				</div>

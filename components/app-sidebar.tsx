@@ -32,9 +32,11 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { getUserAction } from '@/actions/user/get-user';
 
 export async function AppSidebar() {
 	const session = await getServerSession();
+	const user = session && (await getUserAction(session.user.email));
 	const items = [
 		{
 			title: 'Home',
@@ -72,7 +74,7 @@ export async function AppSidebar() {
 					<SidebarGroupContent>
 						<SidebarMenu>
 							<SidebarMenuItem>
-								{session?.user.role == 'ADMIN' && (
+								{user?.user?.role == 'ADMIN' && (
 									<SidebarMenuButton
 										asChild
 										variant={'default'}>
@@ -103,7 +105,7 @@ export async function AppSidebar() {
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<SidebarMenuButton>
-									<User2 /> {session?.user.name}
+									<User2 /> {user?.user?.name}
 									<ChevronUp className='ml-auto' />
 								</SidebarMenuButton>
 							</DropdownMenuTrigger>

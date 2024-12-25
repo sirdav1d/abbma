@@ -1,6 +1,8 @@
 /** @format */
 
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
 	Card,
 	CardContent,
@@ -9,126 +11,77 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import { ScanHeart, Shield, Stethoscope } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AlertCircle } from 'lucide-react';
+import { benefits } from './_constants/benefits';
 
 export default async function DashboardPage() {
 	const tickets = await GetAllTicketsAction();
 
-	// const typeTicket: { [key: string]: string } = {
-	// 	CLUB_VANTAGES: 'Clube de Vantagens',
-	// 	TELEMEDICINE: 'Telemedicina',
-	// 	HEALTH_PLAN: 'Planos de Saúde',
-	// };
-
-	// const statusTicket: { [key: string]: string } = {
-	// 	OPEN: 'Aberto',
-	// 	CLOSED: 'Concluído',
-	// 	PENDING: 'Em Andamento',
-	// };
-
-	const isActivePlanClub = tickets?.find((t) => {
-		return t.type == 'CLUB_VANTAGES';
-	});
-
-	const isActivePlanTele = tickets?.find((t) => {
-		return t.type == 'TELEMEDICINE';
-	});
-
-	const isActivePlanSec = tickets?.find((t) => {
-		return t.type == 'HEALTH_PLAN';
+	const isActivePlan = tickets?.find((t) => {
+		if (t.type == 'CLUB_VANTAGES') {
+			return 'CLUB_VANTAGES';
+		}
+		if (t.type == 'TELEMEDICINE') {
+			return 'TELEMEDICINE';
+		}
+		if (t.type == 'HEALTH_PLAN') {
+			return 'HEALTH_PLAN';
+		}
 	});
 
 	return (
-		<div className='mx-auto w-full max-w-7xl px-4 md:px-0 mt-5'>
+		<div className='mx-auto w-full max-w-7xl px-4 xl:px-0  py-5'>
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 				Descubra tudo o que a ABBMA pode te oferecer
 			</h2>
-			<div className='grid grid-cols-1 md:grid-cols-3 mt-10 gap-5'>
-				<Card>
-					<CardHeader>
-						<CardTitle className='flex gap-2 items-center text-xl md:text-2xl'>
-							<Shield />
-							Clube de Vantagens
-						</CardTitle>
-						<CardDescription>
-							O clube de vantagens oferece descontos exclusivos em diversos
-							segmentos, incluindo cursos gratuitos em todo o Brasil
-						</CardDescription>
-					</CardHeader>
-					<CardContent className='w-full'>
-						{isActivePlanClub?.type === 'CLUB_VANTAGES' && (
-							<span className='bg-green-100 rounded-full text-green-800 font-bold px-4 py-2 w-full text-sm'>
-								Plano Ativo
-							</span>
-						)}
-					</CardContent>
-					<CardFooter className='w-full flex justify-between items-center'>
-						<Button variant={'link'}>Ver Detalhes</Button>
-						{isActivePlanClub?.type === 'CLUB_VANTAGES' ? (
-							<></>
-						) : (
-							<Button>Quero Contratar</Button>
-						)}
-					</CardFooter>
-				</Card>
-
-				<Card className='opacity-80'>
-					<CardHeader>
-						<CardTitle className='flex gap-2 items-center text-xl md:text-2xl'>
-							<Stethoscope />
-							Descontos em Telemedicina
-						</CardTitle>
-						<CardDescription>
-							Com a telemedicina, você tem acesso a atendimento médico em
-							qualquer hora do dia, além de poder contar com consultas em
-							diversas especialidades
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						{isActivePlanTele?.type === 'TELEMEDICINE' && (
-							<span className='bg-green-100 rounded-full text-green-800 font-bold px-4 py-2 w-full text-sm'>
-								Plano Ativo
-							</span>
-						)}
-					</CardContent>
-					<CardFooter className='w-full flex justify-between items-center'>
-						<Button variant={'link'}>Ver Detalhes</Button>
-						{isActivePlanTele?.type === 'TELEMEDICINE' ? (
-							<></>
-						) : (
-							<Button>Quero Contratar</Button>
-						)}
-					</CardFooter>
-				</Card>
-				<Card>
-					<CardHeader>
-						<CardTitle className='flex gap-2 items-center text-xl md:text-2xl'>
-							<ScanHeart />
-							Seguros e Planos de Saúde
-						</CardTitle>
-						<CardDescription>
-							Proteja o que é mais importante! Conte com vantagens exclusivas em
-							diversos Seguros e Planos de Saúdes, garantindo mais tranquilidade
-							para você e sua família
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						{isActivePlanSec?.type === 'HEALTH_PLAN' && (
-							<span className='bg-green-100 rounded-full text-green-800 font-bold px-4 py-2 w-full text-sm'>
-								Plano Ativo
-							</span>
-						)}
-					</CardContent>
-					<CardFooter className='w-full flex justify-between items-center'>
-						<Button variant={'link'}>Ver Detalhes</Button>
-						{isActivePlanSec?.type === 'HEALTH_PLAN' ? (
-							<></>
-						) : (
-							<Button>Quero Contratar</Button>
-						)}
-					</CardFooter>
-				</Card>
+			<div className=' mt-10 gap-5'>
+				<Tabs
+					defaultValue={benefits[0].id}
+					className='w-full'>
+					<TabsList className='grid w-full grid-cols-3 gap-2'>
+						{benefits.map((benefit) => (
+							<TabsTrigger
+								key={benefit.id}
+								value={benefit.id}
+								className='text-sm md:text-base'>
+								<benefit.icon className='h-4 w-4 mr-2' />
+								<span className='hidden md:inline'>{benefit.title}</span>
+							</TabsTrigger>
+						))}
+					</TabsList>
+					{benefits.map((benefit) => (
+						<TabsContent
+							key={benefit.id}
+							value={benefit.id}>
+							<Card>
+								<CardHeader>
+									<div className='flex items-center justify-between'>
+										<div className='flex items-center'>
+											<benefit.icon className='h-6 w-6 mr-2' />
+											<CardTitle>{benefit.title}</CardTitle>
+										</div>
+										{isActivePlan && isActivePlan.type == benefit.id ? (
+											<Badge>Ativo</Badge>
+										) : (
+											<Badge variant={'outline'}>Inativo</Badge>
+										)}
+									</div>
+									<CardDescription>{benefit.description}</CardDescription>
+								</CardHeader>
+								<CardContent>
+									<p className='whitespace-pre-line'>{benefit.content}</p>{' '}
+								</CardContent>
+								<CardFooter>
+									<Button>
+										<AlertCircle className='mr-2 h-4 w-4' />
+										Abrir Chamado
+									</Button>
+								</CardFooter>
+							</Card>
+						</TabsContent>
+					))}
+				</Tabs>
 			</div>
 		</div>
 	);

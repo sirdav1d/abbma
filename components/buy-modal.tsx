@@ -19,14 +19,17 @@ import { Label } from './ui/label';
 import { Input } from './ui/input';
 
 export default function BuyModal({ full = false }: { full: boolean }) {
-	const [state, setState] = useState<FormDataEntryValue | null>('');
+	const [emailState, setEmailState] = useState<FormDataEntryValue | null>('');
+	const [cpfState, setCpfState] = useState<FormDataEntryValue | null>('');
 	const [show, setShow] = useState(false);
 
 	function OnSubmit(data: FormData) {
-		const value = data.get('email');
-		setState(value);
+		const email = data.get('email');
+		const cpf = data.get('cpf');
+		setEmailState(email);
+		setCpfState(cpf);
 		setShow(true);
-		console.log(state);
+		console.log({ emailState, cpfState });
 	}
 	return (
 		<Dialog>
@@ -53,17 +56,29 @@ export default function BuyModal({ full = false }: { full: boolean }) {
 				</DialogHeader>
 				{show ? (
 					<DialogFooter className='flex justify-center items-center w-full'>
-						<BuyButton email={String(state)} />
+						<BuyButton
+							email={String(emailState)}
+							cpf={String(cpfState)}
+						/>
 					</DialogFooter>
 				) : (
 					<form
 						action={OnSubmit}
-						className='flex flex-col gap-2'>
-						<Label>E-mail</Label>
-						<Input
-							name='email'
-							type='email'
-							placeholder='email@email.com'></Input>
+						className='flex flex-col gap-3'>
+						<div className='space-y-1'>
+							<Label>E-mail</Label>
+							<Input
+								name='email'
+								type='email'
+								placeholder='email@email.com'></Input>
+						</div>
+						<div className='space-y-1'>
+							<Label>CPF</Label>
+							<Input
+								name='cpf'
+								type='text'
+								placeholder='000.000.000-00'></Input>
+						</div>
 						<Button
 							type='submit'
 							className='mt-2'>

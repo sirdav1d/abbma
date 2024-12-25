@@ -40,41 +40,44 @@ export async function POST(req: Request) {
 					const phone = session.customer_details?.phone;
 					const name = session.customer_details?.name;
 					const password = Math.random().toString(36).slice(2);
+					const cpf = session?.metadata?.cpf;
 
-					if (email && phone && name) {
+					if (email && phone && name && cpf) {
 						await createUserWithPaymentAction({
 							email,
 							phone,
 							name,
 							password: password,
+							cpf: cpf,
 						});
-						console.log('Usuário criado');
+						console.log('Usuário criado', { email, phone, name, cpf });
 						await WelcomeEmailAction({ email, name, password });
 						console.log('E-mail de bem vindo enviado');
+						const invoiceId = session.invoice as string;
+
+						if (invoiceId) {
+							const invoice = await stripe.invoices.retrieve(invoiceId);
+
+							// Obter a URL da fatura
+							const invoiceUrl = invoice.hosted_invoice_url;
+
+							if (email && invoiceUrl) {
+								console.log(`Enviando fatura para ${email}: ${invoiceUrl}`);
+								await SendInvoiceLinkAction({
+									email: email,
+									link: invoiceUrl,
+									name: name!,
+								});
+							}
+						}
 					} else {
-						console.log('Usuário não foi criado');
+						console.log('Usuário não foi criado', { email, phone, name, cpf });
+						break;
 					}
 
 					// ID do cliente no Stripe
 
 					// Recuperar informações adicionais da fatura ou pagamento
-					const invoiceId = session.invoice as string;
-
-					if (invoiceId) {
-						const invoice = await stripe.invoices.retrieve(invoiceId);
-
-						// Obter a URL da fatura
-						const invoiceUrl = invoice.hosted_invoice_url;
-
-						if (email && invoiceUrl) {
-							console.log(`Enviando fatura para ${email}: ${invoiceUrl}`);
-							await SendInvoiceLinkAction({
-								email: email,
-								link: invoiceUrl,
-								name: name!,
-							});
-						}
-					}
 				}
 
 			case 'checkout.session.expired':

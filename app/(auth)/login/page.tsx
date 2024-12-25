@@ -10,8 +10,8 @@ import MotionImage from '@/components/feature-image';
 
 export default function LoginPage() {
 	return (
-		<div className='grid min-h-svh  lg:grid-cols-2 bg-slate-200'>
-			<div className='flex flex-col gap-4 p-6 md:p-10 w-full h-full'>
+		<div className='grid min-h-screen lg:grid-cols-2 bg-slate-200'>
+			<div className='flex flex-col gap-4 p-4 w-full h-full'>
 				<div className='flex justify-center gap-2'>
 					<Link
 						href='/'
@@ -25,7 +25,7 @@ export default function LoginPage() {
 					</Link>
 				</div>
 				<div className='flex flex-1 items-center justify-center'>
-					<div className='w-full max-w-xs xl:max-w-md'>
+					<div className='w-full  xl:max-w-md'>
 						<LoginForm />
 					</div>
 				</div>

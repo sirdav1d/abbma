@@ -4,7 +4,7 @@ import stripe from '@/lib/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-	const { email } = await req.json();
+	const { email, cpf } = await req.json();
 
 	const price = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
 
@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
 				cancel_url: `${req.headers.get('origin')}/`,
 				metadata: {
 					email,
+					cpf,
 				},
 				phone_number_collection: { enabled: true },
 			});

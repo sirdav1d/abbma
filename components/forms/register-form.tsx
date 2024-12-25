@@ -217,7 +217,7 @@ export default function RegisterForm() {
 								form.getValues('terms') == false
 							}
 							type='submit'
-							className='w-full disabled:opacity-80'>
+							className='w-full disabled:opacity-50'>
 							{form.formState.isLoading || form.formState.isSubmitting ? (
 								<>
 									Cadastrar <Loader2 className='animae-spin' />

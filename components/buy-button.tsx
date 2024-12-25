@@ -8,11 +8,17 @@ import { Button } from './ui/button';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-export default function BuyButton({ email }: { email: string }) {
+export default function BuyButton({
+	email,
+	cpf,
+}: {
+	email: string;
+	cpf: string;
+}) {
 	const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
 
 	const router = useRouter();
-	async function handleClick(email: string) {
+	async function handleClick(email: string, cpf: string) {
 		try {
 			setIsCreatingCheckout(true);
 			const checkoutResponse = await fetch('/api/create-checkout', {
@@ -20,7 +26,7 @@ export default function BuyButton({ email }: { email: string }) {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ email }),
+				body: JSON.stringify({ email, cpf }),
 			});
 
 			const stripeClient = await loadStripe(
@@ -48,7 +54,7 @@ export default function BuyButton({ email }: { email: string }) {
 			size={'lg'}
 			disabled={isCreatingCheckout}
 			className={`px-4 py-2 disabled:opacity-50 z-20 bg-red-700  w-full hover:bg-red-600 font-semibold text-lg text-slate-50`}
-			onClick={() => handleClick(email)}>
+			onClick={() => handleClick(email, cpf)}>
 			{isCreatingCheckout ? (
 				<>
 					Assinar <Loader2 className='animate-spin' />

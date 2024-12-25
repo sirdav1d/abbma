@@ -15,42 +15,44 @@ datasource db {
 }
 
 model User {
-  id         String      @id @default(cuid())
-  email      String      @unique
-  name       String
-  password   String      @default(cuid())
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  tickets    Ticket[]
-  role       Role        @default(CLIENT)
-  is_militar Boolean?
-  occupation String?
-  cpf        String?
-  date_birth DateTime?
-  cep        String?
-  address    String?
-  city       String?
-  state      String?
-  phone      String?
-  Dependent  Dependent[]
+  id           String      @id @default(cuid())
+  email        String      @unique
+  name         String
+  password     String      @default(cuid())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  tickets      Ticket[]
+  role         Role        @default(CLIENT)
+  is_militar   Boolean?
+  occupation   String?
+  cpf          String?
+  date_birth   String?
+  cep          String?
+  neighborhood String?
+  address      String?
+  city         String?
+  state        String?
+  phone        String?
+  Dependent    Dependent[]
 }
 
 model Dependent {
-  id         String    @id @default(cuid())
-  name       String
-  email      String? // Opcional, caso o dependente não tenha e-mail
-  userId     String
-  user       User      @relation(fields: [userId], references: [id]) // Relacionamento com o usuário principal
-  cpf        String?
-  date_birth DateTime?
-  degree     String
-  cep        String?
-  address    String?
-  city       String?
-  state      String?
-  phone      String?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  email        String? // Opcional, caso o dependente não tenha e-mail
+  userId       String
+  user         User     @relation(fields: [userId], references: [id]) // Relacionamento com o usuário principal
+  cpf          String?
+  date_birth   String?
+  degree       String
+  cep          String?
+  neighborhood String?
+  address      String?
+  city         String?
+  state        String?
+  phone        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Ticket {
