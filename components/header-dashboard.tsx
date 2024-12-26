@@ -23,7 +23,7 @@ export default function HeaderDash() {
 	const pathname = usePathname();
 	const title = routeTitles[pathname] || 'Dashboard';
 	return (
-		<div className=' w-full max-w-7xl mx-auto flex flex-col gap-5 items-center px-4 xl:px-0 '>
+		<div className=' w-full max-w-7xl mx-auto flex flex-col gap-5 items-center px-4 2xl:px-0 '>
 			<div className='w-fit md:w-full mt-5 flex items-center gap-3 justify-center mx-auto '>
 				<Image
 					src={logo}

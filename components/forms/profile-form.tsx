@@ -2,12 +2,6 @@
 
 'use client';
 
-import React from 'react';
-
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	Form,
 	FormControl,
@@ -19,23 +13,29 @@ import {
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import * as z from 'zod';
 
+import { updateUserAction } from '@/actions/user/update-user';
+import { Button } from '@/components/ui/button';
+import { User } from '@prisma/client';
 import {
+	ArrowRight,
 	Briefcase,
 	CalendarIcon,
 	CreditCard,
+	Loader2,
+	Lock,
 	Mail,
 	MapPin,
 	Phone,
-	UserIcon,
-	Lock,
 	Shield,
-	Loader2,
-	ArrowRight,
+	UserIcon,
+	UserRoundIcon,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { User } from '@prisma/client';
-import { updateUserAction } from '@/actions/user/update-user';
+import { Card, CardContent } from '../ui/card';
 
 const profileFormSchema = z
 	.object({
@@ -184,361 +184,381 @@ export default function ProfileForm({ user }: { user: Partial<User> }) {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='space-y-8'>
+				className='space-y-4'>
 				<Tabs
 					defaultValue='personal'
 					className='w-full'>
-					<TabsList className='grid w-full grid-cols-4'>
+					<TabsList className='grid w-full grid-cols-4 mb-2'>
 						<TabsTrigger
 							value='personal'
 							className='flex gap-3'>
-							<UserIcon size={16} />
+							<UserRoundIcon
+								size={20}
+								className='w-6 h-6 md:w-5 md:h-5'
+							/>
 							<span className='hidden md:inline'>Pessoal</span>
 						</TabsTrigger>
 						<TabsTrigger
 							value='address'
 							className='flex gap-3'>
-							<MapPin size={16} />
+							<MapPin
+								size={20}
+								className='w-6 h-6 md:w-5 md:h-5'
+							/>
 							<span className='hidden md:inline'>Endereço</span>
 						</TabsTrigger>
 						<TabsTrigger
 							value='professional'
 							className='flex gap-3'>
-							<Briefcase size={16} />
+							<Briefcase
+								size={20}
+								className='w-6 h-6 md:w-5 md:h-5'
+							/>
 							<span className='hidden md:inline'>Profissional</span>
 						</TabsTrigger>
 						<TabsTrigger
 							value='security'
 							className='flex gap-3'>
-							<Shield size={16} />
+							<Shield
+								size={20}
+								className='w-6 h-6 md:w-5 md:h-5'
+							/>
 							<span className='hidden md:inline'>Segurança</span>
 						</TabsTrigger>
 					</TabsList>
-					<TabsContent
-						value='personal'
-						className='space-y-4'>
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-							<FormField
-								control={form.control}
-								name='name'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Nome Completo</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<UserIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													placeholder='Seu nome completo'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='email'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>E-mail</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<Mail className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													disabled
-													placeholder='seu@email.com'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='phone'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Telefone</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<Phone className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													placeholder='(00) 00000-0000'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='cpf'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>CPF</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<CreditCard className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													disabled
-													placeholder='000.000.000-00'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='date_birth'
-								render={({ field }) => (
-									<FormItem className='flex flex-col'>
-										<FormLabel>Data de Nascimento</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<CalendarIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													type='date'
-													className='pl-8 w-full'
-													{...field}
-												/>
-											</div>
-										</FormControl>
+					<Card>
+						<CardContent>
+							<TabsContent
+								value='personal'
+								className='space-y-4'>
+								<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+									<FormField
+										control={form.control}
+										name='name'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Nome Completo</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<UserIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															placeholder='Seu nome completo'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='email'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>E-mail</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<Mail className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															disabled
+															placeholder='seu@email.com'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='phone'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Telefone</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<Phone className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															placeholder='(00) 00000-0000'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='cpf'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>CPF</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<CreditCard className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															disabled
+															placeholder='000.000.000-00'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='date_birth'
+										render={({ field }) => (
+											<FormItem className='flex flex-col'>
+												<FormLabel>Data de Nascimento</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<CalendarIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															type='date'
+															className='pl-8 w-full'
+															{...field}
+														/>
+													</div>
+												</FormControl>
 
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-					</TabsContent>
-					<TabsContent
-						value='address'
-						className='space-y-4'>
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-							<FormField
-								control={form.control}
-								name='address'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Endereço</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<MapPin className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													placeholder='Rua, número, complemento'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='neighborhood'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Bairro</FormLabel>
-										<FormControl>
-											<Input
-												placeholder='Seu bairro'
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='city'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Cidade</FormLabel>
-										<FormControl>
-											<Input
-												placeholder='Sua cidade'
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='state'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Estado</FormLabel>
-										<FormControl>
-											<Input
-												placeholder='UF'
-												maxLength={2}
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='cep'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>CEP</FormLabel>
-										<FormControl>
-											<Input
-												type='text'
-												placeholder='00000-000'
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-					</TabsContent>
-					<TabsContent
-						value='professional'
-						className='space-y-4'>
-						<FormField
-							control={form.control}
-							name='is_militar'
-							render={({ field }) => (
-								<FormItem className='space-y-3'>
-									<FormLabel>Tipo de Usuário</FormLabel>
-									<FormControl>
-										<RadioGroup
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-											className='flex flex-col space-y-1'>
-											<FormItem className='flex items-center space-x-3 space-y-0'>
-												<FormControl>
-													<RadioGroupItem value='military' />
-												</FormControl>
-												<FormLabel className='font-normal'>Militar</FormLabel>
+												<FormMessage />
 											</FormItem>
-											<FormItem className='flex items-center space-x-3 space-y-0'>
+										)}
+									/>
+								</div>
+							</TabsContent>
+							<TabsContent
+								value='address'
+								className='space-y-4'>
+								<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+									<FormField
+										control={form.control}
+										name='address'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Endereço</FormLabel>
 												<FormControl>
-													<RadioGroupItem value='autonomous' />
+													<div className='relative'>
+														<MapPin className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															placeholder='Rua, número, complemento'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
 												</FormControl>
-												<FormLabel className='font-normal'>Autônomo</FormLabel>
+												<FormMessage />
 											</FormItem>
-										</RadioGroup>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						{form.watch('is_militar') === 'autonomous' && (
-							<FormField
-								control={form.control}
-								name='occupation'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Profissão</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<Briefcase className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													placeholder='Sua profissão'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='neighborhood'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Bairro</FormLabel>
+												<FormControl>
+													<Input
+														placeholder='Seu bairro'
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='city'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Cidade</FormLabel>
+												<FormControl>
+													<Input
+														placeholder='Sua cidade'
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='state'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Estado</FormLabel>
+												<FormControl>
+													<Input
+														placeholder='UF'
+														maxLength={2}
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='cep'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>CEP</FormLabel>
+												<FormControl>
+													<Input
+														type='text'
+														placeholder='00000-000'
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+							</TabsContent>
+							<TabsContent
+								value='professional'
+								className='space-y-4'>
+								<FormField
+									control={form.control}
+									name='is_militar'
+									render={({ field }) => (
+										<FormItem className='space-y-3'>
+											<FormLabel>Tipo de Usuário</FormLabel>
+											<FormControl>
+												<RadioGroup
+													onValueChange={field.onChange}
+													defaultValue={field.value}
+													className='flex flex-col space-y-1'>
+													<FormItem className='flex items-center space-x-3 space-y-0'>
+														<FormControl>
+															<RadioGroupItem value='military' />
+														</FormControl>
+														<FormLabel className='font-normal'>
+															Militar
+														</FormLabel>
+													</FormItem>
+													<FormItem className='flex items-center space-x-3 space-y-0'>
+														<FormControl>
+															<RadioGroupItem value='autonomous' />
+														</FormControl>
+														<FormLabel className='font-normal'>
+															Autônomo
+														</FormLabel>
+													</FormItem>
+												</RadioGroup>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								{form.watch('is_militar') === 'autonomous' && (
+									<FormField
+										control={form.control}
+										name='occupation'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Profissão</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<Briefcase className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															placeholder='Sua profissão'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
 								)}
-							/>
-						)}
-					</TabsContent>
-					<TabsContent
-						value='security'
-						className='space-y-4'>
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-							<FormField
-								control={form.control}
-								name='currentPassword'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Senha Atual</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<Lock className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													type='password'
-													placeholder='Sua senha atual'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='password'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Nova Senha</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<Lock className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													type='password'
-													placeholder='Nova senha'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name='confirmNewPassword'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Confirmar Nova Senha</FormLabel>
-										<FormControl>
-											<div className='relative'>
-												<Lock className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-												<Input
-													type='password'
-													placeholder='Confirme a nova senha'
-													className='pl-8'
-													{...field}
-												/>
-											</div>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</div>
-					</TabsContent>
+							</TabsContent>
+							<TabsContent
+								value='security'
+								className='space-y-4'>
+								<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+									<FormField
+										control={form.control}
+										name='currentPassword'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Senha Atual</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<Lock className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															type='password'
+															placeholder='Sua senha atual'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='password'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Nova Senha</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<Lock className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															type='password'
+															placeholder='Nova senha'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name='confirmNewPassword'
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Confirmar Nova Senha</FormLabel>
+												<FormControl>
+													<div className='relative'>
+														<Lock className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+														<Input
+															type='password'
+															placeholder='Confirme a nova senha'
+															className='pl-8'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+							</TabsContent>{' '}
+						</CardContent>
+					</Card>
 				</Tabs>
 				<Button
 					type='submit'

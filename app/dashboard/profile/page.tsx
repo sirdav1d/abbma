@@ -2,7 +2,6 @@
 
 import { getUserAction } from '@/actions/user/get-user';
 import ProfileForm from '@/components/forms/profile-form';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 import { getServerSession } from 'next-auth';
 
@@ -12,16 +11,13 @@ export default async function ProfilePage() {
 	const user = email && (await getUserAction(email));
 
 	return (
-		<div className='max-w-7xl mx-auto px-4 py-5 w-full xl:px-0'>
+		<div className='max-w-7xl mx-auto px-4 py-5 w-full 2xl:px-0'>
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 				Gerencie seus dados
 			</h2>
-			<Card className='w-full mx-auto mt-10'>
-				<CardHeader></CardHeader>
-				<CardContent>
-					{session?.user && user && <ProfileForm user={user.user!} />}
-				</CardContent>
-			</Card>
+			<div className='mt-10'>
+				{session?.user && user && <ProfileForm user={user.user!} />}
+			</div>
 		</div>
 	);
 }

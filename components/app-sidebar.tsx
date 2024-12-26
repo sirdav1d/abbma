@@ -87,10 +87,12 @@ export async function AppSidebar() {
 							</SidebarMenuItem>
 							{items.map((item) => (
 								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
+									<SidebarMenuButton
+										asChild
+										className='mt-2 '>
 										<Link href={item.url}>
 											<item.icon />
-											<span>{item.title}</span>
+											<span className='text-base xl:text-sm'>{item.title}</span>
 										</Link>
 									</SidebarMenuButton>
 								</SidebarMenuItem>

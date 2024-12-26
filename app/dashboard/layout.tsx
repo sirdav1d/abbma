@@ -24,7 +24,7 @@ export default async function DashLayout({
 				<AppSidebar />
 
 				<div className='w-full'>
-					<SidebarTrigger className='mt-2 scale-110 ml-2' />
+					<SidebarTrigger className='mt-2.5 scale-150 ml-2.5' />
 					<HeaderDash />
 					{children}
 				</div>

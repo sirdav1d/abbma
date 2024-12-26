@@ -31,7 +31,7 @@ export default async function DashboardPage() {
 	});
 
 	return (
-		<div className='mx-auto w-full max-w-7xl px-4 xl:px-0  py-5'>
+		<div className='mx-auto w-full max-w-7xl px-4 2xl:px-0  py-5'>
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 				Descubra tudo o que a ABBMA pode te oferecer
 			</h2>
@@ -45,7 +45,7 @@ export default async function DashboardPage() {
 								key={benefit.id}
 								value={benefit.id}
 								className='text-sm md:text-base'>
-								<benefit.icon className='h-4 w-4 mr-2' />
+								<benefit.icon className='h-6 w-6 mr-2' />
 								<span className='hidden md:inline'>{benefit.title}</span>
 							</TabsTrigger>
 						))}
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
 											<CardTitle>{benefit.title}</CardTitle>
 										</div>
 										{isActivePlan && isActivePlan.type == benefit.id ? (
-											<Badge>Ativo</Badge>
+											<Badge className='scale-125'>Ativo</Badge>
 										) : (
 											<Badge variant={'outline'}>Inativo</Badge>
 										)}
