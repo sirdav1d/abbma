@@ -31,7 +31,10 @@ export default function HeaderDash() {
 					width={400}
 					height={400}
 					className='xl:w-20 w-12 object-contain'></Image>
-				<h2 className='font-bold text-3xl xl:text-5xl w-full'> {title}</h2>
+				<h2 className='font-bold text-3xl xl:text-4xl 2xl:text-5xl w-full'>
+					{' '}
+					{title}
+				</h2>
 				<div className='hidden md:flex'>
 					<SignOutBtn />
 				</div>

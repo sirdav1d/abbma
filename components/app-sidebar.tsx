@@ -1,5 +1,6 @@
 /** @format */
 
+import { getUserAction } from '@/actions/user/get-user';
 import {
 	Sidebar,
 	SidebarContent,
@@ -12,19 +13,10 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import {
-	ChevronUp,
-	CircleHelp,
-	CircleUserRound,
-	Home,
-	Inbox,
-	UsersRound,
-	User2,
-	UserRoundCog,
-	Wallet,
-} from 'lucide-react';
+import { ChevronUp, CircleUserRound, User2, UserRoundCog } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
+import { MySidebarMenu } from './my-sidebar-menu';
 import SignOutBtn from './sign-out';
 import {
 	DropdownMenu,
@@ -32,38 +24,10 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { getUserAction } from '@/actions/user/get-user';
 
 export async function AppSidebar() {
 	const session = await getServerSession();
 	const user = session && (await getUserAction(session.user.email));
-	const items = [
-		{
-			title: 'Home',
-			url: '/dashboard',
-			icon: Home,
-		},
-		{
-			title: 'Meus Benefícios',
-			url: '/dashboard/benefits',
-			icon: Inbox,
-		},
-		{
-			title: 'Dependentes',
-			url: '/dashboard/dependents',
-			icon: UsersRound,
-		},
-		{
-			title: 'Planos e Pagamentos',
-			url: '/dashboard/billing',
-			icon: Wallet,
-		},
-		{
-			title: 'Ajuda e Suporte',
-			url: '/dashboard/help',
-			icon: CircleHelp,
-		},
-	];
 
 	return (
 		<Sidebar collapsible='icon'>
@@ -85,18 +49,7 @@ export async function AppSidebar() {
 									</SidebarMenuButton>
 								)}
 							</SidebarMenuItem>
-							{items.map((item) => (
-								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton
-										asChild
-										className='mt-2 '>
-										<Link href={item.url}>
-											<item.icon />
-											<span className='text-base xl:text-sm'>{item.title}</span>
-										</Link>
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
+							<MySidebarMenu />
 						</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup>
@@ -115,14 +68,13 @@ export async function AppSidebar() {
 								side='top'
 								className='w-[--radix-popper-anchor-width] space-y-2'>
 								<DropdownMenuItem
-									className='cursor-pointer w-full flex items-center justify-center h-10 px-4 py-2'
+									className='cursor-pointer w-full flex items-center justify-center h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
 									asChild>
 									<Link href={'/dashboard/profile'}>
 										<CircleUserRound />
 										Perfil
 									</Link>
 								</DropdownMenuItem>
-
 								<DropdownMenuItem asChild>
 									<SignOutBtn />
 								</DropdownMenuItem>

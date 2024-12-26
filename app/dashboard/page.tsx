@@ -57,12 +57,12 @@ export default async function DashboardPage() {
 							<Card>
 								<CardHeader>
 									<div className='flex items-center justify-between'>
-										<div className='flex items-center'>
+										<div className='flex md:items-center flex-col gap-2 md:flex-row'>
 											<benefit.icon className='h-6 w-6 mr-2' />
 											<CardTitle>{benefit.title}</CardTitle>
 										</div>
 										{isActivePlan && isActivePlan.type == benefit.id ? (
-											<Badge className='scale-125'>Ativo</Badge>
+											<Badge className='scale-110'>Ativo</Badge>
 										) : (
 											<Badge variant={'outline'}>Inativo</Badge>
 										)}
@@ -73,7 +73,7 @@ export default async function DashboardPage() {
 									<p className='whitespace-pre-line'>{benefit.content}</p>{' '}
 								</CardContent>
 								<CardFooter>
-									<Button>
+									<Button className='w-full md:w-fit'>
 										<AlertCircle className='mr-2 h-4 w-4' />
 										Abrir Chamado
 									</Button>
