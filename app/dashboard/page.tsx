@@ -12,7 +12,8 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AlertCircle } from 'lucide-react';
+import { ArrowRight, CircleCheckBig } from 'lucide-react';
+import Link from 'next/link';
 import { benefits } from './_constants/benefits';
 
 export default async function DashboardPage() {
@@ -67,16 +68,39 @@ export default async function DashboardPage() {
 											<Badge variant={'outline'}>Inativo</Badge>
 										)}
 									</div>
-									<CardDescription>{benefit.description}</CardDescription>
+									<CardDescription className='text-balance'>
+										{benefit.content}
+									</CardDescription>
 								</CardHeader>
-								<CardContent>
-									<p className='whitespace-pre-line'>{benefit.content}</p>{' '}
+								<CardContent className='flex flex-col gap-8'>
+									<ul className='grid grid-cols-1 md:grid-cols-3  justify-between gap-4 w-full '>
+										{benefit?.item_benefits?.map((item, index) => {
+											return (
+												<li
+													key={index}
+													className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+													<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+													<span className=' text-sm w-full'>{item}</span>
+												</li>
+											);
+										})}
+									</ul>
 								</CardContent>
-								<CardFooter>
-									<Button className='w-full md:w-fit'>
-										<AlertCircle className='mr-2 h-4 w-4' />
-										Abrir Chamado
-									</Button>
+								<CardFooter className='flex items-center gap-5 w-full justify-between'>
+									{isActivePlan && isActivePlan.type == benefit.id ? (
+										<Button
+											variant={'link'}
+											className='w-full md:w-fit'
+											asChild>
+											<Link href={'/dashboard/benefits'}>
+												Verificar meu benefício
+											</Link>
+										</Button>
+									) : (
+										<Button className='w-full md:w-fit'>
+											Ativar benefício Agora <ArrowRight className='h-4 w-4' />
+										</Button>
+									)}
 								</CardFooter>
 							</Card>
 						</TabsContent>

@@ -5,11 +5,69 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight, Mail } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '../ui/form';
+import sendSupportEmailAction from '@/actions/email/sac';
+
+const formSchema = z.object({
+	name: z.string().min(2, {
+		message: 'O nome deve ter pelo menos 2 caracteres.',
+	}),
+	email: z.string().email({
+		message: 'Por favor, insira um endereço de e-mail válido.',
+	}),
+	subject: z.string().min(5, {
+		message: 'O assunto deve ter pelo menos 5 caracteres.',
+	}),
+	message: z.string().min(10, {
+		message: 'A mensagem deve ter pelo menos 10 caracteres.',
+	}),
+});
 
 export default function SupportForm() {
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			name: '',
+			email: '',
+			subject: '',
+			message: '',
+		},
+	});
+
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const { name, email, subject, message } = values;
+		const result = await sendSupportEmailAction({
+			name,
+			email,
+			subject,
+			message,
+		});
+
+		if (result?.success) {
+			toast.success('Mensagem enviada', {
+				description: `${result?.message}`,
+			});
+			form.reset();
+		} else {
+			toast.error('Erro ao enviar', {
+				description: result.message,
+			});
+		}
+	}
+
 	return (
 		<Card>
 			<CardHeader>
@@ -19,42 +77,91 @@ export default function SupportForm() {
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<form className='space-y-4'>
-					<div className='space-y-1'>
-						<Label htmlFor='name'>Nome</Label>
-						<Input
-							id='name'
-							placeholder='Seu nome'
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className='space-y-4'>
+						<FormField
+							control={form.control}
+							name='name'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Nome</FormLabel>
+									<FormControl>
+										<Input
+											placeholder='Seu nome'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
-					<div className='space-y-1'>
-						<Label htmlFor='email'>E-mail</Label>
-						<Input
-							id='email'
-							type='email'
-							placeholder='seu@email.com'
+
+						<FormField
+							control={form.control}
+							name='email'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>E-mail</FormLabel>
+									<FormControl>
+										<Input
+											type='email'
+											placeholder='email@email.com'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
-					<div className='space-y-1'>
-						<Label htmlFor='subject'>Assunto</Label>
-						<Input
-							id='subject'
-							placeholder='Assunto da mensagem'
+
+						<FormField
+							control={form.control}
+							name='subject'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Assunto</FormLabel>
+									<FormControl>
+										<Input
+											placeholder='Assunto da mensagem'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
-					<div className='space-y-1'>
-						<Label htmlFor='message'>Mensagem</Label>
-						<Textarea
-							id='message'
-							placeholder='Digite sua mensagem aqui'
+
+						<FormField
+							control={form.control}
+							name='message'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Mensagem</FormLabel>
+									<FormControl>
+										<Textarea
+											placeholder='Digite sua mensagem aqui'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
-					</div>
-					<Button
-						type='submit'
-						className='w-full'>
-						Enviar Mensagem <ArrowRight />
-					</Button>
-				</form>
+
+						<Button
+							disabled={
+								form.formState.isLoading ||
+								form.formState.isSubmitting ||
+								!form.formState.isValid
+							}
+							type='submit'
+							className='w-full disabled:opacity-50'>
+							Enviar Mensagem <ArrowRight />
+						</Button>
+					</form>
+				</Form>
 			</CardContent>
 		</Card>
 	);

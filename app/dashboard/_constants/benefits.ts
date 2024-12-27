@@ -1,4 +1,7 @@
-import { Gift, ScanHeart, Stethoscope } from "lucide-react";
+/** @format */
+
+import { associate } from '@/constants/associate';
+import { Gift, ScanHeart, Stethoscope } from 'lucide-react';
 
 export const benefits = [
 	{
@@ -6,15 +9,8 @@ export const benefits = [
 		title: 'Clube de Vantagens',
 		description: 'Acesse descontos exclusivos em diversas lojas parceiras.',
 		icon: Gift,
-		content: `Nosso Clube de Vantagens é uma plataforma exclusiva que oferece uma ampla gama de descontos e ofertas especiais em diversos estabelecimentos parceiros. Como membro, você terá acesso a:
-
-    • Descontos em restaurantes, cinemas, teatros e eventos culturais
-    • Ofertas especiais em lojas de roupas, eletrônicos e acessórios
-    • Preços reduzidos em academias, spas e centros de bem-estar
-    • Vantagens exclusivas em viagens, hotéis e pacotes turísticos
-    • Descontos em cursos, livrarias e material escolar
-
-    Navegue pela nossa plataforma online ou use nosso aplicativo móvel para descobrir as melhores ofertas perto de você. Economize em suas compras diárias e aproveite experiências únicas com o Clube de Vantagens.`,
+		content: `Nosso Clube de Vantagens é uma plataforma exclusiva que oferece uma ampla gama de descontos e ofertas especiais em diversos estabelecimentos parceiros. Como membro, você terá acesso a:`,
+		item_benefits: associate,
 	},
 	{
 		id: 'TELEMEDICINE',

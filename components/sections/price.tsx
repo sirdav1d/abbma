@@ -11,19 +11,9 @@ import {
 	CardTitle,
 } from '../ui/card';
 import { FadeText } from '../ui/fade-text';
+import { associate } from '@/constants/associate';
 
 export default function Price() {
-	const associado = [
-		'Desconto de até 60% em medicamentos em diversas farmácias',
-		'Desconto de até 30% em diversos restaurantes em Delivery',
-		'Desconto em produtos para  PET ',
-		'Descontos em diversas Lojas',
-		'Descontos em diversos seguros',
-		'Descontos em telemedicina',
-		'Descontos em Planos de Saúde',
-		'Desconto de até 60% em cinema, teatro e shows',
-		'Acesso a diversos cursos',
-	];
 	return (
 		<div
 			id='price'
@@ -59,7 +49,7 @@ export default function Price() {
 						</CardHeader>
 						<CardContent>
 							<ul className='grid grid-cols-1 md:grid-cols-2  gap-3 w-full '>
-								{associado.map((item, index) => {
+								{associate.map((item, index) => {
 									return (
 										<li
 											key={index}
