@@ -14,7 +14,7 @@ interface BtnRevealProps {
 export default function BtnReveal(props: BtnRevealProps) {
 	const [show, setShow] = useState(false);
 	return (
-		<div className='flex items-center gap-5'>
+		<div className='flex items-center gap-5 flex-col md:flex-row'>
 			<Button
 				variant={'outline'}
 				onClick={() => setShow(!show)}>
