@@ -1,0 +1,39 @@
+/** @format */
+
+'use client';
+import { Button } from '@/components/ui/button';
+import { Eye, EyeOff } from 'lucide-react';
+import React from 'react';
+import { useState } from 'react';
+
+interface BtnRevealProps {
+	email: string;
+	password: string;
+}
+
+export default function BtnReveal(props: BtnRevealProps) {
+	const [show, setShow] = useState(false);
+	return (
+		<div className='flex items-center gap-5'>
+			<Button
+				variant={'outline'}
+				onClick={() => setShow(!show)}>
+				{show ? (
+					<>
+						Esconder Credenciais <EyeOff />
+					</>
+				) : (
+					<>
+						{' '}
+						Revelar Credenciais <Eye />
+					</>
+				)}
+			</Button>
+
+			<div className='flex flex-col gap-2 text-muted-foreground text-sm'>
+				<p>E-mail: {show ? props.email : ' ********'}</p>
+				<p>Senha: {show ? props.password : ' ********'}</p>
+			</div>
+		</div>
+	);
+}

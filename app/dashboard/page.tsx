@@ -12,9 +12,12 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowRight, CircleCheckBig } from 'lucide-react';
+import { ArrowRight, CircleCheckBig, CircleSlash2 } from 'lucide-react';
 import Link from 'next/link';
 import { benefits } from './_constants/benefits';
+import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
+import { BorderTrail } from '@/components/ui/border-trail';
+import { Separator } from '@/components/ui/separator';
 
 export default async function DashboardPage() {
 	const tickets = await GetAllTicketsAction();
@@ -94,15 +97,135 @@ export default async function DashboardPage() {
 											asChild>
 											<Link href={'/dashboard/benefits'}>
 												Verificar meu benefício
+												<ArrowRight className='h-4 w-4' />
 											</Link>
 										</Button>
 									) : (
-										<Button className='w-full md:w-fit'>
-											Ativar benefício Agora <ArrowRight className='h-4 w-4' />
+										<Button
+											variant={'link'}
+											className='w-full md:w-fit'
+											asChild>
+											<Link
+												href={`https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda%20com%20${benefit.title}`}
+												target='_blank'
+												rel='noopener noreferrer'>
+												Falar Com Consultor <ArrowRight className='h-4 w-4' />
+											</Link>
 										</Button>
 									)}
 								</CardFooter>
 							</Card>
+
+							<Separator className='my-4' />
+
+							{benefit.id == 'TELEMEDICINE' && (
+								<div className='grid grid-cols-1 md:grid-cols-3 w-full mt-5 gap-5'>
+									<Card>
+										<CardHeader>
+											<CardTitle className='font-bold text-xl'>
+												R$24,99
+											</CardTitle>
+											<CardDescription>
+												PLANO INDIVIDUAL + CLUBE DE VANTAGENS
+											</CardDescription>
+										</CardHeader>
+										<CardContent>
+											<ul className='space-y-3'>
+												{teleIndividual.habiltado.map((item, index) => {
+													return (
+														<li
+															key={index}
+															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+															<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+															<span className=' text-sm w-full'>{item}</span>
+														</li>
+													);
+												})}
+												{teleIndividual.inabilitado.map((item, index) => {
+													return (
+														<li
+															key={index}
+															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+															<CircleSlash2 className='text-red-500 w-5 h-5 size-full' />
+															<span className=' text-sm w-full'>{item}</span>
+														</li>
+													);
+												})}
+											</ul>
+										</CardContent>
+										<CardFooter>
+											<Button className='w-full'>
+												Contratar Plano <ArrowRight />
+											</Button>
+										</CardFooter>
+									</Card>
+									<Card className='relative'>
+										<BorderTrail
+											style={{
+												boxShadow:
+													'0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(0 0 0 / 50%), 0 0 140px 90px rgb(59 130 246 / 50%)',
+											}}
+											size={100}
+										/>
+										<CardHeader>
+											<CardTitle className='font-bold text-xl'>
+												R$44,99
+											</CardTitle>
+											<CardDescription>
+												PLANO CASAL + CLUBE DE VANTAGENS
+											</CardDescription>
+										</CardHeader>
+										<CardContent>
+											<ul className='space-y-3'>
+												{teleCouple.habiltado.map((item, index) => {
+													return (
+														<li
+															key={index}
+															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+															<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+															<span className=' text-sm w-full'>{item}</span>
+														</li>
+													);
+												})}
+											</ul>
+										</CardContent>
+										<CardFooter>
+											<Button className='w-full'>
+												Contratar Plano <ArrowRight />
+											</Button>
+										</CardFooter>
+									</Card>
+									<Card>
+										<CardHeader>
+											<CardTitle className='font-bold text-xl'>
+												R$79,99
+											</CardTitle>
+											<CardDescription>
+												PLANO FAMÍLIA + CLUBE DE VANTAGENS
+											</CardDescription>
+										</CardHeader>
+										<CardContent>
+											<ul className='space-y-3'>
+												{teleFamily.habiltado.map((item, index) => {
+													return (
+														<li
+															key={index}
+															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+															<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+															<span className=' text-sm w-full'>{item}</span>
+														</li>
+													);
+												})}
+											</ul>
+										</CardContent>
+										<CardFooter>
+											<Button className='w-full'>
+												Contratar Plano <ArrowRight />
+											</Button>
+										</CardFooter>
+									</Card>
+								</div>
+							)}
 						</TabsContent>
 					))}
 				</Tabs>
