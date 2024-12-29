@@ -12,8 +12,10 @@ import {
 } from '../ui/card';
 import { FadeText } from '../ui/fade-text';
 import { associate } from '@/constants/associate';
+import { getServerSession } from 'next-auth';
 
-export default function Price() {
+export default async function Price() {
+	const session = await getServerSession();
 	return (
 		<div
 			id='price'
@@ -61,9 +63,11 @@ export default function Price() {
 								})}
 							</ul>
 						</CardContent>
-						<CardFooter className='w-full flex items-center justify-center'>
-							<BuyModal full={true} />
-						</CardFooter>
+						{!session?.user && (
+							<CardFooter className='w-full flex items-center justify-center'>
+								<BuyModal full={true} />
+							</CardFooter>
+						)}
 					</Card>
 				</div>
 			</div>

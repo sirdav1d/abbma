@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 	title: 'ABBMA',
 	description:
 		'Associação Brasileira de Benefícios para Militares e Autônomos, nosso compromisso é proporcionar aos seus associados e dependentes, acesso a uma ampla gama de benefícios, através de parcerias privadas, que visam facilitar o bem-estar, educação e saúde ',
-	icons: ['/abbma-favicon.png'],
+	icons: ['/logo-principal.png'],
 };
 
 export default function RootLayout({

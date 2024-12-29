@@ -1,7 +1,10 @@
 /** @format */
 
+import logo from '@/assets/logo-principal.png';
+import wppLogo from '@/assets/whatsapp-logo.png';
 import DektopHeader from '@/components/desktop-header';
 import Footer from '@/components/footer';
+import MobileHeader from '@/components/mobile-header';
 import About from '@/components/sections/about';
 import CTA from '@/components/sections/cta';
 import Faq from '@/components/sections/faq';
@@ -9,15 +12,9 @@ import Features from '@/components/sections/features';
 import Hero from '@/components/sections/hero';
 import Price from '@/components/sections/price';
 import Image from 'next/image';
-import wppLogo from '@/assets/whatsapp-logo.png';
-import MobileHeader from '@/components/mobile-header';
 import Link from 'next/link';
-import logo from '@/assets/logo-principal.png';
-import { getServerSession } from 'next-auth';
 
 export default async function Home() {
-	const session = await getServerSession();
-
 	return (
 		<main className='bg-slate-100 overflow-x-hidden '>
 			<div className='relative w-full h-full'>
@@ -46,7 +43,7 @@ export default async function Home() {
 				<Hero />
 				<About />
 				<Features />
-				{session?.user ? <></> : <Price />}
+				<Price />
 				<Faq />
 				<CTA />
 				<Footer />

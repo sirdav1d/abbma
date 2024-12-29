@@ -107,7 +107,7 @@ export default async function DashboardPage() {
 										<div className='flex'>
 											{session?.user && benefit.id === 'CLUB_VANTAGES' && (
 												<BuyButton
-													priceType='tele_individual'
+													priceType='associate'
 													size='default'
 													email={session?.user?.email}
 													cpf={String(session?.user?.cpf)}
@@ -168,9 +168,12 @@ export default async function DashboardPage() {
 											</ul>
 										</CardContent>
 										<CardFooter>
-											<Button className='w-full'>
-												Contratar Plano <ArrowRight />
-											</Button>
+											<BuyButton
+												size='default'
+												email={String(session?.user?.email)}
+												cpf={String(session?.user?.cpf)}
+												priceType={'tele_individual'}
+											/>
 										</CardFooter>
 									</Card>
 									<Card className='relative border-none'>
@@ -204,9 +207,12 @@ export default async function DashboardPage() {
 											</ul>
 										</CardContent>
 										<CardFooter>
-											<Button className='w-full'>
-												Contratar Plano <ArrowRight />
-											</Button>
+											<BuyButton
+												size='default'
+												email={String(session?.user?.email)}
+												cpf={String(session?.user?.cpf)}
+												priceType={'tele_couple'}
+											/>
 										</CardFooter>
 									</Card>
 									<Card>
@@ -233,9 +239,12 @@ export default async function DashboardPage() {
 											</ul>
 										</CardContent>
 										<CardFooter>
-											<Button className='w-full'>
-												Contratar Plano <ArrowRight />
-											</Button>
+											<BuyButton
+												size='default'
+												email={String(session?.user?.email)}
+												cpf={String(session?.user?.cpf)}
+												priceType={'tele_family'}
+											/>
 										</CardFooter>
 									</Card>
 								</div>

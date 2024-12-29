@@ -28,7 +28,7 @@ export default async function CTA() {
 				<Button
 					asChild
 					size={'lg'}
-					className='w-fit text-lg z-20 border border-slate-50 bg-blue-700 hover:bg-blue-600'>
+					className='w-fit text-lg z-20 border border-slate-50 text-blue-600 bg-slate-50 hover:bg-transparent hover:text-slate-50'>
 					<Link href='/dashboard'>
 						Ir para Dahsboard <ArrowRight className='scale-150' />
 					</Link>
