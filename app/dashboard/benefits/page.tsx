@@ -13,23 +13,10 @@ import {
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import BtnReveal from './_components/btn-reveal';
+import { Separator } from '@/components/ui/separator';
 
 export default async function BenefitsPage() {
 	const tickets = await GetAllTicketsAction();
-
-	let newTitle: string;
-
-	tickets?.find((t) => {
-		if (t.type == 'CLUB_VANTAGES') {
-			return (newTitle = 'CLUBE DE VANTAGENS');
-		}
-		if (t.type == 'TELEMEDICINE') {
-			return (newTitle = 'TELEMEDICINA');
-		}
-		if (t.type == 'HEALTH_PLAN') {
-			return (newTitle = 'SEGUROS E PLANOS DE SAÚDE');
-		}
-	});
 
 	return (
 		<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0'>
@@ -37,25 +24,42 @@ export default async function BenefitsPage() {
 				<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 					Meus Benefícios Ativos
 				</h2>
+				{tickets?.length === 0 && (
+					<div className='flex flex-col items-center justify-center gap-5 w-full'>
+						<h3 className='text-muted-foreground'>
+							Você não possui benefícios ativos
+						</h3>
+						<Button
+							asChild
+							variant={'link'}>
+							<Link href={'/dashboard'}>
+								Ver Benefícios Disponíveis <ArrowRight />
+							</Link>
+						</Button>
+						<Separator className='my-5' />
+					</div>
+				)}
 				<div className='w-fit grid'>
 					{tickets?.map((item, index) => {
 						return (
 							<Card key={index}>
 								<CardHeader>
-									<CardTitle>{newTitle}</CardTitle>
+									<CardTitle>{item.title}</CardTitle>
 									<CardDescription>
-										Ao entrar na plataforma parceira, faça login com suas credenciais
-										abaixo:
+										Ao entrar na plataforma parceira, faça login com suas
+										credenciais abaixo:
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
 									<BtnReveal
-										email={'ddavid.diniz@gmail.com'}
-										password={'123456'}
+										email={item.credential_email!}
+										password={item.credential_pass!}
 									/>
 								</CardContent>
 								<CardFooter>
-									<Button asChild className='w-full'>
+									<Button
+										asChild
+										className='w-full'>
 										<Link
 											target='_blank'
 											href={'https://abbma.clubeparcerias.com.br/'}>

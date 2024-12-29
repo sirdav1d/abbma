@@ -20,10 +20,14 @@ export async function getUserAction(email: string) {
 				user: existUser,
 			};
 		}
-		return { success: false, message: 'Usuário não encontrado' };
+		return { success: false, message: 'Usuário não encontrado', user: null };
 	} catch (error) {
 		console.log(error);
 		console.log('não encontrado');
-		return { success: false, message: 'Algo deu errado, tente novamente' };
+		return {
+			success: false,
+			message: 'Algo deu errado, tente novamente',
+			user: null,
+		};
 	}
 }

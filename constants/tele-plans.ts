@@ -4,7 +4,7 @@ export const teleIndividual = {
 	habiltado: [
 		'Clube de Vantagens',
 		'Clínica médica 24h/7 dias',
-		'Limitado a 2 consultas por mês',
+		'Consultas ilimitadas',
 		'Consulta em diversas Especialidades',
 		'Descontos em medicamentos',
 		'Descontos exlusivos em seguros',
@@ -23,7 +23,7 @@ export const teleCouple = {
 	habiltado: [
 		'Clube de Vantagens',
 		'Clínica médica 24h/7 dias',
-		'Limitado a 2 consultas por mês',
+		'Consultas ilimitadas',
 		'Consulta em diversas Especialidades',
 		'Descontos em medicamentos',
 		'Descontos exlusivos em seguros',
@@ -40,7 +40,7 @@ export const teleFamily = {
 	habiltado: [
 		'Clube de Vantagens',
 		'Clínica médica 24h/7 dias',
-		'Limitado a 2 consultas por mês',
+		'Consultas ilimitadas',
 		'Consulta em diversas Especialidades',
 		'Descontos em medicamentos',
 		'Descontos exlusivos em seguros',

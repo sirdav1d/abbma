@@ -2,6 +2,7 @@
 
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
 import { Badge } from '@/components/ui/badge';
+import { BorderTrail } from '@/components/ui/border-trail';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
@@ -11,16 +12,18 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 import { ArrowRight, CircleCheckBig, CircleSlash2 } from 'lucide-react';
 import Link from 'next/link';
 import { benefits } from './_constants/benefits';
-import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
-import { BorderTrail } from '@/components/ui/border-trail';
-import { Separator } from '@/components/ui/separator';
+import { getServerSession } from 'next-auth';
+import BuyButton from '@/components/buy-button';
 
 export default async function DashboardPage() {
 	const tickets = await GetAllTicketsAction();
+	const session = await getServerSession();
 
 	const isActivePlan = tickets?.find((t) => {
 		if (t.type == 'CLUB_VANTAGES') {
@@ -101,17 +104,28 @@ export default async function DashboardPage() {
 											</Link>
 										</Button>
 									) : (
-										<Button
-											variant={'link'}
-											className='w-full md:w-fit'
-											asChild>
-											<Link
-												href={`https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda%20com%20${benefit.title}`}
-												target='_blank'
-												rel='noopener noreferrer'>
-												Falar Com Consultor <ArrowRight className='h-4 w-4' />
-											</Link>
-										</Button>
+										<div className='flex'>
+											{session?.user && benefit.id === 'CLUB_VANTAGES' && (
+												<BuyButton
+													priceType='tele_individual'
+													size='default'
+													email={session?.user?.email}
+													cpf={String(session?.user?.cpf)}
+												/>
+											)}
+
+											<Button
+												variant={'link'}
+												className='w-full md:w-fit'
+												asChild>
+												<Link
+													href={`https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda%20com%20${benefit.title}`}
+													target='_blank'
+													rel='noopener noreferrer'>
+													Falar Com Consultor <ArrowRight className='h-4 w-4' />
+												</Link>
+											</Button>
+										</div>
 									)}
 								</CardFooter>
 							</Card>
@@ -119,7 +133,7 @@ export default async function DashboardPage() {
 							<Separator className='my-4' />
 
 							{benefit.id == 'TELEMEDICINE' && (
-								<div className='grid grid-cols-1 md:grid-cols-3 w-full mt-5 gap-5'>
+								<div className='grid grid-cols-1 xl:grid-cols-3 w-full mt-5 gap-5'>
 									<Card>
 										<CardHeader>
 											<CardTitle className='font-bold text-xl'>
@@ -159,11 +173,11 @@ export default async function DashboardPage() {
 											</Button>
 										</CardFooter>
 									</Card>
-									<Card className='relative'>
+									<Card className='relative border-none'>
 										<BorderTrail
 											style={{
 												boxShadow:
-													'0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(0 0 0 / 50%), 0 0 140px 90px rgb(59 130 246 / 50%)',
+													'0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(59 130 246 / 100%), 0 0 140px 90px rgb(96 165 250 / 50%)',
 											}}
 											size={100}
 										/>

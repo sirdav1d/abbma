@@ -2,7 +2,9 @@
 
 import SendInvoiceLinkAction from '@/actions/email/invoice-link';
 import WelcomeEmailAction from '@/actions/email/welcome';
+import { createTicketAction } from '@/actions/tickets/create-ticket';
 import { createUserWithPaymentAction } from '@/actions/user/create-with-payment';
+import { getUserAction } from '@/actions/user/get-user';
 import stripe from '@/lib/stripe';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -41,18 +43,38 @@ export async function POST(req: Request) {
 					const name = session.customer_details?.name;
 					const password = Math.random().toString(36).slice(2);
 					const cpf = session?.metadata?.cpf;
+					// const priceType = session?.metadata?.priceType;
 
 					if (email && phone && name && cpf) {
-						await createUserWithPaymentAction({
-							email,
-							phone,
-							name,
-							password: password,
-							cpf: cpf,
-						});
-						console.log('Usuário criado', { email, phone, name, cpf });
-						await WelcomeEmailAction({ email, name, password });
-						console.log('E-mail de bem vindo enviado');
+						const myUser = await getUserAction(email);
+
+						if (!myUser.success) {
+							await createUserWithPaymentAction({
+								email,
+								phone,
+								name,
+								password: password,
+								cpf: cpf,
+							});
+							console.log('Usuário e ticket criados', {
+								email,
+								phone,
+								name,
+								cpf,
+							});
+							await WelcomeEmailAction({ email, name, password });
+							console.log('E-mail de bem vindo enviado');
+						}
+
+						if (myUser.user) {
+							await createTicketAction({
+								title: 'Clube de Vantagens',
+								type: 'CLUB_VANTAGES',
+								userId: myUser?.user?.id,
+							});
+							console.log('Novo Ticket Criado');
+						}
+
 						const invoiceId = session.invoice as string;
 
 						if (invoiceId) {

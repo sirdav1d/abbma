@@ -4,9 +4,39 @@ import stripe from '@/lib/stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-	const { email, cpf } = await req.json();
+	const { email, cpf, priceType } = await req.json();
 
-	const price = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
+	const priceAssociate = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
+
+	const priceTeleIndividual =
+		process.env.STRIPE_SUBSCRIPTION_TELEMEDICINE_INDIVIUAL_PRICE_ID;
+
+	const priceTeleCouple =
+		process.env.STRIPE_SUBSCRIPTION_TELEMEDICINE_COUPLE_PRICE_ID;
+
+	const priceTeleFamily =
+		process.env.STRIPE_SUBSCRIPTION_TELEMEDICINE_FAMILY_PRICE_ID;
+
+	function getPrice(priceType: unknown) {
+		if (priceType == 'associate') {
+			return priceAssociate;
+		}
+
+		if (priceType == 'tele_individual') {
+			return priceTeleIndividual;
+		}
+
+		if (priceType == 'tele_couple') {
+			return priceTeleCouple;
+		}
+		if (priceType == 'tele_family') {
+			return priceTeleFamily;
+		}
+	}
+
+	const price = getPrice(priceType);
+
+	console.log(priceType);
 
 	try {
 		const customers = await stripe.customers.list({
@@ -52,6 +82,7 @@ export async function POST(req: NextRequest) {
 				metadata: {
 					email,
 					cpf,
+					priceType,
 				},
 				phone_number_collection: { enabled: true },
 			});

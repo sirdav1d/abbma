@@ -39,7 +39,7 @@ export async function createUserWithPaymentAction({
 				role: 'CLIENT',
 				tickets: {
 					create: {
-						title: 'Liberar acesso a Clube de Vantagens',
+						title: 'Clube de Vantagens',
 						description:
 							'usuário já fez o pagamento e aguarda acesso ao clube de vantagens',
 						status: 'OPEN',

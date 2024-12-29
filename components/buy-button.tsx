@@ -11,9 +11,13 @@ import { useRouter } from 'next/navigation';
 export default function BuyButton({
 	email,
 	cpf,
+	priceType = 'associate',
+	size,
 }: {
 	email: string;
 	cpf: string;
+	size?: 'default' | 'sm' | 'lg' | 'icon';
+	priceType: 'associate' | 'tele_individual' | 'tele_couple' | 'tele_family';
 }) {
 	const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
 
@@ -26,7 +30,7 @@ export default function BuyButton({
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ email, cpf }),
+				body: JSON.stringify({ email, cpf, priceType }),
 			});
 
 			const stripeClient = await loadStripe(
@@ -51,9 +55,9 @@ export default function BuyButton({
 
 	return (
 		<Button
-			size={'lg'}
+			size={size ?? 'lg'}
 			disabled={isCreatingCheckout}
-			className={`px-4 py-2 disabled:opacity-50 z-20 bg-red-700  w-full hover:bg-red-600 font-semibold text-lg text-slate-50`}
+			className={`px-4 py-2 disabled:opacity-50 z-20 bg-red-700  w-full hover:bg-red-600 font-semibold text-base text-slate-50`}
 			onClick={() => handleClick(email, cpf)}>
 			{isCreatingCheckout ? (
 				<>

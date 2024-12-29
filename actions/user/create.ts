@@ -25,9 +25,13 @@ export async function createUserAction({
 		});
 
 		if (existUser) {
-			return { success: false, message: 'Usuário já tem e-mail cadastrado' };
+			return {
+				success: false,
+				message: 'Usuário já tem e-mail cadastrado',
+				user: null,
+			};
 		}
-		await prisma.user.create({
+		const user = await prisma.user.create({
 			data: {
 				email,
 				phone,
@@ -37,10 +41,18 @@ export async function createUserAction({
 		});
 		console.log('cadastrado');
 		//enviar e-mail de confirmação de cadastro
-		return { success: true, message: 'Usuário cadastrado com sucesso' };
+		return {
+			success: true,
+			message: 'Usuário cadastrado com sucesso',
+			user: user,
+		};
 	} catch (error) {
 		console.log(error);
 		console.log('não cadastrado');
-		return { success: false, message: 'Algo deu errado, tente novamente' };
+		return {
+			success: false,
+			message: 'Algo deu errado, tente novamente',
+			user: null,
+		};
 	}
 }

@@ -2,7 +2,6 @@
 
 import { associate } from '@/constants/associate';
 import { healthPlan } from '@/constants/health-plan';
-import { telemedicine } from '@/constants/telemedicine';
 import { Gift, ScanHeart, Stethoscope } from 'lucide-react';
 
 export const benefits = [
@@ -17,8 +16,8 @@ export const benefits = [
 		id: 'TELEMEDICINE',
 		title: 'Telemedicina',
 		icon: Stethoscope,
-		content: `Nosso serviço de Telemedicina proporciona acesso rápido e conveniente a cuidados médicos de qualidade, 24 horas por dia, 7 dias por semana. Com este benefício, você tem acesso a:`,
-		item_benefits: telemedicine,
+		content: `Nosso serviço de Telemedicina proporciona acesso rápido e conveniente a cuidados médicos de qualidade, 24 horas por dia, 7 dias por semana.`,
+		item_benefits: [],
 	},
 	{
 		id: 'HEALTH_PLAN',

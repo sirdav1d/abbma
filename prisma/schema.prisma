@@ -56,15 +56,17 @@ model Dependent {
 }
 
 model Ticket {
-  id          String     @id @default(cuid())
-  title       String
-  description String?
-  type        TicketType @default(CLUB_VANTAGES)
-  status      Status     @default(OPEN)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  userId      String
-  user        User       @relation(fields: [userId], references: [id])
+  id               String     @id @default(cuid())
+  title            String
+  description      String?
+  type             TicketType @default(CLUB_VANTAGES)
+  status           Status     @default(OPEN)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  credential_email String?
+  credential_pass  String?
+  userId           String
+  user             User       @relation(fields: [userId], references: [id])
 }
 
 enum Status {
