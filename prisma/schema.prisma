@@ -83,6 +83,8 @@ enum Role {
 
 enum TicketType {
   CLUB_VANTAGES // Clube de Vantagens
-  TELEMEDICINE // Telemedicina
+  TELEMEDICINE_INDIVIDUAL
+  TELEMEDICINE_COUPLE
+  TELEMEDICINE_FAMILY // Telemedicina
   HEALTH_PLAN // Planos de Saúde
 }

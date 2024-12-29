@@ -19,7 +19,7 @@ export default async function BenefitsPage() {
 	const tickets = await GetAllTicketsAction();
 
 	return (
-		<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0'>
+		<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5'>
 			<div className='flex flex-col gap-10'>
 				<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 					Meus Benefícios Ativos
@@ -39,7 +39,7 @@ export default async function BenefitsPage() {
 						<Separator className='my-5' />
 					</div>
 				)}
-				<div className='w-fit grid'>
+				<div className='w-fit grid md:grid-cols-2 gap-5'>
 					{tickets?.map((item, index) => {
 						return (
 							<Card key={index}>
@@ -57,15 +57,27 @@ export default async function BenefitsPage() {
 									/>
 								</CardContent>
 								<CardFooter>
-									<Button
-										asChild
-										className='w-full'>
-										<Link
-											target='_blank'
-											href={'https://abbma.clubeparcerias.com.br/'}>
-											Acessar Plataforma <ArrowRight />
-										</Link>
-									</Button>{' '}
+									{item.type == 'CLUB_VANTAGES' ? (
+										<Button
+											asChild
+											className='w-full'>
+											<Link
+												target='_blank'
+												href={'https://abbma.clubeparcerias.com.br/'}>
+												Acessar Plataforma <ArrowRight />
+											</Link>
+										</Button>
+									) : (
+										<Button
+											asChild
+											className='w-full'>
+											<Link
+												target='_blank'
+												href={'https://medicar.com.br/'}>
+												Acessar Plataforma <ArrowRight />
+											</Link>
+										</Button>
+									)}
 								</CardFooter>
 							</Card>
 						);

@@ -29,7 +29,11 @@ export default async function DashboardPage() {
 		if (t.type == 'CLUB_VANTAGES') {
 			return 'CLUB_VANTAGES';
 		}
-		if (t.type == 'TELEMEDICINE') {
+		if (
+			t.type == 'TELEMEDICINE_INDIVIDUAL' ||
+			t.type == 'TELEMEDICINE_COUPLE' ||
+			t.type == 'TELEMEDICINE_FAMILY'
+		) {
 			return 'TELEMEDICINE';
 		}
 		if (t.type == 'HEALTH_PLAN') {
@@ -93,7 +97,10 @@ export default async function DashboardPage() {
 									</ul>
 								</CardContent>
 								<CardFooter className='flex items-center gap-5 w-full justify-between'>
-									{isActivePlan && isActivePlan.type == benefit.id ? (
+									{isActivePlan?.type == 'CLUB_VANTAGES' ||
+									isActivePlan?.type == 'TELEMEDICINE_INDIVIDUAL' ||
+									isActivePlan?.type == 'TELEMEDICINE_COUPLE' ||
+									isActivePlan?.type == 'TELEMEDICINE_FAMILY' ? (
 										<Button
 											variant={'link'}
 											className='w-full md:w-fit'
@@ -105,14 +112,12 @@ export default async function DashboardPage() {
 										</Button>
 									) : (
 										<div className='flex'>
-											{session?.user && benefit.id === 'CLUB_VANTAGES' && (
-												<BuyButton
-													priceType='associate'
-													size='default'
-													email={session?.user?.email}
-													cpf={String(session?.user?.cpf)}
-												/>
-											)}
+											<BuyButton
+												priceType='CLUB_VANTAGES'
+												size='default'
+												email={String(session?.user?.email)}
+												cpf={String(session?.user?.cpf)}
+											/>
 
 											<Button
 												variant={'link'}
@@ -168,12 +173,24 @@ export default async function DashboardPage() {
 											</ul>
 										</CardContent>
 										<CardFooter>
-											<BuyButton
-												size='default'
-												email={String(session?.user?.email)}
-												cpf={String(session?.user?.cpf)}
-												priceType={'tele_individual'}
-											/>
+											{isActivePlan?.type === 'TELEMEDICINE_INDIVIDUAL' ? (
+												<Button
+													variant={'link'}
+													className='w-full md:w-fit'
+													asChild>
+													<Link href={'/dashboard/benefits'}>
+														Verificar meu benefício
+														<ArrowRight className='h-4 w-4' />
+													</Link>
+												</Button>
+											) : (
+												<BuyButton
+													size='default'
+													email={String(session?.user?.email)}
+													cpf={String(session?.user?.cpf)}
+													priceType={'TELEMEDICINE_INDIVIDUAL'}
+												/>
+											)}
 										</CardFooter>
 									</Card>
 									<Card className='relative border-none'>
@@ -207,12 +224,24 @@ export default async function DashboardPage() {
 											</ul>
 										</CardContent>
 										<CardFooter>
-											<BuyButton
-												size='default'
-												email={String(session?.user?.email)}
-												cpf={String(session?.user?.cpf)}
-												priceType={'tele_couple'}
-											/>
+											{isActivePlan?.type === 'TELEMEDICINE_COUPLE' ? (
+												<Button
+													variant={'link'}
+													className='w-full md:w-fit'
+													asChild>
+													<Link href={'/dashboard/benefits'}>
+														Verificar meu benefício
+														<ArrowRight className='h-4 w-4' />
+													</Link>
+												</Button>
+											) : (
+												<BuyButton
+													size='default'
+													email={String(session?.user?.email)}
+													cpf={String(session?.user?.cpf)}
+													priceType={'TELEMEDICINE_COUPLE'}
+												/>
+											)}
 										</CardFooter>
 									</Card>
 									<Card>
@@ -239,12 +268,24 @@ export default async function DashboardPage() {
 											</ul>
 										</CardContent>
 										<CardFooter>
-											<BuyButton
-												size='default'
-												email={String(session?.user?.email)}
-												cpf={String(session?.user?.cpf)}
-												priceType={'tele_family'}
-											/>
+											{isActivePlan?.type === 'TELEMEDICINE_FAMILY' ? (
+												<Button
+													variant={'link'}
+													className='w-full md:w-fit'
+													asChild>
+													<Link href={'/dashboard/benefits'}>
+														Verificar meu benefício
+														<ArrowRight className='h-4 w-4' />
+													</Link>
+												</Button>
+											) : (
+												<BuyButton
+													size='default'
+													email={String(session?.user?.email)}
+													cpf={String(session?.user?.cpf)}
+													priceType={'TELEMEDICINE_FAMILY'}
+												/>
+											)}
 										</CardFooter>
 									</Card>
 								</div>

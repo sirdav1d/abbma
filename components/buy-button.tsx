@@ -8,16 +8,17 @@ import { Button } from './ui/button';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { $Enums } from '@prisma/client';
 export default function BuyButton({
 	email,
 	cpf,
-	priceType = 'associate',
+	priceType = 'CLUB_VANTAGES',
 	size,
 }: {
 	email: string;
 	cpf: string;
 	size?: 'default' | 'sm' | 'lg' | 'icon';
-	priceType: 'associate' | 'tele_individual' | 'tele_couple' | 'tele_family';
+	priceType: $Enums.TicketType;
 }) {
 	const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
 
