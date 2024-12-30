@@ -25,21 +25,23 @@ export default async function DashboardPage() {
 	const tickets = await GetAllTicketsAction();
 	const session = await getServerSession();
 
-	const isActivePlan = tickets?.find((t) => {
-		if (t.type == 'CLUB_VANTAGES') {
-			return 'CLUB_VANTAGES';
-		}
-		if (
-			t.type == 'TELEMEDICINE_INDIVIDUAL' ||
-			t.type == 'TELEMEDICINE_COUPLE' ||
-			t.type == 'TELEMEDICINE_FAMILY'
-		) {
-			return 'TELEMEDICINE';
-		}
-		if (t.type == 'HEALTH_PLAN') {
-			return 'HEALTH_PLAN';
-		}
-	});
+	const benefitTypeMapping: Record<string, string> = {
+		TELEMEDICINE_INDIVIDUAL: 'TELEMEDICINE',
+		TELEMEDICINE_COUPLE: 'TELEMEDICINE',
+		TELEMEDICINE_FAMILY: 'TELEMEDICINE',
+	};
+
+	const activeTicketTypes =
+		tickets?.map((ticket) => {
+			// Mapear o tipo do ticket para a categoria principal, se aplicável
+			return benefitTypeMapping[ticket.type] || ticket.type;
+		}) || [];
+
+	const activeTicketTypesUp =
+		tickets?.map((ticket) => {
+			// Mapear o tipo do ticket para a categoria principal, se aplicável
+			return ticket.type;
+		}) || [];
 
 	return (
 		<div className='mx-auto w-full max-w-7xl px-4 2xl:px-0  py-5'>
@@ -61,237 +63,246 @@ export default async function DashboardPage() {
 							</TabsTrigger>
 						))}
 					</TabsList>
-					{benefits.map((benefit) => (
-						<TabsContent
-							key={benefit.id}
-							value={benefit.id}>
-							<Card>
-								<CardHeader>
-									<div className='flex items-center justify-between'>
-										<div className='flex md:items-center flex-col gap-2 md:flex-row'>
-											<benefit.icon className='h-6 w-6 mr-2' />
-											<CardTitle>{benefit.title}</CardTitle>
-										</div>
-										{isActivePlan && isActivePlan.type == benefit.id ? (
-											<Badge className='scale-110'>Ativo</Badge>
-										) : (
-											<Badge variant={'outline'}>Inativo</Badge>
-										)}
-									</div>
-									<CardDescription className='text-balance'>
-										{benefit.content}
-									</CardDescription>
-								</CardHeader>
-								<CardContent className='flex flex-col gap-8'>
-									<ul className='grid grid-cols-1 md:grid-cols-3  justify-between gap-4 w-full '>
-										{benefit?.item_benefits?.map((item, index) => {
-											return (
-												<li
-													key={index}
-													className='flex w-full justify-start gap-2 items-center text-slate-700 '>
-													<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
-													<span className=' text-sm w-full'>{item}</span>
-												</li>
-											);
-										})}
-									</ul>
-								</CardContent>
-								<CardFooter className='flex items-center gap-5 w-full justify-between'>
-									{isActivePlan?.type == 'CLUB_VANTAGES' ||
-									isActivePlan?.type == 'TELEMEDICINE_INDIVIDUAL' ||
-									isActivePlan?.type == 'TELEMEDICINE_COUPLE' ||
-									isActivePlan?.type == 'TELEMEDICINE_FAMILY' ? (
-										<Button
-											variant={'link'}
-											className='w-full md:w-fit'
-											asChild>
-											<Link href={'/dashboard/benefits'}>
-												Verificar meu benefício
-												<ArrowRight className='h-4 w-4' />
-											</Link>
-										</Button>
-									) : (
-										<div className='flex'>
-											<BuyButton
-												priceType='CLUB_VANTAGES'
-												size='default'
-												email={String(session?.user?.email)}
-												cpf={String(session?.user?.cpf)}
-											/>
+					{benefits.map((benefit) => {
+						const isActive = activeTicketTypes.includes(benefit.id);
 
+						return (
+							<TabsContent
+								key={benefit.id}
+								value={benefit.id}>
+								<Card>
+									<CardHeader>
+										<div className='flex items-center justify-between'>
+											<div className='flex md:items-center flex-col gap-2 md:flex-row'>
+												<benefit.icon className='h-6 w-6 mr-2' />
+												<CardTitle>{benefit.title}</CardTitle>
+											</div>
+											{isActive ? (
+												<Badge className='scale-110'>Ativo</Badge>
+											) : (
+												<Badge variant={'outline'}>Inativo</Badge>
+											)}
+										</div>
+										<CardDescription className='text-balance'>
+											{benefit.content}
+										</CardDescription>
+									</CardHeader>
+									<CardContent className='flex flex-col gap-8'>
+										<ul className='grid grid-cols-1 md:grid-cols-3  justify-between gap-4 w-full '>
+											{benefit?.item_benefits?.map((item, index) => {
+												return (
+													<li
+														key={index}
+														className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+														<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+														<span className=' text-sm w-full'>{item}</span>
+													</li>
+												);
+											})}
+										</ul>
+									</CardContent>
+									<CardFooter className='flex items-center gap-5 w-full justify-between'>
+										{isActive ? (
 											<Button
 												variant={'link'}
 												className='w-full md:w-fit'
 												asChild>
-												<Link
-													href={`https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda%20com%20${benefit.title}`}
-													target='_blank'
-													rel='noopener noreferrer'>
-													Falar Com Consultor <ArrowRight className='h-4 w-4' />
+												<Link href={'/dashboard/benefits'}>
+													Verificar meu benefício
+													<ArrowRight className='h-4 w-4' />
 												</Link>
 											</Button>
-										</div>
-									)}
-								</CardFooter>
-							</Card>
+										) : (
+											<div className='flex'>
+												{benefit.id === 'CLUB_VANTAGES' && (
+													<BuyButton
+														priceType='CLUB_VANTAGES'
+														size='default'
+														email={String(session?.user?.email)}
+														cpf={String(session?.user?.cpf)}
+													/>
+												)}
 
-							<Separator className='my-4' />
+												<Button
+													variant={'link'}
+													className='w-full md:w-fit'
+													asChild>
+													<Link
+														href={`https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda%20com%20${benefit.title}`}
+														target='_blank'
+														rel='noopener noreferrer'>
+														Falar Com Consultor{' '}
+														<ArrowRight className='h-4 w-4' />
+													</Link>
+												</Button>
+											</div>
+										)}
+									</CardFooter>
+								</Card>
 
-							{benefit.id == 'TELEMEDICINE' && (
-								<div className='grid grid-cols-1 xl:grid-cols-3 w-full mt-5 gap-5'>
-									<Card>
-										<CardHeader>
-											<CardTitle className='font-bold text-xl'>
-												R$24,99
-											</CardTitle>
-											<CardDescription>
-												PLANO INDIVIDUAL + CLUBE DE VANTAGENS
-											</CardDescription>
-										</CardHeader>
-										<CardContent>
-											<ul className='space-y-3'>
-												{teleIndividual.habiltado.map((item, index) => {
-													return (
-														<li
-															key={index}
-															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
-															<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
-															<span className=' text-sm w-full'>{item}</span>
-														</li>
-													);
-												})}
-												{teleIndividual.inabilitado.map((item, index) => {
-													return (
-														<li
-															key={index}
-															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
-															<CircleSlash2 className='text-red-500 w-5 h-5 size-full' />
-															<span className=' text-sm w-full'>{item}</span>
-														</li>
-													);
-												})}
-											</ul>
-										</CardContent>
-										<CardFooter>
-											{isActivePlan?.type === 'TELEMEDICINE_INDIVIDUAL' ? (
-												<Button
-													variant={'link'}
-													className='w-full md:w-fit'
-													asChild>
-													<Link href={'/dashboard/benefits'}>
-														Verificar meu benefício
-														<ArrowRight className='h-4 w-4' />
-													</Link>
-												</Button>
-											) : (
-												<BuyButton
-													size='default'
-													email={String(session?.user?.email)}
-													cpf={String(session?.user?.cpf)}
-													priceType={'TELEMEDICINE_INDIVIDUAL'}
-												/>
-											)}
-										</CardFooter>
-									</Card>
-									<Card className='relative border-none'>
-										<BorderTrail
-											style={{
-												boxShadow:
-													'0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(59 130 246 / 100%), 0 0 140px 90px rgb(96 165 250 / 50%)',
-											}}
-											size={100}
-										/>
-										<CardHeader>
-											<CardTitle className='font-bold text-xl'>
-												R$44,99
-											</CardTitle>
-											<CardDescription>
-												PLANO CASAL + CLUBE DE VANTAGENS
-											</CardDescription>
-										</CardHeader>
-										<CardContent>
-											<ul className='space-y-3'>
-												{teleCouple.habiltado.map((item, index) => {
-													return (
-														<li
-															key={index}
-															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
-															<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
-															<span className=' text-sm w-full'>{item}</span>
-														</li>
-													);
-												})}
-											</ul>
-										</CardContent>
-										<CardFooter>
-											{isActivePlan?.type === 'TELEMEDICINE_COUPLE' ? (
-												<Button
-													variant={'link'}
-													className='w-full md:w-fit'
-													asChild>
-													<Link href={'/dashboard/benefits'}>
-														Verificar meu benefício
-														<ArrowRight className='h-4 w-4' />
-													</Link>
-												</Button>
-											) : (
-												<BuyButton
-													size='default'
-													email={String(session?.user?.email)}
-													cpf={String(session?.user?.cpf)}
-													priceType={'TELEMEDICINE_COUPLE'}
-												/>
-											)}
-										</CardFooter>
-									</Card>
-									<Card>
-										<CardHeader>
-											<CardTitle className='font-bold text-xl'>
-												R$79,99
-											</CardTitle>
-											<CardDescription>
-												PLANO FAMÍLIA + CLUBE DE VANTAGENS
-											</CardDescription>
-										</CardHeader>
-										<CardContent>
-											<ul className='space-y-3'>
-												{teleFamily.habiltado.map((item, index) => {
-													return (
-														<li
-															key={index}
-															className='flex w-full justify-start gap-2 items-center text-slate-700 '>
-															<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
-															<span className=' text-sm w-full'>{item}</span>
-														</li>
-													);
-												})}
-											</ul>
-										</CardContent>
-										<CardFooter>
-											{isActivePlan?.type === 'TELEMEDICINE_FAMILY' ? (
-												<Button
-													variant={'link'}
-													className='w-full md:w-fit'
-													asChild>
-													<Link href={'/dashboard/benefits'}>
-														Verificar meu benefício
-														<ArrowRight className='h-4 w-4' />
-													</Link>
-												</Button>
-											) : (
-												<BuyButton
-													size='default'
-													email={String(session?.user?.email)}
-													cpf={String(session?.user?.cpf)}
-													priceType={'TELEMEDICINE_FAMILY'}
-												/>
-											)}
-										</CardFooter>
-									</Card>
-								</div>
-							)}
-						</TabsContent>
-					))}
+								<Separator className='my-4' />
+
+								{benefit.id == 'TELEMEDICINE' && (
+									<div className='grid grid-cols-1 xl:grid-cols-3 w-full mt-5 gap-5'>
+										<Card>
+											<CardHeader>
+												<CardTitle className='font-bold text-xl'>
+													R$24,99
+												</CardTitle>
+												<CardDescription>
+													PLANO INDIVIDUAL + CLUBE DE VANTAGENS
+												</CardDescription>
+											</CardHeader>
+											<CardContent>
+												<ul className='space-y-3'>
+													{teleIndividual.habiltado.map((item, index) => {
+														return (
+															<li
+																key={index}
+																className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+																<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+																<span className=' text-sm w-full'>{item}</span>
+															</li>
+														);
+													})}
+													{teleIndividual.inabilitado.map((item, index) => {
+														return (
+															<li
+																key={index}
+																className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+																<CircleSlash2 className='text-red-500 w-5 h-5 size-full' />
+																<span className=' text-sm w-full'>{item}</span>
+															</li>
+														);
+													})}
+												</ul>
+											</CardContent>
+											<CardFooter>
+												{isActive &&
+												activeTicketTypesUp.includes(
+													'TELEMEDICINE_INDIVIDUAL',
+												) ? (
+													<Button
+														variant={'link'}
+														className='w-full md:w-fit'
+														asChild>
+														<Link href={'/dashboard/benefits'}>
+															Verificar meu benefício
+															<ArrowRight className='h-4 w-4' />
+														</Link>
+													</Button>
+												) : (
+													<BuyButton
+														size='default'
+														email={String(session?.user?.email)}
+														cpf={String(session?.user?.cpf)}
+														priceType={'TELEMEDICINE_INDIVIDUAL'}
+													/>
+												)}
+											</CardFooter>
+										</Card>
+										<Card className='relative border-none'>
+											<BorderTrail
+												style={{
+													boxShadow:
+														'0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(59 130 246 / 100%), 0 0 140px 90px rgb(96 165 250 / 50%)',
+												}}
+												size={100}
+											/>
+											<CardHeader>
+												<CardTitle className='font-bold text-xl'>
+													R$44,99
+												</CardTitle>
+												<CardDescription>
+													PLANO CASAL + CLUBE DE VANTAGENS
+												</CardDescription>
+											</CardHeader>
+											<CardContent>
+												<ul className='space-y-3'>
+													{teleCouple.habiltado.map((item, index) => {
+														return (
+															<li
+																key={index}
+																className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+																<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+																<span className=' text-sm w-full'>{item}</span>
+															</li>
+														);
+													})}
+												</ul>
+											</CardContent>
+											<CardFooter>
+												{isActive &&
+												activeTicketTypesUp.includes('TELEMEDICINE_COUPLE') ? (
+													<Button
+														variant={'link'}
+														className='w-full md:w-fit'
+														asChild>
+														<Link href={'/dashboard/benefits'}>
+															Verificar meu benefício
+															<ArrowRight className='h-4 w-4' />
+														</Link>
+													</Button>
+												) : (
+													<BuyButton
+														size='default'
+														email={String(session?.user?.email)}
+														cpf={String(session?.user?.cpf)}
+														priceType={'TELEMEDICINE_COUPLE'}
+													/>
+												)}
+											</CardFooter>
+										</Card>
+										<Card>
+											<CardHeader>
+												<CardTitle className='font-bold text-xl'>
+													R$79,99
+												</CardTitle>
+												<CardDescription>
+													PLANO FAMÍLIA + CLUBE DE VANTAGENS
+												</CardDescription>
+											</CardHeader>
+											<CardContent>
+												<ul className='space-y-3'>
+													{teleFamily.habiltado.map((item, index) => {
+														return (
+															<li
+																key={index}
+																className='flex w-full justify-start gap-2 items-center text-slate-700 '>
+																<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+																<span className=' text-sm w-full'>{item}</span>
+															</li>
+														);
+													})}
+												</ul>
+											</CardContent>
+											<CardFooter>
+												{isActive &&
+												activeTicketTypesUp.includes('TELEMEDICINE_FAMILY') ? (
+													<Button
+														variant={'link'}
+														className='w-full md:w-fit'
+														asChild>
+														<Link href={'/dashboard/benefits'}>
+															Verificar meu benefício
+															<ArrowRight className='h-4 w-4' />
+														</Link>
+													</Button>
+												) : (
+													<BuyButton
+														size='default'
+														email={String(session?.user?.email)}
+														cpf={String(session?.user?.cpf)}
+														priceType={'TELEMEDICINE_FAMILY'}
+													/>
+												)}
+											</CardFooter>
+										</Card>
+									</div>
+								)}
+							</TabsContent>
+						);
+					})}
 				</Tabs>
 			</div>
 		</div>

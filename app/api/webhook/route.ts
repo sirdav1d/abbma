@@ -4,9 +4,11 @@ import SendInvoiceLinkAction from '@/actions/email/invoice-link';
 import WelcomeEmailAction from '@/actions/email/welcome';
 import { createTicketAction } from '@/actions/tickets/create-ticket';
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import { updateTicketAction } from '@/actions/tickets/update-ticket';
 import { createUserWithPaymentAction } from '@/actions/user/create-with-payment';
 import { getUserAction } from '@/actions/user/get-user';
 import stripe from '@/lib/stripe';
+import { $Enums } from '@prisma/client';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
@@ -44,7 +46,7 @@ export async function POST(req: Request) {
 					const name = session.customer_details?.name;
 					const password = Math.random().toString(36).slice(2);
 					const cpf = session?.metadata?.cpf;
-					const priceType = session?.metadata?.priceType;
+					const priceType = session?.metadata?.priceType as $Enums.TicketType;
 
 					if (email && phone && name && cpf) {
 						const myUser = await getUserAction(email);
@@ -66,77 +68,80 @@ export async function POST(req: Request) {
 							await WelcomeEmailAction({ email, name, password });
 							console.log('E-mail de bem vindo enviado');
 						}
+						const tickets = await GetAllTicketsAction();
+						const customers = await stripe.customers.list({ email });
+						const customer = customers.data[0];
 
-						if (myUser.user) {
-							const customers = await stripe.customers.list({ email });
-							const customer = customers.data[0];
+						if (customer) {
+							// Obter assinaturas ativas do cliente
+							const subscriptions = await stripe.subscriptions.list({
+								customer: customer.id,
+								status: 'active',
+							});
 
-							if (customer) {
-								// Obter assinaturas ativas do cliente
-								const subscriptions = await stripe.subscriptions.list({
-									customer: customer.id,
-									status: 'active',
-								});
+							const sessionDetails = await stripe.checkout.sessions.retrieve(
+								session.id,
+								{ expand: ['line_items'] }, // Expande para obter os itens da sessão
+							);
 
-								const sessionDetails = await stripe.checkout.sessions.retrieve(
-									session.id,
-									{ expand: ['line_items'] }, // Expande para obter os itens da sessão
+							const lineItems = sessionDetails.line_items?.data || [];
+
+							const requestedPriceId = lineItems[0]?.price?.id;
+
+							// Verificar se o plano solicitado já está ativo
+							if (requestedPriceId) {
+								// Verificar se o plano solicitado já está ativo
+								const activeSubscription = subscriptions.data.find((sub) =>
+									sub.items.data.some(
+										(item) => item.price.id === requestedPriceId,
+									),
 								);
 
-								const lineItems = sessionDetails.line_items?.data || [];
-
-								const requestedPriceId = lineItems[0]?.price?.id;
-
-								// Verificar se o plano solicitado já está ativo
-								if (requestedPriceId) {
-									// Verificar se o plano solicitado já está ativo
-									const activeSubscription = subscriptions.data.find((sub) =>
-										sub.items.data.some(
-											(item) => item.price.id === requestedPriceId,
-										),
-									);
-
-									if (!activeSubscription && subscriptions.data.length > 0) {
-										// Alterar o plano existente
-										const currentSubscription = subscriptions.data[0];
-										await stripe.subscriptions.update(currentSubscription.id, {
-											items: [
-												{
-													id: currentSubscription.items.data[0].id,
-													price: requestedPriceId,
-												},
-											],
-											proration_behavior: 'create_prorations',
-										});
-										console.log('Assinatura Atualizada');
-									}
+								if (!activeSubscription && subscriptions.data.length > 0) {
+									// Alterar o plano existente
+									const currentSubscription = subscriptions.data[0];
+									console.log({ currentSubscription });
+									await stripe.subscriptions.update(currentSubscription.id, {
+										items: [
+											{
+												id: currentSubscription.items.data[0].id,
+												price: requestedPriceId,
+											},
+										],
+										proration_behavior: 'create_prorations',
+									});
+									console.log('Assinatura Atualizada');
 								}
+							}
+
+							const oldTicket = tickets?.find(
+								(ticket) => ticket.type !== 'CLUB_VANTAGES',
+							);
+
+							if (oldTicket && myUser?.user && priceType) {
+								await updateTicketAction({
+									ticketId: oldTicket?.id,
+									userId: myUser?.user?.id,
+									type: priceType,
+								});
+								console.log('Plano Atualizado');
 							}
 						}
 
-						const tickets = await GetAllTicketsAction();
 						if (tickets?.length === 0) {
-							if (priceType === 'CLUB_VANTAGES') {
-								await createTicketAction({
-									title: 'Clube de Vantagens',
-									type: 'CLUB_VANTAGES',
-									userId: String(myUser?.user?.id),
-								});
-								console.log('Novo Ticket Criado - CLUB_VANTAGES');
-							} else if (priceType === 'TELEMEDICINE_INDIVIDUAL') {
+							await createTicketAction({
+								title: 'Clube de Vantagens',
+								type: 'CLUB_VANTAGES',
+								userId: String(myUser?.user?.id),
+							});
+							console.log('Novo Ticket Criado - CLUB_VANTAGES');
+							if (priceType === 'TELEMEDICINE_INDIVIDUAL') {
 								await createTicketAction({
 									title: 'Telemedicina Individual',
 									type: 'TELEMEDICINE_INDIVIDUAL',
 									userId: String(myUser?.user?.id),
 								});
 								console.log('Novo Ticket Criado - TELEMEDICINE_COUPLE');
-
-								await createTicketAction({
-									title: 'Clube de Vantagens',
-									type: 'CLUB_VANTAGES',
-									userId: String(myUser?.user?.id),
-								});
-								console.log('Novo Ticket Criado - CLUB_VANTAGES');
 							} else if (priceType === 'TELEMEDICINE_COUPLE') {
 								await createTicketAction({
 									title: 'Telemedicina Casal',
@@ -144,13 +149,6 @@ export async function POST(req: Request) {
 									userId: String(myUser?.user?.id),
 								});
 								console.log('Novo Ticket Criado - TELEMEDICINE_COUPLE');
-
-								await createTicketAction({
-									title: 'Clube de Vantagens',
-									type: 'CLUB_VANTAGES',
-									userId: String(myUser?.user?.id),
-								});
-								console.log('Novo Ticket Criado - CLUB_VANTAGES');
 							} else if (priceType === 'TELEMEDICINE_FAMILY') {
 								await createTicketAction({
 									title: 'Telemedicina Família',
@@ -158,16 +156,7 @@ export async function POST(req: Request) {
 									userId: String(myUser?.user?.id),
 								});
 								console.log('Novo Ticket Criado - TELEMEDICINE_FAMILY');
-
-								await createTicketAction({
-									title: 'Clube de Vantagens',
-									type: 'CLUB_VANTAGES',
-									userId: String(myUser?.user?.id),
-								});
-								console.log('Novo Ticket Criado - CLUB_VANTAGES');
 							}
-						}else{
-							
 						}
 
 						const invoiceId = session.invoice as string;
