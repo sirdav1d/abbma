@@ -17,58 +17,66 @@ export async function POST(req: NextRequest) {
 	const priceTeleFamily =
 		process.env.STRIPE_SUBSCRIPTION_TELEMEDICINE_FAMILY_PRICE_ID;
 
-	function getPrice(priceType: unknown) {
-		if (priceType == 'CLUB_VANTAGES') {
-			return priceAssociate;
-		}
-
-		if (priceType == 'TELEMEDICINE_INDIVIDUAL') {
-			return priceTeleIndividual;
-		}
-
-		if (priceType == 'TELEMEDICINE_COUPLE') {
-			return priceTeleCouple;
-		}
-		if (priceType == 'TELEMEDICINE_FAMILY') {
-			return priceTeleFamily;
+	function getPrice(priceType: string | undefined): string {
+		switch (priceType) {
+			case 'CLUB_VANTAGES':
+				return priceAssociate!;
+			case 'TELEMEDICINE_INDIVIDUAL':
+				return priceTeleIndividual!;
+			case 'TELEMEDICINE_COUPLE':
+				return priceTeleCouple!;
+			case 'TELEMEDICINE_FAMILY':
+				return priceTeleFamily!;
+			default:
+				throw new Error(`Tipo de preço inválido: ${priceType}`);
 		}
 	}
 
-	const priceTypeId = getPrice(priceType);
+	if (!email || !cpf || !priceType) {
+		return NextResponse.json({
+			message: 'Parâmetros obrigatórios ausentes.',
+			ok: false,
+		});
+	}
 
-	console.log(priceType);
+	const priceTypeId = getPrice(priceType);
 
 	try {
 		const customers = await stripe.customers.list({
 			email: String(email),
 		});
 
-		const customer = customers.data[0];
-		console.log(customer, customers, email);
+		let customer = customers.data[0];
 
-		if (customer) {
-			const subscriptions = await stripe.subscriptions.list({
-				customer: customer.id,
-				status: 'active',
+		if (!customer) {
+			customer = await stripe.customers.create({
+				email: String(email),
+				metadata: { cpf },
 			});
+		}
 
-			const hasActiveSubscription = subscriptions.data.some((sub) =>
-				sub.items.data.some((item) => item.price.id === priceTypeId),
-			);
+		const subscriptions = await stripe.subscriptions.list({
+			customer: customer.id,
+			status: 'active',
+		});
 
-			if (hasActiveSubscription) {
-				console.log('assinatura duplicada identificada');
-				// 3. Se o cliente já tiver uma assinatura ativa, evitar nova criação
-				return NextResponse.json({
-					message: 'Este cliente já tem uma assinatura ativa para este plano.',
-					ok: false,
-					sessionId: null,
-					priceId: null,
-				});
-			}
+		const hasActiveSubscription = subscriptions.data.some((sub) =>
+			sub.items.data.some((item) => item.price.id === priceTypeId),
+		);
+
+		if (hasActiveSubscription) {
+			console.log('assinatura duplicada identificada');
+			// 3. Se o cliente já tiver uma assinatura ativa, evitar nova criação
+			return NextResponse.json({
+				message: 'Este cliente já tem uma assinatura ativa para este plano.',
+				ok: false,
+				sessionId: null,
+				priceId: null,
+			});
 		}
 
 		const session = await stripe.checkout.sessions.create({
+			customer: customer.id,
 			line_items: [
 				{
 					price: priceTypeId,
@@ -95,6 +103,9 @@ export async function POST(req: NextRequest) {
 		});
 	} catch (err) {
 		console.error(err);
-		return NextResponse.error();
+		return NextResponse.json({
+			message: 'Ocorreu um erro ao processar a solicitação.',
+			ok: false,
+		});
 	}
 }

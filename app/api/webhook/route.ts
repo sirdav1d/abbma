@@ -59,20 +59,37 @@ export async function POST(req: Request) {
 								password: password,
 								cpf: cpf,
 							});
-							console.log('Usuário e ticket criados', {
-								email,
-								phone,
-								name,
-								cpf,
-							});
 							await WelcomeEmailAction({ email, name, password });
-							console.log('E-mail de bem vindo enviado');
 						}
+
 						const tickets = await GetAllTicketsAction();
 						const customers = await stripe.customers.list({ email });
 						const customer = customers.data[0];
 
 						if (customer) {
+							// Garantir que o cliente tem um método de pagamento associado
+							const paymentMethods = await stripe.paymentMethods.list({
+								customer: customer.id,
+								type: 'card',
+							});
+
+							if (paymentMethods.data.length === 0) {
+								// Solicitar que o cliente adicione um cartão
+								console.log('Cliente não possui um cartão registrado.');
+							} else {
+								// Definir o primeiro cartão encontrado como o método de pagamento padrão
+								const card = paymentMethods.data[0];
+
+								await stripe.customers.update(customer.id, {
+									invoice_settings: {
+										default_payment_method: card.id,
+									},
+								});
+								console.log(
+									'Método de pagamento padrão atualizado para o cartão.',
+								);
+							}
+
 							// Obter assinaturas ativas do cliente
 							const subscriptions = await stripe.subscriptions.list({
 								customer: customer.id,
@@ -83,34 +100,45 @@ export async function POST(req: Request) {
 								session.id,
 								{ expand: ['line_items'] }, // Expande para obter os itens da sessão
 							);
-
 							const lineItems = sessionDetails.line_items?.data || [];
-
 							const requestedPriceId = lineItems[0]?.price?.id;
 
-							// Verificar se o plano solicitado já está ativo
-							if (requestedPriceId) {
-								// Verificar se o plano solicitado já está ativo
-								const activeSubscription = subscriptions.data.find((sub) =>
-									sub.items.data.some(
-										(item) => item.price.id === requestedPriceId,
-									),
-								);
+							if (subscriptions.data.length > 0) {
+								// Cancelar a assinatura vigente, se houver
+								const activeSubscription =
+									subscriptions.data[subscriptions.data.length - 1];
+								const subscriptionId = activeSubscription.id;
 
-								if (!activeSubscription && subscriptions.data.length > 0) {
-									// Alterar o plano existente
-									const currentSubscription = subscriptions.data[0];
-									console.log({ currentSubscription });
-									await stripe.subscriptions.update(currentSubscription.id, {
-										items: [
-											{
-												id: currentSubscription.items.data[0].id,
-												price: requestedPriceId,
-											},
-										],
-										proration_behavior: 'create_prorations',
+								// Cancelar a assinatura anterior
+								await stripe.subscriptions.cancel(subscriptionId);
+								console.log(`Assinatura antiga cancelada: ${subscriptionId}`);
+
+								// Criar uma nova assinatura com o novo plano
+								if (requestedPriceId) {
+									// Verifica se há faturas pendentes ou geradas para o cliente
+									const invoices = await stripe.invoices.list({
+										customer: customer.id,
+										status: 'open',
 									});
-									console.log('Assinatura Atualizada');
+
+									if (invoices.data.length > 0) {
+										const invoice = invoices.data[0];
+										const invoiceUrl = invoice.hosted_invoice_url;
+
+										if (email && invoiceUrl) {
+											console.log(
+												`Enviando fatura prorrata para ${email}: ${invoiceUrl}`,
+											);
+											await SendInvoiceLinkAction({
+												email: email,
+												link: invoiceUrl,
+												name: name!,
+												sub: 'Envio de fatura prorrata',
+												message:
+													'Atualizamos o seu plano e estamos te enviando a fatura referente ao cancelamento da assinatura anterior.',
+											});
+										}
+									}
 								}
 							}
 

@@ -6,12 +6,16 @@ interface RecoveryPassActionProps {
 	email: string;
 	link: string;
 	name: string;
+	message?: string;
+	sub?: string;
 }
 
 export default async function SendInvoiceLinkAction({
 	email,
 	link,
 	name,
+	sub,
+	message,
 }: RecoveryPassActionProps) {
 	const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	try {
@@ -22,6 +26,8 @@ export default async function SendInvoiceLinkAction({
 				email,
 				name,
 				link,
+				sub,
+				message,
 			}),
 		});
 		return resp.json();

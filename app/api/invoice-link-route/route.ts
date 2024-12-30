@@ -5,7 +5,7 @@ import { NextResponse, NextRequest } from 'next/server';
 export async function POST(req: NextRequest) {
 	try {
 		const body = await req.json();
-		const { email, name, link } = body;
+		const { email, name, link, sub, message } = body;
 
 		if (!email || !name || !link) {
 			return NextResponse.json(
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     <html>
       <body>
         <p>Olá ${name},</p>
-        <p>Você se tornou um associado, acesse o link abaixo e tenha acesso a sua fatura e seu recibo. <br/> <strong>${link}</strong></p><br/>
+        <p>${message ?? 'Você se tornou um associado, acesse o link abaixo e tenha acesso a sua fatura e seu recibo.'} <br/> <strong>${link}</strong></p><br/>
         <p>Se você não solicitou essa assinatura, por favor, ignore este e-mail.</p>
       </body>
     </html>
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 					name: process.env.BREVO_SENDER_NAME,
 				},
 				to: [{ email }],
-				subject: 'Acesse seu recibo',
+				subject: `${sub ?? 'Acesse seu recibo'}`,
 				htmlContent,
 				// Parâmetros para substituir no template
 				// Substituir no template {{NAME}}

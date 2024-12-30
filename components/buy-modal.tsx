@@ -59,7 +59,7 @@ export default function BuyModal({ full = false }: { full: boolean }) {
 						<BuyButton
 							email={String(emailState)}
 							cpf={String(cpfState)}
-							priceType={'associate'}
+							priceType={'CLUB_VANTAGES'}
 						/>
 					</DialogFooter>
 				) : (
