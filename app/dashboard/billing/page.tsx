@@ -40,7 +40,7 @@ export default function BillingPage() {
 	const [showPaymentHistory, setShowPaymentHistory] = useState(false);
 
 	return (
-		<div className='container mx-auto px-4 py-8'>
+		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
 			<div className='space-y-6'>
 				<Card>
 					<CardHeader>
