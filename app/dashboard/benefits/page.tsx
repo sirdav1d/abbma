@@ -56,7 +56,7 @@ export default async function BenefitsPage() {
 										password={item.credential_pass!}
 									/>
 								</CardContent>
-								<CardFooter>
+								<CardFooter className='flex flex-col gap-2'>
 									{item.type == 'CLUB_VANTAGES' ? (
 										<Button
 											asChild
@@ -78,6 +78,12 @@ export default async function BenefitsPage() {
 											</Link>
 										</Button>
 									)}
+									<Button
+										size={'sm'}
+										variant={'outline'}
+										className='border-red-500 text-red-500 hover:text-slate-50 hover:bg-red-500 w-full'>
+										Cancelar Assinatura
+									</Button>
 								</CardFooter>
 							</Card>
 						);
