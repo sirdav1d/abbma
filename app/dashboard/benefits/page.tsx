@@ -14,6 +14,7 @@ import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import BtnReveal from './_components/btn-reveal';
 import { Separator } from '@/components/ui/separator';
+import CancelSubModal from '@/components/cancel-sub-modal';
 
 export default async function BenefitsPage() {
 	const tickets = await GetAllTicketsAction();
@@ -78,12 +79,10 @@ export default async function BenefitsPage() {
 											</Link>
 										</Button>
 									)}
-									<Button
-										size={'sm'}
-										variant={'outline'}
-										className='border-red-500 text-red-500 hover:text-slate-50 hover:bg-red-500 w-full'>
-										Cancelar Assinatura
-									</Button>
+									<CancelSubModal
+										planName={item.title}
+										id={item.id}
+									/>
 								</CardFooter>
 							</Card>
 						);

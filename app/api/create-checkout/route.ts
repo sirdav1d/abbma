@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 			console.log('assinatura duplicada identificada');
 			// 3. Se o cliente já tiver uma assinatura ativa, evitar nova criação
 			return NextResponse.json({
-				message: 'Este cliente já tem uma assinatura ativa para este plano.',
+				message: 'Cliente já apresenta este plano ativo.',
 				ok: false,
 				sessionId: null,
 				priceId: null,

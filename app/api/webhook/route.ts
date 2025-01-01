@@ -103,11 +103,43 @@ export async function POST(req: Request) {
 							const lineItems = sessionDetails.line_items?.data || [];
 							const requestedPriceId = lineItems[0]?.price?.id;
 
-							if (subscriptions.data.length > 0) {
+							if (subscriptions.data.length > 1) {
 								// Cancelar a assinatura vigente, se houver
 								const activeSubscription =
 									subscriptions.data[subscriptions.data.length - 1];
 								const subscriptionId = activeSubscription.id;
+
+								const oldTicket = tickets?.find(
+									(ticket) => ticket.type !== 'CLUB_VANTAGES',
+								);
+
+								if (oldTicket && myUser?.user && priceType) {
+									await updateTicketAction({
+										ticketId: oldTicket?.id,
+										userId: myUser?.user?.id,
+										type: priceType,
+									});
+									console.log('Plano Atualizado');
+								} else if (myUser?.user && priceType) {
+									let newTitle;
+									if (priceType == 'TELEMEDICINE_INDIVIDUAL') {
+										newTitle = 'Telemedicina Individual';
+									}
+
+									if (priceType == 'TELEMEDICINE_COUPLE') {
+										newTitle = 'Telemedicina Casal';
+									}
+
+									if (priceType == 'TELEMEDICINE_FAMILY') {
+										newTitle = 'Telemedicina Família';
+									}
+
+									await createTicketAction({
+										userId: myUser?.user?.id,
+										type: priceType,
+										title: newTitle!,
+									});
+								}
 
 								// Cancelar a assinatura anterior
 								await stripe.subscriptions.cancel(subscriptionId);
@@ -140,19 +172,6 @@ export async function POST(req: Request) {
 										}
 									}
 								}
-							}
-
-							const oldTicket = tickets?.find(
-								(ticket) => ticket.type !== 'CLUB_VANTAGES',
-							);
-
-							if (oldTicket && myUser?.user && priceType) {
-								await updateTicketAction({
-									ticketId: oldTicket?.id,
-									userId: myUser?.user?.id,
-									type: priceType,
-								});
-								console.log('Plano Atualizado');
 							}
 						}
 

@@ -64,6 +64,7 @@ model Ticket {
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   credential_email String?
+  stripeId         String?
   credential_pass  String?
   userId           String
   user             User       @relation(fields: [userId], references: [id])

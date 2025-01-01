@@ -9,12 +9,14 @@ interface CreateTicketProps {
 	userId: string;
 	type: $Enums.TicketType;
 	title: string;
+	stripeId?: string;
 }
 
 export async function createTicketAction({
 	userId,
 	type,
 	title,
+	stripeId,
 }: CreateTicketProps) {
 	const credentialPassword = Math.random().toString(36).slice(2);
 	const user = await prisma.user.findUnique({
@@ -28,6 +30,7 @@ export async function createTicketAction({
 				title: title,
 				credential_email: user?.email,
 				credential_pass: credentialPassword,
+				stripeId: stripeId ?? '',
 			},
 		});
 

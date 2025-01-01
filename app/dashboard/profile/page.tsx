@@ -1,8 +1,8 @@
 /** @format */
 
 import { getUserAction } from '@/actions/user/get-user';
+import DeleteAccountModal from '@/components/delete-account-modal';
 import ProfileForm from '@/components/forms/profile-form';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 import { getServerSession } from 'next-auth';
@@ -22,11 +22,7 @@ export default async function ProfilePage() {
 			</div>
 			<Separator className='my-5' />
 			<div className='w-full flex'>
-				<Button
-					variant={'outline'}
-					className='border-red-500 text-red-500 hover:text-slate-50 hover:bg-red-500 ml-auto'>
-					Excluir Conta
-				</Button>
+				<DeleteAccountModal />
 			</div>
 		</div>
 	);
