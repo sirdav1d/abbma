@@ -52,8 +52,7 @@ export async function createUserWithPaymentAction({
 		//enviar e-mail de confirmação de cadastro
 		return { success: true, message: 'Usuário cadastrado com sucesso' };
 	} catch (error) {
-		console.log(error);
 		console.log('não cadastrado');
-		return { success: false, message: 'Algo deu errado, tente novamente' };
+		return { success: false, message: `Algo deu errado - ${error}` };
 	}
 }

@@ -107,16 +107,16 @@ const profileFormSchema = z
 			.optional(),
 		password: z
 			.string()
-			.min(8, {
-				message: 'A nova senha deve ter pelo menos 8 caracteres.',
+			.min(5, {
+				message: 'A nova senha deve ter pelo menos 5 caracteres.',
 			})
 			.or(z.literal(''))
 			.optional(),
 		confirmNewPassword: z
 			.string()
-			.min(8, {
+			.min(5, {
 				message:
-					'A confirmação da nova senha deve ter pelo menos 8 caracteres.',
+					'A confirmação da nova senha deve ter pelo menos 5 caracteres.',
 			})
 			.or(z.literal(''))
 			.optional(),

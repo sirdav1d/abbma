@@ -36,7 +36,6 @@ export default async function sendSupportEmailAction({
 			return { success: true, message: 'Email enviado com sucesso!' };
 		}
 	} catch (error) {
-		console.log(error);
 		return { success: false, message: `Erro: ${error}` };
 	}
 }

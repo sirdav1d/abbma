@@ -61,8 +61,7 @@ export async function updateTicketAction({
 		//enviar e-mail de confirmação de cadastro
 		return { success: true, message: `Plano ${type} atualizado com sucesso` };
 	} catch (error) {
-		console.log(error);
 		console.log('não atualizado');
-		return { success: false, message: 'Algo deu errado, tente novamente' };
+		return { success: false, message: `Algo deu errado - ${error}` };
 	}
 }

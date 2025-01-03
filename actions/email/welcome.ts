@@ -27,6 +27,6 @@ export default async function WelcomeEmailAction({
 
 	if (!response.ok) {
 		const error = await response.json();
-		throw new Error(`Erro ao enviar e-mail: ${error.message}`);
+		return { success: false, message: `Algo deu errado - ${error}` };
 	}
 }

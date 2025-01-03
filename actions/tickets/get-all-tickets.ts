@@ -7,8 +7,12 @@ import { prisma } from '@/lib/prisma';
 export default async function GetAllTicketsAction() {
 	try {
 		const tickets = await prisma.ticket.findMany();
-		return tickets;
+		return { success: true, message: `Deu certo`, data: tickets };
 	} catch (error) {
-		console.log(error);
+		return {
+			success: false,
+			message: `Algo deu errado - ${error}`,
+			data: null,
+		};
 	}
 }

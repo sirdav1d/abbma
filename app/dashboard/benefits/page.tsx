@@ -25,7 +25,7 @@ export default async function BenefitsPage() {
 				<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 					Meus Benefícios Ativos
 				</h2>
-				{tickets?.length === 0 && (
+				{tickets?.data?.length === 0 && (
 					<div className='flex flex-col items-center justify-center gap-5 w-full'>
 						<h3 className='text-muted-foreground'>
 							Você não possui benefícios ativos
@@ -41,7 +41,7 @@ export default async function BenefitsPage() {
 					</div>
 				)}
 				<div className='w-fit grid md:grid-cols-2 gap-5'>
-					{tickets?.map((item, index) => {
+					{tickets?.data?.map((item, index) => {
 						return (
 							<Card key={index}>
 								<CardHeader>

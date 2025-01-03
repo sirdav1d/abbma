@@ -31,7 +31,6 @@ export async function getSubscriptionsAction() {
 
 		return { subscriptions: subscriptions.data };
 	} catch (error) {
-		console.error('Erro ao obter assinaturas:', error);
-		throw new Error('Não foi possível recuperar as assinaturas.');
+		return { success: false, message: `Algo deu errado - ${error}` };
 	}
 }

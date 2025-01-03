@@ -9,7 +9,7 @@ import GetAllTicketsAction from '../tickets/get-all-tickets';
 export async function deleteUserAction(email: string) {
 	try {
 		const tickets = await GetAllTicketsAction();
-		tickets?.map((ticket) => {
+		tickets?.data?.map((ticket) => {
 			deleteTicketsAction({ id: ticket.id });
 		});
 

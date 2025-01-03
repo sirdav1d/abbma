@@ -109,7 +109,7 @@ export async function POST(req: Request) {
 									subscriptions.data[subscriptions.data.length - 1];
 								const subscriptionId = activeSubscription.id;
 
-								const oldTicket = tickets?.find(
+								const oldTicket = tickets?.data?.find(
 									(ticket) => ticket.type !== 'CLUB_VANTAGES',
 								);
 
@@ -175,7 +175,7 @@ export async function POST(req: Request) {
 							}
 						}
 
-						if (tickets?.length === 0) {
+						if (tickets?.data?.length === 0) {
 							await createTicketAction({
 								title: 'Clube de Vantagens',
 								type: 'CLUB_VANTAGES',

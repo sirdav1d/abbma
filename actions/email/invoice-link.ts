@@ -32,6 +32,6 @@ export default async function SendInvoiceLinkAction({
 		});
 		return resp.json();
 	} catch (error) {
-		console.log(error);
+		return { success: false, message: `Algo deu errado - ${error}` };
 	}
 }

@@ -14,13 +14,26 @@ export default function DeleteAccountBtn() {
 
 	const session = useSession();
 
+	const baseURL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
 	async function handleCancelSubscription() {
 		setLoading(true);
+
+		const cancel = await fetch(`${baseURL}/api/cancel-sub`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				id: 'id', // Aqui você substitui pelo nome do plano que o usuário deseja cancelar
+			}),
+		});
+
+		console.log(cancel);
 
 		try {
 			if (session.data?.user) {
 				const response = await deleteUserAction(session.data.user.email);
-
 				if (!response.ok) {
 					toast.error('Erro ao excluir conta', {
 						description: String(response.error),

@@ -11,6 +11,7 @@ interface CreateUserProps {
 	password: string;
 	name: string;
 	phone: string | null;
+	cpf: string;
 }
 
 export async function createUserAction({
@@ -18,6 +19,7 @@ export async function createUserAction({
 	name,
 	phone,
 	password,
+	cpf,
 }: CreateUserProps) {
 	try {
 		const existUser = await prisma.user.findUnique({
@@ -37,6 +39,7 @@ export async function createUserAction({
 				phone,
 				name,
 				password: await bcrypt.hash(password, 10),
+				cpf: cpf,
 			},
 		});
 		console.log('cadastrado');
@@ -47,11 +50,10 @@ export async function createUserAction({
 			user: user,
 		};
 	} catch (error) {
-		console.log(error);
 		console.log('não cadastrado');
 		return {
 			success: false,
-			message: 'Algo deu errado, tente novamente',
+			message: `Algo deu errado - ${error}`,
 			user: null,
 		};
 	}

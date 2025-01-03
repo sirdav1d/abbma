@@ -32,13 +32,13 @@ export default async function DashboardPage() {
 	};
 
 	const activeTicketTypes =
-		tickets?.map((ticket) => {
+		tickets?.data?.map((ticket) => {
 			// Mapear o tipo do ticket para a categoria principal, se aplicável
 			return benefitTypeMapping[ticket.type] || ticket.type;
 		}) || [];
 
 	const activeTicketTypesUp =
-		tickets?.map((ticket) => {
+		tickets?.data?.map((ticket) => {
 			// Mapear o tipo do ticket para a categoria principal, se aplicável
 			return ticket.type;
 		}) || [];

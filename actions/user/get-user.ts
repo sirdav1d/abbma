@@ -22,11 +22,10 @@ export async function getUserAction(email: string) {
 		}
 		return { success: false, message: 'Usuário não encontrado', user: null };
 	} catch (error) {
-		console.log(error);
 		console.log('não encontrado');
 		return {
 			success: false,
-			message: 'Algo deu errado, tente novamente',
+			message: `Algo deu errado - ${error}`,
 			user: null,
 		};
 	}

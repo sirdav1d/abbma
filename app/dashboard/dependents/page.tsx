@@ -46,12 +46,12 @@ export default function DependentsPage() {
 	return (
 		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty capitalize'>
-				Gerencie seus dependentes
+				Gerencie Seus Dependentes
 			</h2>
 			<Card className='mt-5'>
 				<CardHeader>
 					<div className='flex justify-between md:items-center md:flex-row flex-col gap-5'>
-						<CardTitle>Seus Dependentes</CardTitle>
+						<CardTitle>Dependentes</CardTitle>
 						<Dialog
 							open={isAddingDependent}
 							onOpenChange={setIsAddingDependent}>

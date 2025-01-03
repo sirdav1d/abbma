@@ -30,6 +30,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import { Checkbox } from '../ui/checkbox';
 import WelcomeEmailAction from '@/actions/email/welcome';
+import { cpf } from 'zod-br-tax-id';
 
 const formSchema = z
 	.object({
@@ -43,6 +44,7 @@ const formSchema = z
 			.regex(/^(\+?\d{1,3})?\s?\(?\d{2,3}\)?\s?\d{4,5}-?\d{4}$/, {
 				message: 'O número de telefone celular não é válido',
 			}),
+		cpf: cpf(),
 		confirmPass: z
 			.string()
 			.min(4, { message: 'A senha deve conter no mínimo 4 dígitos' }),
@@ -60,6 +62,7 @@ export default function RegisterForm() {
 			email: '',
 			password: '',
 			name: '',
+			cpf: '',
 			phone: '',
 			confirmPass: '',
 			terms: false,
@@ -69,10 +72,16 @@ export default function RegisterForm() {
 	const router = useRouter();
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		const { email, name, password, phone } = values;
+		const { email, name, password, phone, cpf } = values;
 
 		try {
-			const response = await createUserAction({ email, name, password, phone });
+			const response = await createUserAction({
+				email,
+				name,
+				password,
+				phone,
+				cpf,
+			});
 			const resp = await WelcomeEmailAction({ email, name, password });
 			console.log(resp);
 			if (!response.success) {
@@ -82,8 +91,7 @@ export default function RegisterForm() {
 				router.push('/login');
 			}
 		} catch (error) {
-			console.log(error);
-			toast.error('Algo deu errado. não foi possível cadastrar usuário');
+			toast.error(`Algo deu errado - ${error}`);
 		}
 	}
 
@@ -127,6 +135,23 @@ export default function RegisterForm() {
 										<Input
 											type='tel'
 											placeholder='(00) 00000 0000'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='cpf'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>CPF</FormLabel>
+									<FormControl>
+										<Input
+											type='text'
+											placeholder='000.000.000-00'
 											{...field}
 										/>
 									</FormControl>

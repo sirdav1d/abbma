@@ -40,6 +40,9 @@ export default async function RecoveryPassAction({
 		});
 		return resp.json();
 	} catch (error) {
-		console.log(error);
+		return {
+			ok: false,
+			message: error,
+		};
 	}
 }

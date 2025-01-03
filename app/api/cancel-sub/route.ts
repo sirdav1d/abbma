@@ -19,10 +19,13 @@ export async function POST(req: NextRequest) {
 			});
 		}
 
-		const { email } = session?.user;
-
 		const { id } = await req.json();
-		await deleteTicketsAction({ id: id });
+
+		if (id) {
+			await deleteTicketsAction({ id: id });
+		}
+
+		const { email } = session?.user;
 
 		if (!email) {
 			return NextResponse.json({
