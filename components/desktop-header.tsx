@@ -8,15 +8,9 @@ import { Button } from './ui/button';
 import { getServerSession } from 'next-auth';
 import { AppWindow } from 'lucide-react';
 import SignOutBtn from './sign-out';
+import { links } from '@/constants/links-header';
 
 export default async function DektopHeader() {
-	const links = [
-		{ href: '#club', label: 'Clube de Vantagens' },
-		{ href: '#tele', label: 'Telemedicina' },
-		{ href: '#seg', label: 'Saúde e Seguros' },
-		{ href: '#price', label: 'Preços' },
-	];
-
 	const session = await getServerSession();
 	return (
 		<div className='hidden md:flex w-full fixed py-4   mx-auto bg-slate-50/80 backdrop-blur-md z-50'>

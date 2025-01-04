@@ -20,10 +20,14 @@ import Link from 'next/link';
 import { benefits } from './_constants/benefits';
 import { getServerSession } from 'next-auth';
 import BuyButton from '@/components/buy-button';
+import { getUserAction } from '@/actions/user/get-user';
+import ModalAlertProfileIncomplete from '@/components/modal-alert-profile-incomplete';
 
 export default async function DashboardPage() {
 	const tickets = await GetAllTicketsAction();
 	const session = await getServerSession();
+
+	const { user } = await getUserAction(String(session?.user?.email));
 
 	const benefitTypeMapping: Record<string, string> = {
 		TELEMEDICINE_INDIVIDUAL: 'TELEMEDICINE',
@@ -192,15 +196,26 @@ export default async function DashboardPage() {
 														</Link>
 													</Button>
 												) : (
-													<BuyButton
-														size='default'
-														email={String(session?.user?.email)}
-														cpf={String(session?.user?.cpf)}
-														priceType={'TELEMEDICINE_INDIVIDUAL'}
-													/>
+													<>
+														{user?.cep ||
+														user?.neighborhood ||
+														user?.date_birth ||
+														user?.city ||
+														user?.address ? (
+															<BuyButton
+																size='default'
+																email={String(session?.user?.email)}
+																cpf={String(session?.user?.cpf)}
+																priceType={'TELEMEDICINE_INDIVIDUAL'}
+															/>
+														) : (
+															<ModalAlertProfileIncomplete />
+														)}
+													</>
 												)}
 											</CardFooter>
 										</Card>
+
 										<Card className='relative border-none'>
 											<BorderTrail
 												style={{
@@ -211,7 +226,10 @@ export default async function DashboardPage() {
 											/>
 											<CardHeader>
 												<CardTitle className='font-bold text-xl'>
-													R$44,99
+													R$44,99{' '}
+													<span className='text-sm font-normal text-red-500'>
+														( R$22,49 por vida )
+													</span>
 												</CardTitle>
 												<CardDescription>
 													PLANO CASAL + CLUBE DE VANTAGENS
@@ -244,19 +262,33 @@ export default async function DashboardPage() {
 														</Link>
 													</Button>
 												) : (
-													<BuyButton
-														size='default'
-														email={String(session?.user?.email)}
-														cpf={String(session?.user?.cpf)}
-														priceType={'TELEMEDICINE_COUPLE'}
-													/>
+													<>
+														{user?.cep ||
+														user?.neighborhood ||
+														user?.date_birth ||
+														user?.city ||
+														user?.address ? (
+															<BuyButton
+																size='default'
+																email={String(session?.user?.email)}
+																cpf={String(session?.user?.cpf)}
+																priceType={'TELEMEDICINE_COUPLE'}
+															/>
+														) : (
+															<ModalAlertProfileIncomplete />
+														)}
+													</>
 												)}
 											</CardFooter>
 										</Card>
+
 										<Card>
 											<CardHeader>
 												<CardTitle className='font-bold text-xl'>
-													R$79,99
+													R$79,99{' '}
+													<span className='text-sm font-normal text-red-500'>
+														( R$19,99 por vida )
+													</span>
 												</CardTitle>
 												<CardDescription>
 													PLANO FAMÍLIA + CLUBE DE VANTAGENS
@@ -289,12 +321,22 @@ export default async function DashboardPage() {
 														</Link>
 													</Button>
 												) : (
-													<BuyButton
-														size='default'
-														email={String(session?.user?.email)}
-														cpf={String(session?.user?.cpf)}
-														priceType={'TELEMEDICINE_FAMILY'}
-													/>
+													<>
+														{user?.cep ||
+														user?.neighborhood ||
+														user?.date_birth ||
+														user?.city ||
+														user?.address ? (
+															<BuyButton
+																size='default'
+																email={String(session?.user?.email)}
+																cpf={String(session?.user?.cpf)}
+																priceType={'TELEMEDICINE_FAMILY'}
+															/>
+														) : (
+															<ModalAlertProfileIncomplete />
+														)}
+													</>
 												)}
 											</CardFooter>
 										</Card>

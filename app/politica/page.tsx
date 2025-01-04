@@ -29,20 +29,22 @@ export default function Politica() {
 						<h2 className='font-bold text-3xl md:text-5xl'>
 							Política de Privacidade
 						</h2>
-						<p className='text-sm text-balance'>
+						<p className='text-sm md:text-md text-balance'>
 							<span className='font-bold'>
 								ASSOCIAÇÃO BRASILEIRA DE BENEFÍCIOS PARA MILITARES E AUTÔNOMOS
 								(ABBMA).
 							</span>{' '}
 							A ABBMA está comprometida com a proteção dos seus dados pessoais.
 							Esta Política explica como coletamos, usamos e compartilhamos suas
-							informações.
+							informações. Poderão ser associados da <strong>ABBMA</strong>{' '}
+							todos os militares dos âmbitos, federal, estadual e municipal e os
+							autônomos
 						</p>
 					</div>
 					<Separator />
 					<div className='py-5 flex flex-col gap-5'>
-						<h2 className='font-bold text-3xl md:text-5xl'>Dados Coletados</h2>
-						<p className='text-sm'>
+						<h3 className='font-bold text-xl md:text-3xl'>Dados Coletados</h3>
+						<p className='text-sm md:text-md'>
 							{' '}
 							<span className='font-bold'>Navegação:</span> Cookies e Google
 							Analytics
@@ -50,8 +52,8 @@ export default function Politica() {
 					</div>
 					<Separator />
 					<div className='py-5 flex flex-col gap-5'>
-						<h2 className='font-bold text-3xl md:text-5xl'>Como Coletamos</h2>
-						<ul className='text-sm'>
+						<h3 className='font-bold text-xl md:text-3xl'>Como Coletamos</h3>
+						<ul className='text-sm md:text-md'>
 							<li>Formulários de contato</li>
 							<li>Cookies</li>
 							<li>Google Analytics</li>
@@ -59,9 +61,9 @@ export default function Politica() {
 					</div>
 					<Separator />
 					<div className='py-5 flex flex-col gap-5'>
-						<h2 className='font-bold text-3xl md:text-5xl'>Finalidade</h2>
-						<p className='text-sm'>Utilizamos seus dados para:</p>
-						<ul className='text-sm'>
+						<h3 className='font-bold text-xl md:text-3xl'>Finalidade</h3>
+						<p className='text-sm md:text-md'>Utilizamos seus dados para:</p>
+						<ul className='text-sm md:text-md'>
 							<li>Atendimento ao cliente</li>
 							<li>Melhorar sua experiência no site</li>
 							<li>Análises de desempenho</li>
@@ -70,11 +72,13 @@ export default function Politica() {
 					</div>
 					<Separator />
 					<div className='py-5 flex flex-col gap-5'>
-						<h2 className='font-bold text-3xl md:text-5xl'>
+						<h3 className='font-bold text-xl md:text-3xl'>
 							Compartilhamento com Terceiros
-						</h2>
-						<p className='text-sm'>Seus dados podem ser compartilhados com:</p>
-						<ul className='text-sm'>
+						</h3>
+						<p className='text-sm md:text-md'>
+							Seus dados podem ser compartilhados com:
+						</p>
+						<ul className='text-sm md:text-md'>
 							<li>
 								<span className='font-bold'>Stripe e Mercado Pago:</span>{' '}
 								Pagamentos
@@ -86,15 +90,15 @@ export default function Politica() {
 					</div>
 					<Separator />
 					<div className='py-5 flex flex-col gap-5'>
-						<h2 className='font-bold text-3xl md:text-5xl'>
+						<h3 className='font-bold text-xl md:text-3xl'>
 							Direitos do Usuário
-						</h2>
-						<ul className='text-sm'>
+						</h3>
+						<ul className='text-sm md:text-md'>
 							<li>Acessar, corrigir ou excluir seus dados</li>
 							<li>Retirar seu consentimento</li>
 						</ul>
-						<p className='text-sm font-bold'>Contato:</p>
-						<ul className='text-sm'>
+						<p className='text-sm font-bold md:text-md'>Contato:</p>
+						<ul className='text-sm md:text-md'>
 							<li>
 								<span className='font-bold'>E-mail:</span>{' '}
 								luizfreitas@qrcontabilidade.com.br
@@ -106,20 +110,20 @@ export default function Politica() {
 					</div>
 					<Separator />
 					<div className='py-5 flex flex-col gap-5'>
-						<h2 className='font-bold text-3xl md:text-5xl'> Uso de Cookies</h2>
-						<p className='text-sm text-balance'>
+						<h3 className='font-bold text-xl md:text-3xl'> Uso de Cookies</h3>
+						<p className='text-sm text-balance md:text-md'>
 							Utilizamos cookies para melhorar a experiência no site. Você pode
 							gerenciar ou bloquear cookies no seu navegador
 						</p>
 					</div>
 					<Separator />
 					<div className='py-5 flex flex-col gap-5'>
-						<h2 className='font-bold text-3xl md:text-5xl'>Alterações</h2>
-						<p className='text-sm'>
+						<h3 className='font-bold text-xl md:text-3xl'>Alterações</h3>
+						<p className='text-sm md:text-md'>
 							Esta Política pode ser atualizada a qualquer momento. Recomendamos
 							que você revise periodicamente
 						</p>
-						<ul className='text-sm'>
+						<ul className='text-sm md:text-md'>
 							<li>
 								<span className='font-bold'>Endereço:</span> Rua Luiz Leopoldo
 								Fernandes Pinheiro, 551 - Sala 1108, Niterói

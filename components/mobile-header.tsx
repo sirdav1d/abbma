@@ -20,15 +20,9 @@ import logo from '@/assets/logo-principal.png';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import SignOutBtn from './sign-out';
+import { links } from '@/constants/links-header';
 
 export default function MobileHeader() {
-	const links = [
-		{ href: '/#club', label: 'Clube de Vantagens' },
-		{ href: '/#tele', label: 'Telemedicina' },
-		{ href: '/#seg', label: 'Saúde e Seguros' },
-		{ href: '/#price', label: 'Preços' },
-	];
-
 	const session = useSession();
 	return (
 		<Drawer modal={false}>
