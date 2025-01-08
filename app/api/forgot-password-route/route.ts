@@ -47,7 +47,6 @@ export async function POST(req: NextRequest) {
 				subject: 'Recuperação de Senha',
 				htmlContent,
 				// Parâmetros para substituir no template
-				// Substituir no template {{NAME}}
 			}),
 		});
 

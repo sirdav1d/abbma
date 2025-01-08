@@ -74,7 +74,7 @@ export default function ForgotForm() {
 
 	return (
 		<Form {...form}>
-			<Card className='bg-slate-50'>
+			<Card className='bg-slate-50 xl:max-w-md w-full'>
 				<CardHeader>
 					<CardTitle className='text-2xl'>Esqueci minha senha</CardTitle>
 					<CardDescription>

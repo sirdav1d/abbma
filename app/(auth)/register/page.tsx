@@ -11,24 +11,19 @@ import Link from 'next/link';
 export default function RegisterPage() {
 	return (
 		<div className='grid min-h-screen lg:grid-cols-2 bg-slate-200 w-full'>
-			<div className='flex flex-col gap-4 p-4  w-full h-full'>
-				<div className='flex justify-center gap-2'>
-					<Link
-						href='/'
-						className='flex items-center gap-2 font-medium'>
-						<Image
-							src={logo}
-							alt='logo ABBMA'
-							width={200}
-							height={200}
-							className='w-20 h-auto lg:w-28'></Image>
-					</Link>
-				</div>
-				<div className='flex flex-1 items-center justify-center'>
-					<div className='w-full xl:max-w-md'>
-						<RegisterForm />
-					</div>
-				</div>
+			<div className='flex flex-col gap-6 p-4  w-full h-full items-center justify-center'>
+				<Link
+					href='/'
+					className='flex items-center gap-2 font-medium'>
+					<Image
+						src={logo}
+						alt='logo ABBMA'
+						width={200}
+						height={200}
+						className=' h-auto w-28'></Image>
+				</Link>
+
+				<RegisterForm />
 			</div>
 			<div className='relative hidden bg-gradient-to-br px-5 from-blue-600 to-blue-950 lg:flex w-full h-full justify-center flex-col items-center text-balance'>
 				<FadeText>

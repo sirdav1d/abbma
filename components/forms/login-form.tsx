@@ -71,7 +71,7 @@ export default function LoginForm() {
 
 	return (
 		<Form {...form}>
-			<Card className='bg-slate-50'>
+			<Card className='bg-slate-50 xl:max-w-md w-full'>
 				<CardHeader>
 					<CardTitle className='text-2xl'>Entrar</CardTitle>
 					<CardDescription>

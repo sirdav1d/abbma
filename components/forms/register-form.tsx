@@ -97,7 +97,7 @@ export default function RegisterForm() {
 
 	return (
 		<Form {...form}>
-			<Card className='bg-slate-50 w-full'>
+			<Card className='bg-slate-50 w-full xl:max-w-md'>
 				<CardHeader>
 					<CardTitle className='text-2xl'>Cadastrar</CardTitle>
 					<CardDescription>
@@ -107,7 +107,7 @@ export default function RegisterForm() {
 				<CardContent>
 					<form
 						onSubmit={form.handleSubmit(onSubmit)}
-						className='space-y-4'>
+						className='space-y-3'>
 						<FormField
 							control={form.control}
 							name='name'

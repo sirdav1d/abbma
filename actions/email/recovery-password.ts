@@ -18,6 +18,13 @@ export default async function RecoveryPassAction({
 		where: { email },
 	});
 
+	if (!user) {
+		return {
+			ok: false,
+			message: 'E-mail não enontrado em nossa base de dados',
+		};
+	}
+
 	try {
 		const newPassword = Math.random().toString(36).slice(2);
 		const hashedPassword = await bcrypt.hash(newPassword, 10);
