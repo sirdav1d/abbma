@@ -34,7 +34,7 @@ export async function AppSidebar() {
 			<SidebarHeader />
 			<SidebarContent className='bg-slate-100'>
 				<SidebarGroup>
-					<SidebarGroupLabel>ABBMA</SidebarGroupLabel>
+					<SidebarGroupLabel>ABBMA -</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
 							<SidebarMenuItem>
