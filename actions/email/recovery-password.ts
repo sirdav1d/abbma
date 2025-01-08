@@ -45,11 +45,15 @@ export default async function RecoveryPassAction({
 				password: newPassword,
 			}),
 		});
-		return resp.json();
+
+		const data = await resp.json();
+
+		return { ok: true, message: 'e-mail enviado', data: data };
 	} catch (error) {
 		return {
 			ok: false,
 			message: error,
+			data: null,
 		};
 	}
 }

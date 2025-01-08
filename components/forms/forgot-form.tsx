@@ -59,13 +59,16 @@ export default function ForgotForm() {
 			const resp = await RecoveryPassAction({ email });
 			console.log(resp);
 
-			toast.success('E-mail de recuperação de senha enviado');
-			router.push('/login');
-			form.reset();
+			if (resp.ok) {
+				toast.success('E-mail de recuperação de senha enviado');
+				router.push('/login');
+				form.reset();
+			} else {
+				toast.error('Algo deu errado');
+			}
 		} catch (error) {
 			console.log(error);
 			toast.error('Algo deu errado');
-			form.reset();
 		}
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
