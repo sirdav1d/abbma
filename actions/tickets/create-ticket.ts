@@ -31,6 +31,7 @@ export async function createTicketAction({
 				credential_email: user?.email,
 				credential_pass: credentialPassword,
 				stripeId: stripeId ?? '',
+				status: 'PENDING',
 			},
 		});
 

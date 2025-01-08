@@ -1,7 +1,9 @@
 /** @format */
 
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
-import { Badge } from '@/components/ui/badge';
+import { getUserAction } from '@/actions/user/get-user';
+import BuyButton from '@/components/buy-button';
+import ModalAlertProfileIncomplete from '@/components/modal-alert-profile-incomplete';
 import { BorderTrail } from '@/components/ui/border-trail';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,12 +18,9 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 import { ArrowRight, CircleCheckBig, CircleSlash2 } from 'lucide-react';
+import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { benefits } from './_constants/benefits';
-import { getServerSession } from 'next-auth';
-import BuyButton from '@/components/buy-button';
-import { getUserAction } from '@/actions/user/get-user';
-import ModalAlertProfileIncomplete from '@/components/modal-alert-profile-incomplete';
 
 export default async function DashboardPage() {
 	const tickets = await GetAllTicketsAction();
@@ -81,11 +80,6 @@ export default async function DashboardPage() {
 												<benefit.icon className='h-6 w-6 mr-2' />
 												<CardTitle>{benefit.title}</CardTitle>
 											</div>
-											{isActive ? (
-												<Badge className='scale-110'>Ativo</Badge>
-											) : (
-												<Badge variant={'outline'}>Inativo</Badge>
-											)}
 										</div>
 										<CardDescription className='text-balance'>
 											{benefit.content}

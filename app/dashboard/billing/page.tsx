@@ -2,8 +2,7 @@
 
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
@@ -12,7 +11,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
 	Table,
 	TableBody,
@@ -21,7 +19,8 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { Check } from 'lucide-react';
+import { ArrowDown, ArrowUp, Check } from 'lucide-react';
+import { useState } from 'react';
 
 const planFeatures = [
 	'Clube de Vantagens',
@@ -31,9 +30,24 @@ const planFeatures = [
 ];
 
 const paymentHistory = [
-	{ date: '01/05/2024', amount: 'R$ 6,90', status: 'Pago' },
-	{ date: '01/04/2024', amount: 'R$ 6,90', status: 'Pago' },
-	{ date: '01/03/2024', amount: 'R$ 6,90', status: 'Pago' },
+	{
+		date: '01/05/2024',
+		amount: 'R$ 6,90',
+		status: 'Pago',
+		link: 'fdafdafdafdafdafda',
+	},
+	{
+		date: '01/04/2024',
+		amount: 'R$ 6,90',
+		status: 'Pago',
+		link: 'fdafdafdafdafdafda',
+	},
+	{
+		date: '01/03/2024',
+		amount: 'R$ 6,90',
+		status: 'Pago',
+		link: 'fdafdafdafdafdafda',
+	},
 ];
 
 export default function BillingPage() {
@@ -63,17 +77,19 @@ export default function BillingPage() {
 								</li>
 							))}
 						</ul>
-						<div className='flex space-x-4'>
-							<Button>Atualizar Plano</Button>
-							<Button asChild>
-								<Link href='/payment'>Assinar Agora</Link>
-							</Button>
-							<Button
-								variant='outline'
-								onClick={() => setShowPaymentHistory(!showPaymentHistory)}>
-								{showPaymentHistory ? 'Ocultar Histórico' : 'Ver Histórico'}
-							</Button>
-						</div>
+						<Button
+							className='w-full md:w-fit'
+							onClick={() => setShowPaymentHistory(!showPaymentHistory)}>
+							{showPaymentHistory ? (
+								<>
+									Ocultar Histórico <ArrowUp />
+								</>
+							) : (
+								<>
+									Ver Histórico <ArrowDown />
+								</>
+							)}
+						</Button>
 					</CardContent>
 				</Card>
 
@@ -89,6 +105,7 @@ export default function BillingPage() {
 										<TableHead>Data</TableHead>
 										<TableHead>Valor</TableHead>
 										<TableHead>Status</TableHead>
+										<TableHead>Link da Fatura</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody>
@@ -97,6 +114,7 @@ export default function BillingPage() {
 											<TableCell>{payment.date}</TableCell>
 											<TableCell>{payment.amount}</TableCell>
 											<TableCell>{payment.status}</TableCell>
+											<TableCell>{payment.link}</TableCell>
 										</TableRow>
 									))}
 								</TableBody>
