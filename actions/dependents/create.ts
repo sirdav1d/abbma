@@ -2,46 +2,67 @@
 
 'use server';
 
-import bcrypt from 'bcrypt';
-
 import { prisma } from '@/lib/prisma';
 
 interface CreateDependentProps {
-	email: string;
-	password: string;
-	name: string;
-	phone: string | null;
+	address: string;
+	cep: string;
+	city: string;
 	cpf: string;
+	date_birth: string;
+	degree: string;
+	email: string;
+	name: string;
+	phone: string;
+	neighborhood: string;
+	state: string;
+	userId: string;
 }
 
 export async function createDependentAction({
+	address,
+	cep,
+	city,
+	cpf,
+	date_birth,
+	degree,
 	email,
 	name,
 	phone,
-	cpf,
+	neighborhood,
+	state,
+	userId,
 }: CreateDependentProps) {
 	try {
 		const user = await prisma.dependent.create({
 			data: {
-				email,
-				phone,
-				name,
+				name: name,
+				degree: degree,
+				address: address,
+				cep: cep,
+				city: city,
 				cpf: cpf,
+				date_birth: date_birth,
+				email: email,
+				neighborhood: neighborhood,
+				phone: phone,
+				state: state,
+				userId: userId,
 			},
 		});
-		console.log('cadastrado');
+		console.log('depedente cadastrado');
 		//enviar e-mail de confirmação de cadastro
 		return {
 			success: true,
-			message: 'Usuário cadastrado com sucesso',
-			user: user,
+			message: 'Dependente cadastrado com sucesso',
+			dependent: user,
 		};
 	} catch (error) {
 		console.log('não cadastrado');
 		return {
 			success: false,
 			message: `Algo deu errado - ${error}`,
-			user: null,
+			dependent: null,
 		};
 	}
 }
