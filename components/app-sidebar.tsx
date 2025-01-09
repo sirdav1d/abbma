@@ -8,7 +8,6 @@ import {
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarGroupLabel,
-	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
@@ -30,11 +29,12 @@ export async function AppSidebar() {
 	const user = session && (await getUserAction(session.user.email));
 
 	return (
-		<Sidebar collapsible='icon'>
-			<SidebarHeader />
+		<Sidebar
+			collapsible='icon'
+			className=''>
 			<SidebarContent className='bg-slate-100'>
 				<SidebarGroup>
-					<SidebarGroupLabel>ABBMA -</SidebarGroupLabel>
+					<SidebarGroupLabel>ABBMA</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
 							<SidebarMenuItem>

@@ -17,6 +17,9 @@ import { ArrowRight, Plus } from 'lucide-react';
 import Link from 'next/link';
 import TableDependent from './_components/table-dependent';
 import { Separator } from '@/components/ui/separator';
+import { getServerSession } from 'next-auth';
+import { getUserAction } from '@/actions/user/get-user';
+import { redirect } from 'next/navigation';
 
 export default async function DependentsPage() {
 	const tickets = await GetAllTicketsAction();
@@ -28,8 +31,12 @@ export default async function DependentsPage() {
 		valoresProcurados.includes(elemento.type),
 	);
 
-	console.log(isAble);
+	const session = await getServerSession();
+	const user = session && (await getUserAction(session?.user.email));
 
+	if (!user) {
+		redirect('/login');
+	}
 	return (
 		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty capitalize'>
@@ -66,14 +73,18 @@ export default async function DependentsPage() {
 										Adicionar Dependente <Plus />
 									</Button>
 								</DialogTrigger>
-								<DialogContent>
+								<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-4xl overflow-scroll'>
 									<DialogHeader>
 										<DialogTitle>Adicionar Novo Dependente</DialogTitle>
 										<DialogDescription>
 											Preencha os dados do novo dependente abaixo.
 										</DialogDescription>
 									</DialogHeader>
-									<DependentForm />
+									<DependentForm
+										userId={String(user?.user?.id)}
+										user={null}
+										isUpdating={false}
+									/>
 								</DialogContent>
 							</Dialog>
 						</div>
