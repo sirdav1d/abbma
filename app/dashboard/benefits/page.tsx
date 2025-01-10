@@ -31,7 +31,7 @@ export default async function BenefitsPage() {
 						<Separator className='my-5' />
 					</div>
 				)}
-				<div className='w-fit grid md:grid-cols-2 gap-5'>
+				<div className='w-full grid grid-cols-1 mx-auto md:grid-cols-2 gap-5'>
 					{tickets?.data?.map((item, index) => {
 						return (
 							<CardBenefit
