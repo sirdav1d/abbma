@@ -2,24 +2,16 @@
 
 import GetAllDependentsAction from '@/actions/dependents/get-all';
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
-import DependentForm from '@/components/forms/dependent-form';
+import { getUserAction } from '@/actions/user/get-user';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/components/ui/dialog';
-import { ArrowRight, Plus } from 'lucide-react';
-import Link from 'next/link';
-import TableDependent from './_components/table-dependent';
 import { Separator } from '@/components/ui/separator';
+import { ArrowRight } from 'lucide-react';
 import { getServerSession } from 'next-auth';
-import { getUserAction } from '@/actions/user/get-user';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import ModalCreateDependent from './_components/modal-create-dependent';
+import TableDependent from './_components/table-dependent';
 
 export default async function DependentsPage() {
 	const tickets = await GetAllTicketsAction();
@@ -64,33 +56,21 @@ export default async function DependentsPage() {
 					<CardHeader>
 						<div className='flex justify-between md:items-center md:flex-row flex-col gap-5'>
 							<CardTitle>Dependentes</CardTitle>
-							<Dialog>
-								<DialogTrigger asChild>
-									<Button
-										size={'sm'}
-										disabled={!isAble}
-										className='disabled:opacity-50 disabled:cursor-not-allowed'>
-										Adicionar Dependente <Plus />
-									</Button>
-								</DialogTrigger>
-								<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-4xl overflow-scroll'>
-									<DialogHeader>
-										<DialogTitle>Adicionar Novo Dependente</DialogTitle>
-										<DialogDescription>
-											Preencha os dados do novo dependente abaixo.
-										</DialogDescription>
-									</DialogHeader>
-									<DependentForm
-										userId={String(user?.user?.id)}
-										user={null}
-										isUpdating={false}
-									/>
-								</DialogContent>
-							</Dialog>
+							<ModalCreateDependent
+								isAble={isAble!}
+								userId={String(user.user?.id)}
+							/>
 						</div>
 					</CardHeader>
 					<CardContent>
-						{data ? <TableDependent dependents={data} /> : <></>}
+						{data ? (
+							<TableDependent
+								dependents={data}
+								userId={String(user.user?.id)}
+							/>
+						) : (
+							<></>
+						)}
 					</CardContent>
 				</Card>
 			)}

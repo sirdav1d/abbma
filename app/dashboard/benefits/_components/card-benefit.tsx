@@ -53,10 +53,14 @@ export default function CardBenefit(props: CardBenefitProps) {
 							status={props.ticket?.status}
 						/>
 					)}
-					<CancelSubModal
-						planName={String(props.ticket?.title)}
-						id={String(props.ticket?.id)}
-					/>
+					{props.ticket.status == 'CLOSED' ? (
+						<CancelSubModal
+							planName={String(props.ticket?.title)}
+							id={String(props.ticket?.id)}
+						/>
+					) : (
+						<></>
+					)}
 				</CardFooter>
 			</Card>
 		)

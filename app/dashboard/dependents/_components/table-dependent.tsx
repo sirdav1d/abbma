@@ -1,6 +1,5 @@
 /** @format */
 
-import { Button } from '@/components/ui/button';
 import {
 	Table,
 	TableBody,
@@ -10,11 +9,12 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 import { Dependent } from '@prisma/client';
-import { Pencil, Trash2 } from 'lucide-react';
-import React from 'react';
+import ModalDeleteDependent from './modal-delete-dependent';
+import ModalUpdateDependent from './modal-update-dependent';
 
 interface TableDependentProps {
 	dependents?: Dependent[];
+	userId: string;
 }
 
 export default function TableDependent(props: TableDependentProps) {
@@ -29,27 +29,26 @@ export default function TableDependent(props: TableDependentProps) {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{props.dependents?.map((dependent) => (
-					<TableRow key={dependent.id}>
-						<TableCell>{dependent.name}</TableCell>
-						<TableCell>{dependent.degree}</TableCell>
-						<TableCell>{dependent.date_birth}</TableCell>
-						<TableCell>
-							<div className='flex space-x-2'>
-								<Button
-									variant='outline'
-									size='sm'>
-									<Pencil className='h-4 w-4' />
-								</Button>
-								<Button
-									variant='outline'
-									size='sm'>
-									<Trash2 className='h-4 w-4' />
-								</Button>
-							</div>
-						</TableCell>
-					</TableRow>
-				))}
+				{props.dependents?.map((dependent) => {
+					if (dependent.isActive) {
+						return (
+							<TableRow key={dependent.id}>
+								<TableCell>{dependent.name}</TableCell>
+								<TableCell>{dependent.degree}</TableCell>
+								<TableCell>{dependent.date_birth}</TableCell>
+								<TableCell>
+									<div className='flex space-x-2'>
+										<ModalUpdateDependent
+											userId={dependent.id}
+											dependent={dependent}
+										/>
+										<ModalDeleteDependent dependent={dependent} />
+									</div>
+								</TableCell>
+							</TableRow>
+						);
+					}
+				})}
 			</TableBody>
 		</Table>
 	) : (

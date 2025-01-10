@@ -34,7 +34,7 @@ model User {
   state        String?
   phone        String?
   Dependent    Dependent[]
-  isActive     Boolean?
+  isActive     Boolean?    @default(true)
 }
 
 model Dependent {
@@ -54,7 +54,7 @@ model Dependent {
   phone        String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  isActive     Boolean?
+  isActive     Boolean? @default(true)
 }
 
 model Ticket {
@@ -70,7 +70,7 @@ model Ticket {
   credential_pass  String?
   userId           String
   user             User       @relation(fields: [userId], references: [id])
-  isActive         Boolean?
+  isActive         Boolean?   @default(true)
 }
 
 enum Status {

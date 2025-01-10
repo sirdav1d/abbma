@@ -1,0 +1,49 @@
+/** @format */
+
+import DependentForm from '@/components/forms/dependent-form';
+import { Button } from '@/components/ui/button';
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog';
+import { Dependent } from '@prisma/client';
+import { Pencil } from 'lucide-react';
+
+interface ModalUpdateDependentProps {
+	userId: string;
+	dependent: Partial<Dependent>;
+}
+
+export default function ModalUpdateDependent({
+	dependent,
+	userId,
+}: ModalUpdateDependentProps) {
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button
+					size={'sm'}
+					className='disabled:opacity-50 disabled:cursor-not-allowed'>
+					<Pencil />
+				</Button>
+			</DialogTrigger>
+			<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-4xl overflow-scroll'>
+				<DialogHeader>
+					<DialogTitle>Adicionar Novo Dependente</DialogTitle>
+					<DialogDescription>
+						Preencha os dados do novo dependente abaixo.
+					</DialogDescription>
+				</DialogHeader>
+				<DependentForm
+					userId={userId}
+					user={dependent ?? null}
+					isUpdating={true}
+				/>
+			</DialogContent>
+		</Dialog>
+	);
+}

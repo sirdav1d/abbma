@@ -29,6 +29,7 @@ import {
 
 import { Dependent } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { updateDependentAction } from '@/actions/dependents/update';
 
 const formSchema = z.object({
 	name: z.string().min(2, {
@@ -124,11 +125,33 @@ export default function DependentForm({
 
 				if (response.success) {
 					toast.success('Dependente Cadastrado com sucesso');
+					router.refresh();
+					form.reset();
 				} else {
 					toast.error('Algo deu errado', { description: response.message });
 				}
-				router.refresh();
-				form.reset();
+			} else {
+				const response = await updateDependentAction({
+					address: address,
+					cep: cep,
+					city: city,
+					cpf: cpf,
+					date_birth: date_birth,
+					degree: degree,
+					email: email,
+					name: name,
+					neighborhood: neighborhood,
+					phone: phone,
+					state: state,
+					id: userId,
+				});
+
+				if (response.success) {
+					toast.success('Dependente Cadastrado com sucesso');
+					router.refresh();
+				} else {
+					toast.error('Algo deu errado', { description: response.message });
+				}
 			}
 		} catch (error) {
 			toast.error('Algo deu errado');
@@ -339,7 +362,15 @@ export default function DependentForm({
 				<Button
 					type='submit'
 					className='w-full'>
-					Adicionar Dependente <ArrowRight />
+					{isUpdating ? (
+						<>
+							Atualizar Dependente <ArrowRight />
+						</>
+					) : (
+						<>
+							Adicionar Dependente <ArrowRight />
+						</>
+					)}
 				</Button>
 			</form>
 		</Form>
