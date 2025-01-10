@@ -47,7 +47,7 @@ export function MySidebarMenu() {
 						className={pathname === item.url ? 'bg-primary text-slate-50' : ''}>
 						<Link href={item.url}>
 							<item.icon className='mr-2 h-4 w-4' />
-							<span className='text-base'>{item.title}</span>
+							<span className='text-base md:text-sm'>{item.title}</span>
 						</Link>
 					</SidebarMenuButton>
 				</SidebarMenuItem>

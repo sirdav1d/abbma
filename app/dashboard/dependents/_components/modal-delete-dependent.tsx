@@ -46,7 +46,7 @@ export default function ModalDeleteDependent({
 	}
 	return (
 		<Dialog>
-			<DialogTrigger>
+			<DialogTrigger asChild>
 				<Button
 					type='submit'
 					variant='destructive'
