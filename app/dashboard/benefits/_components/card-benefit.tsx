@@ -23,7 +23,7 @@ export default function CardBenefit(props: CardBenefitProps) {
 		props.ticket && (
 			<Card
 				key={props.ticket?.id}
-				className='w-full max-w-sm md:max-w-full'>
+				className='w-full max-w-xs mx-auto md:max-w-full'>
 				<CardHeader>
 					<CardTitle className='flex items-center justify-between'>
 						{props.ticket?.title}{' '}
