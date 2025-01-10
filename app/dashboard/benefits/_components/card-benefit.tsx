@@ -21,7 +21,9 @@ interface CardBenefitProps {
 export default function CardBenefit(props: CardBenefitProps) {
 	return (
 		props.ticket && (
-			<Card key={props.ticket?.id}>
+			<Card
+				key={props.ticket?.id}
+				className='w-full max-w-sm md:max-w-full'>
 				<CardHeader>
 					<CardTitle className='flex items-center justify-between'>
 						{props.ticket?.title}{' '}

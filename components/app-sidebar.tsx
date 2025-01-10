@@ -36,7 +36,7 @@ export async function AppSidebar() {
 				<SidebarGroup>
 					<SidebarGroupLabel>ABBMA</SidebarGroupLabel>
 					<SidebarGroupContent>
-						<SidebarMenu>
+						<SidebarMenu className='space-y-4'>
 							<SidebarMenuItem>
 								{user?.user?.role == 'ADMIN' && (
 									<SidebarMenuButton

@@ -39,7 +39,7 @@ export function MySidebarMenu() {
 	const pathname = usePathname();
 
 	return (
-		<>
+		<div className='space-y-2'>
 			{items.map((item) => (
 				<SidebarMenuItem key={item.title}>
 					<SidebarMenuButton
@@ -47,11 +47,11 @@ export function MySidebarMenu() {
 						className={pathname === item.url ? 'bg-primary text-slate-50' : ''}>
 						<Link href={item.url}>
 							<item.icon className='mr-2 h-4 w-4' />
-							{item.title}
+							<span className='text-base'>{item.title}</span>
 						</Link>
 					</SidebarMenuButton>
 				</SidebarMenuItem>
 			))}
-		</>
+		</div>
 	);
 }
