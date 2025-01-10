@@ -12,7 +12,7 @@ export default function HeroImage() {
 			initial={{ opacity: 0 }}
 			whileInView={{ opacity: 1 }}
 			viewport={{ once: false }}
-			transition={{ duration: 0.5 }}>
+			transition={{ duration: 0.3, delay: 0.2 }}>
 			<Image
 				src={heroImage}
 				alt='Mulher sorrindo olhando para celular'

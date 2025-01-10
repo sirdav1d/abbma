@@ -1,5 +1,6 @@
 /** @format */
 
+import { datoRequestAction } from '@/actions/datocms/datocms';
 import logo from '@/assets/logo-principal.png';
 import wppLogo from '@/assets/whatsapp-logo.png';
 import DektopHeader from '@/components/desktop-header';
@@ -15,6 +16,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Home() {
+	const { data } = await datoRequestAction();
+	console.log(data.videoHeroThumb.url);
+
 	return (
 		<main className='bg-slate-100 overflow-x-hidden '>
 			<div className='relative w-full h-full'>
@@ -41,7 +45,10 @@ export default async function Home() {
 				</div>
 				<DektopHeader />
 				<Hero />
-				<About />
+				<About
+					urlThumb={data.videoHeroThumb.url}
+					urlVideo={data.videoHero.url}
+				/>
 				<Features />
 				<Price />
 				<Faq />
