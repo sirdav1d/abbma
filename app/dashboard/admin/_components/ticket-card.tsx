@@ -1,0 +1,87 @@
+/** @format */
+
+import React from 'react';
+import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Shield, Phone, Heart, Clock, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+
+const benefitTypeIcons = {
+	'Clube de Vantagens': Shield,
+	Telemedicina: Phone,
+	'Plano de Saúde': Heart,
+};
+
+type Ticket = {
+	id: number;
+	number: string;
+	clientName: string;
+	benefitType: string;
+	status: string;
+	openDate: string;
+};
+
+export function TicketCards({ tickets }: { tickets: Ticket[] }) {
+	return (
+		<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+			{tickets.map((ticket) => {
+				const BenefitIcon =
+					benefitTypeIcons[ticket.benefitType as keyof typeof benefitTypeIcons];
+				return (
+					<Card key={ticket.id}>
+						<CardHeader>
+							<CardTitle className='flex justify-between items-center'>
+								<span>{ticket.number}</span>
+								<Badge
+									variant={
+										ticket.status === 'Pendente'
+											? 'warning'
+											: ticket.status === 'Em Andamento'
+												? 'secondary'
+												: 'success'
+									}>
+									{ticket.status === 'Pendente' && (
+										<Clock className='mr-1 h-3 w-3' />
+									)}
+									{ticket.status === 'Em Andamento' && (
+										<Clock className='mr-1 h-3 w-3' />
+									)}
+									{ticket.status === 'Concluído' && (
+										<CheckCircle className='mr-1 h-3 w-3' />
+									)}
+									{ticket.status}
+								</Badge>
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className='font-semibold'>{ticket.clientName}</p>
+							<div className='flex items-center mt-2'>
+								{BenefitIcon && <BenefitIcon className='mr-2 h-4 w-4' />}
+								<span>{ticket.benefitType}</span>
+							</div>
+							<p className='text-sm text-gray-500 mt-2'>
+								Aberto em:{' '}
+								{new Date(ticket.openDate).toLocaleDateString('pt-BR')}
+							</p>
+						</CardContent>
+						<CardFooter>
+							<Button
+								variant='link'
+								asChild
+								className='w-full'>
+								<Link href={`/dashboard/admin/${ticket.id}`}>Ver Detalhes</Link>
+							</Button>
+						</CardFooter>
+					</Card>
+				);
+			})}
+		</div>
+	);
+}

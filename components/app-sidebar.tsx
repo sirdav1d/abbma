@@ -38,7 +38,7 @@ export async function AppSidebar() {
 					<SidebarGroupContent>
 						<SidebarMenu className='space-y-4'>
 							<SidebarMenuItem>
-								{user?.user?.role == 'ADMIN' && (
+								{user?.user?.role !== 'ADMIN' && (
 									<SidebarMenuButton
 										asChild
 										variant={'default'}>
