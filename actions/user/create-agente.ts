@@ -38,6 +38,7 @@ export default async function createAgenteAction({
 				name: agent.name,
 				password: await bcrypt.hash('password', 10),
 				cpf: agent.cpf,
+				role:agent.role
 			},
 		});
 		console.log('cadastrado');
