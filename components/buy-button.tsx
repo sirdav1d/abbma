@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { $Enums } from '@prisma/client';
+
 export default function BuyButton({
 	email,
 	cpf,
@@ -18,7 +18,12 @@ export default function BuyButton({
 	email: string;
 	cpf: string;
 	size?: 'default' | 'sm' | 'lg' | 'icon';
-	priceType: $Enums.TicketType;
+	priceType:
+		| 'CLUB_VANTAGES'
+		| 'TELEMEDICINE_INDIVIDUAL'
+		| 'TELEMEDICINE_FAMILY'
+		| 'TELEMEDICINE_COUPLE'
+		| 'HEALTH_PLAN';
 }) {
 	const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
 

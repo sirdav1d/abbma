@@ -3,7 +3,7 @@
 'use client';
 
 import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { CircleHelp, Home, Inbox, UsersRound, Wallet } from 'lucide-react';
+import { CircleHelp, Home, Inbox, UsersRound } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -23,11 +23,7 @@ const items = [
 		url: '/dashboard/dependents',
 		icon: UsersRound,
 	},
-	{
-		title: 'Planos e Pagamentos',
-		url: '/dashboard/billing',
-		icon: Wallet,
-	},
+
 	{
 		title: 'Ajuda e Suporte',
 		url: '/dashboard/help',

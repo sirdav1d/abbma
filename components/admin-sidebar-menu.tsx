@@ -11,12 +11,12 @@ const items = [
 	{
 		title: 'Gestão de Tarefas',
 		url: '/dashboard/admin',
-		icon: UserCog,
+		icon: ListTodo,
 	},
 	{
 		title: 'Gestão de usuários',
 		url: '/dashboard/admin/users',
-		icon: ListTodo ,
+		icon: UserCog,
 	},
 ];
 
