@@ -12,11 +12,12 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { ChevronUp, CircleUserRound, User2, Wallet } from 'lucide-react';
+import { ChevronUp, CircleUserRound, User2 } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { AdminSidebarMenu } from './admin-sidebar-menu';
 import { MySidebarMenu } from './my-sidebar-menu';
+import PortalBtn from './portal-btn';
 import SignOutBtn from './sign-out';
 import {
 	DropdownMenu,
@@ -69,7 +70,7 @@ export async function AppSidebar() {
 								side='top'
 								className='w-[--radix-popper-anchor-width] space-y-2'>
 								<DropdownMenuItem
-									className='cursor-pointer w-full flex items-center justify-center h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
+									className='cursor-pointer w-full flex items-center justify-start h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
 									asChild>
 									<Link href={'/dashboard/profile'}>
 										<CircleUserRound />
@@ -79,10 +80,7 @@ export async function AppSidebar() {
 								<DropdownMenuItem
 									className='cursor-pointer w-full flex items-center justify-center h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
 									asChild>
-									<Link href={'/dashboard/billing'}>
-										<Wallet />
-										Portal
-									</Link>
+									<PortalBtn />
 								</DropdownMenuItem>
 								<DropdownMenuItem asChild>
 									<SignOutBtn />
