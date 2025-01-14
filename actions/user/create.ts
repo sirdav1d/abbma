@@ -40,6 +40,7 @@ export async function createUserAction({
 				name,
 				password: await bcrypt.hash(password, 10),
 				cpf: cpf,
+				role:'CLIENT'
 			},
 		});
 		console.log('cadastrado');
