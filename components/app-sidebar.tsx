@@ -12,9 +12,10 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { ChevronUp, CircleUserRound, User2, UserRoundCog } from 'lucide-react';
+import { ChevronUp, CircleUserRound, User2 } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
+import { AdminSidebarMenu } from './admin-sidebar-menu';
 import { MySidebarMenu } from './my-sidebar-menu';
 import SignOutBtn from './sign-out';
 import {
@@ -33,24 +34,24 @@ export async function AppSidebar() {
 			collapsible='icon'
 			className=''>
 			<SidebarContent className='bg-slate-100'>
+				{user?.user?.role !== 'CLIENT' && (
+					<SidebarGroup>
+						<SidebarGroupLabel>Admin</SidebarGroupLabel>
+						<SidebarGroupContent>
+							<SidebarMenu>
+								<>
+									<AdminSidebarMenu />
+								</>
+							</SidebarMenu>
+						</SidebarGroupContent>
+					</SidebarGroup>
+				)}{' '}
 				<SidebarGroup>
-					<SidebarGroupLabel>ABBMA</SidebarGroupLabel>
+					<SidebarGroupLabel>Aplicação</SidebarGroupLabel>
 					<SidebarGroupContent>
-						<SidebarMenu className='space-y-4'>
-							<SidebarMenuItem>
-								{user?.user?.role !== 'ADMIN' && (
-									<SidebarMenuButton
-										asChild
-										variant={'default'}>
-										<Link href={'/dashboard/admin'}>
-											<UserRoundCog />
-											<span>Admin</span>
-										</Link>
-									</SidebarMenuButton>
-								)}
-							</SidebarMenuItem>
+						<SidebarMenu>
 							<MySidebarMenu />
-						</SidebarMenu>
+						</SidebarMenu>{' '}
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>

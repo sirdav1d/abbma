@@ -19,6 +19,7 @@ export default function HeaderDash() {
 		'/dashboard/help': 'Ajuda e Suporte',
 		'/dashboard/profile': 'Meu Perfil',
 		'/dashboard/admin': 'Painel Admin',
+		'/dashboard/admin/users': 'Gestão de Usuários',
 	};
 
 	const pathname = usePathname();

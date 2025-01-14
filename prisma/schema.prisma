@@ -35,6 +35,7 @@ model User {
   phone        String?
   Dependent    Dependent[]
   isActive     Boolean?    @default(true)
+  isSubscribed Boolean?    @default(false)
 }
 
 model Dependent {

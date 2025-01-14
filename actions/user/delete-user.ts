@@ -3,21 +3,14 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import deleteTicketsAction from '../tickets/delete-ticket';
-import GetAllTicketsAction from '../tickets/get-all-tickets';
 
 export async function deleteUserAction(email: string) {
 	try {
-		const tickets = await GetAllTicketsAction();
-		tickets?.data?.map((ticket) => {
-			deleteTicketsAction({ id: ticket.id });
-		});
-
-		const user = await prisma.user.delete({
+		const user = await prisma.user.update({
 			where: { email: email },
-			include: {
-				Dependent: true,
-				tickets: true,
+			data: {
+				isActive: false,
+				isSubscribed: false,
 			},
 		});
 
