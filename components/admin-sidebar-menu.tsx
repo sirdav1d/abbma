@@ -3,7 +3,7 @@
 'use client';
 
 import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Home, Inbox } from 'lucide-react';
+import { ListTodo, UserCog } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -11,12 +11,12 @@ const items = [
 	{
 		title: 'Gestão de Tarefas',
 		url: '/dashboard/admin',
-		icon: Home,
+		icon: UserCog,
 	},
 	{
 		title: 'Gestão de usuários',
 		url: '/dashboard/admin/users',
-		icon: Inbox,
+		icon: ListTodo ,
 	},
 ];
 
