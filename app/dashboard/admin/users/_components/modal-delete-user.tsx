@@ -12,13 +12,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
+import { User } from '@prisma/client';
 import { ArrowRight, Loader2, Trash2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-export default function ModalDeleteUser() {
+export default function ModalDeleteUser({ user }: { user: Partial<User> }) {
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const session = useSession();
@@ -67,7 +68,7 @@ export default function ModalDeleteUser() {
 				<DialogFooter>
 					<Button
 						disabled={loading}
-						onClick={() => onSubmitDel(String(session?.data?.user?.email))}
+						onClick={() => onSubmitDel(user.email!)}
 						variant={'destructive'}
 						className='w-full disabled:opacity-50'>
 						{loading ? (

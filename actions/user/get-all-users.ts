@@ -3,12 +3,11 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
-export async function getAllUserAction(email: string) {
+export async function getAllUserAction() {
 	try {
-		const users = await prisma.user.findMany({
-			where: { email: email },
-		});
+		const users = await prisma.user.findMany({});
 
 		if (users) {
 			//enviar e-mail de confirmação de cadastro
@@ -18,6 +17,7 @@ export async function getAllUserAction(email: string) {
 				users: users,
 			};
 		}
+		revalidatePath('/dashboard/admin/users', 'layout');
 		return { success: false, message: 'Usuários não encontrados', users: null };
 	} catch (error) {
 		console.log('não encontrado');

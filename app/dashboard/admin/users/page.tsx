@@ -12,7 +12,7 @@ export default async function UsersAdminPage() {
 	if (!session?.user?.email) {
 		redirect('/dashboard');
 	}
-	const { users, success } = await getAllUserAction(session?.user?.email);
+	const { users, success } = await getAllUserAction();
 	return (
 		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty capitalize'>
@@ -20,7 +20,9 @@ export default async function UsersAdminPage() {
 			</h2>
 
 			<div className='mt-10'>
-				{users && success && <DataTableDemo data={users} />}
+				{users && success && (
+					<DataTableDemo data={users.filter((user) => user.isActive)} />
+				)}
 			</div>
 		</div>
 	);

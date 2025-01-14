@@ -20,7 +20,8 @@ import {
 } from '@/components/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '@prisma/client';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -49,6 +50,8 @@ export default function FormManage({ user }: FormManageProps) {
 		},
 	});
 
+	const router = useRouter();
+
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
 			setIsPending(true);
@@ -63,6 +66,7 @@ export default function FormManage({ user }: FormManageProps) {
 			toast.success('Usuário Atualizado - 200', {
 				description: `${name} - Usuário atualizado no banco de dados`,
 			});
+			router.refresh();
 		} catch (error) {
 			console.log(error);
 			toast.error('Algo deu errado - 500', {
@@ -152,7 +156,10 @@ export default function FormManage({ user }: FormManageProps) {
 					type='submit'
 					className='w-full'>
 					{isPending ? (
-						<span className='bg-transparent h-6 w-6 border-l border-t border-zinc-50 rounded-full animate-spin' />
+						<>
+							Atualizar
+							<Loader2 className='animate-spin' />
+						</>
 					) : (
 						<>
 							Atualizar

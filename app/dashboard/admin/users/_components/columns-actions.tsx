@@ -9,7 +9,7 @@ export default function ColumnActions({ user }: { user: Partial<User> }) {
 	return (
 		<div className='flex gap-2'>
 			<ModalManageUser user={user} />
-			<ModalDeleteUser />
+			<ModalDeleteUser user={user} />
 		</div>
 	);
 }

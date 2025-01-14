@@ -22,7 +22,7 @@ model User {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   tickets      Ticket[]
-  role         Role        @default(CLIENT)
+  role         Role
   is_militar   Boolean?
   occupation   String?
   cpf          String?

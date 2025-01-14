@@ -18,7 +18,7 @@ export async function manageUserAction({ user }: { user: Partial<User> }) {
 			},
 		});
 		console.log(resp);
-		revalidatePath('/dashboard/profile');
+		revalidatePath('/dashboard/admin/users', 'layout');
 
 		console.log('atualizado');
 		//enviar e-mail de confirmação de cadastro

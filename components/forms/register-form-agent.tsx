@@ -191,7 +191,7 @@ export default function RegisterAgentForm() {
 					className='w-full disabled:opacity-50'>
 					{form.formState.isLoading || form.formState.isSubmitting ? (
 						<>
-							Cadastrar <Loader2 className='animae-spin' />
+							Cadastrar <Loader2 className='animate-spin' />
 						</>
 					) : (
 						<>
