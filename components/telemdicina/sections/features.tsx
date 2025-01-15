@@ -23,7 +23,7 @@ export default function Features() {
 						return (
 							<Card
 								key={index}
-								className='hover:dark transition-all ease-linear duration-300 group'>
+								className='hover:dark transition-all ease-linear duration-300 group border-none'>
 								<CardHeader>
 									<CardTitle className='flex gap-5 flex-col'>
 										<item.icon className='group-hover:text-blue-400 text-blue-600 w-10 h-10' />

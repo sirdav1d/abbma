@@ -6,15 +6,15 @@ import RetStairs from '@/assets/ret-stairs';
 import segurosImage from '@/assets/segurosImage.png';
 import telemedicinaImage from '@/assets/telemedicinaImage.png';
 import vantagensImage from '@/assets/vantagensImage.png';
-import { ArrowDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import FeatureImage from '../../feature-image';
 import BlurIn from '../../ui/blur-in';
 import { Button } from '../../ui/button';
 import { FadeText } from '../../ui/fade-text';
-import Link from 'next/link';
 
 export default function Features() {
+	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const features = [
 		{
 			title: 'Clube de Vantagens',
@@ -22,6 +22,7 @@ export default function Features() {
 			description:
 				'O clube de vantagens oferece descontos exclusivos em diversos segmentos, incluindo cursos gratuitos em todo o Brasil',
 			src: vantagensImage,
+			link: `https://abbma.clubeparcerias.com.br/`,
 		},
 		{
 			title: 'Telemedicina',
@@ -29,6 +30,7 @@ export default function Features() {
 			description:
 				'Com a telemedicina, você tem acesso a atendimento médico em qualquer hora do dia, além de poder contar com consultas em diversas especialidades',
 			src: telemedicinaImage,
+			link: `${baseUrl}/telemedicina`,
 		},
 		{
 			title: 'Seguros e Planos de Saúde',
@@ -36,6 +38,7 @@ export default function Features() {
 			description:
 				'Proteja o que é mais importante! Conte com vantagens exclusivas em diversos Seguros e Planos de Saúdes, garantindo mais tranquilidade para você e sua família',
 			src: segurosImage,
+			link: 'https://turath.com.br/produtos/',
 		},
 	];
 	return (
@@ -73,10 +76,12 @@ export default function Features() {
 									<Button
 										asChild
 										className='bg-blue-700 hover:bg-blue-600 font-semibold text-slate-50'>
-										<Link href={'#price'}>
+										<a
+											href={f.link}
+											target='_blank'>
 											Saiba mais
-											<ArrowDown className='w-5 h-5 size-full scale-125' />
-										</Link>
+											<ArrowRight />
+										</a>
 									</Button>
 								</FadeText>
 							</div>
