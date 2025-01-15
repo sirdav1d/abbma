@@ -1,14 +1,14 @@
 /** @format */
 
 import React from 'react';
-import { FadeText } from '../ui/fade-text';
+import { FadeText } from '../../ui/fade-text';
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
-} from '../ui/accordion';
-import BlurIn from '../ui/blur-in';
+} from '../../ui/accordion';
+import BlurIn from '../../ui/blur-in';
 import RetCrossDark from '@/assets/ret-cross-dark';
 import RetStairs from '@/assets/ret-stairs';
 import { faq } from '@/constants/faq';
@@ -25,7 +25,7 @@ export default function Faq() {
 						<RetStairs />
 					</BlurIn>
 					<FadeText framerProps={{ show: { transition: { delay: 0.2 } } }}>
-						<h2 className='font-bold text-3xl lg:text-5xl max-w-2xl mx-auto text-slate-950'>
+						<h2 className='font-semibold text-3xl lg:text-5xl max-w-2xl mx-auto text-slate-950'>
 							Perguntas Frequentes
 						</h2>
 					</FadeText>

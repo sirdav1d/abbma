@@ -1,7 +1,7 @@
 /** @format */
 
 export const telemedicine = [
-	'Clínico Geral, 24h',
+	'Clínico Geral 24h',
 	'Cardiologista',
 	'Dermatologista',
 	'Pediatria',

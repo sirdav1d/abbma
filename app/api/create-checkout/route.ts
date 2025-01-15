@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
 			mode: 'subscription',
 			payment_method_types: ['card'],
 			success_url: `${req.headers.get('origin')}/success`,
-			cancel_url: `${req.headers.get('origin')}/`,
+			cancel_url: `${req.headers.get('origin')}/homepage`,
 			metadata: {
 				email,
 				cpf,

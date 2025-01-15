@@ -8,10 +8,10 @@ import telemedicinaImage from '@/assets/telemedicinaImage.png';
 import vantagensImage from '@/assets/vantagensImage.png';
 import { ArrowDown } from 'lucide-react';
 import Image from 'next/image';
-import FeatureImage from '../feature-image';
-import BlurIn from '../ui/blur-in';
-import { Button } from '../ui/button';
-import { FadeText } from '../ui/fade-text';
+import FeatureImage from '../../feature-image';
+import BlurIn from '../../ui/blur-in';
+import { Button } from '../../ui/button';
+import { FadeText } from '../../ui/fade-text';
 import Link from 'next/link';
 
 export default function Features() {
@@ -54,7 +54,7 @@ export default function Features() {
 									framerProps={{
 										show: { transition: { delay: 0.2 } },
 									}}>
-									<h2 className='text-3xl font-bold text-slate-950'>
+									<h2 className='text-3xl font-semibold text-slate-950'>
 										{f.title}
 									</h2>
 								</FadeText>

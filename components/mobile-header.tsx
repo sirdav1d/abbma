@@ -20,10 +20,13 @@ import logo from '@/assets/logo-principal.png';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import SignOutBtn from './sign-out';
-import { links } from '@/constants/links-header';
+import { homepageLinks } from '@/constants/links-header';
+import { usePathname } from 'next/navigation';
 
 export default function MobileHeader() {
 	const session = useSession();
+	const pathname = usePathname();
+	
 	return (
 		<Drawer modal={false}>
 			<DrawerTrigger
@@ -53,17 +56,18 @@ export default function MobileHeader() {
 				</DrawerHeader>
 				<nav className='p-4'>
 					<ul className='flex flex-col gap-5 text-base font-semibold'>
-						{links.map((l, index) => {
-							return (
-								<li
-									key={index}
-									className='hover:text-red-600 transition-all ease-linear duration-200'>
-									<DrawerClose>
-										<a href={l.href}>{l.label}</a>
-									</DrawerClose>
-								</li>
-							);
-						})}
+						{pathname == '/homepage' &&
+							homepageLinks.map((l, index) => {
+								return (
+									<li
+										key={index}
+										className='hover:text-red-600 transition-all ease-linear duration-200'>
+										<DrawerClose>
+											<a href={l.href}>{l.label}</a>
+										</DrawerClose>
+									</li>
+								);
+							})}
 					</ul>
 				</nav>
 				<DrawerFooter>

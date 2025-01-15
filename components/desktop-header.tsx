@@ -1,14 +1,13 @@
 /** @format */
 
-import React from 'react';
-import Image from 'next/image';
 import logo from '@/assets/logo-principal.png';
-import Link from 'next/link';
-import { Button } from './ui/button';
-import { getServerSession } from 'next-auth';
 import { AppWindow } from 'lucide-react';
+import { getServerSession } from 'next-auth';
+import Image from 'next/image';
+import Link from 'next/link';
+import DesktopHeaderLinks from './descktop-header-links';
 import SignOutBtn from './sign-out';
-import { links } from '@/constants/links-header';
+import { Button } from './ui/button';
 
 export default async function DektopHeader() {
 	const session = await getServerSession();
@@ -23,19 +22,7 @@ export default async function DektopHeader() {
 						height={80}></Image>
 				</Link>
 
-				<nav>
-					<ul className='flex gap-5 font-normal text-base'>
-						{links.map((l, index) => {
-							return (
-								<li
-									key={index}
-									className='hover:text-red-600 text-slate-950 transition-all ease-linear duration-200'>
-									<a href={l.href}>{l.label}</a>
-								</li>
-							);
-						})}
-					</ul>
-				</nav>
+				<DesktopHeaderLinks />
 				{!session ? (
 					<div className='flex items-center gap-3 '>
 						<Button

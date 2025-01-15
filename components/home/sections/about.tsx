@@ -1,9 +1,9 @@
 /** @format */
 
 import RetCrossDark from '@/assets/ret-cross-dark';
-import BlurIn from '../ui/blur-in';
-import { FadeText } from '../ui/fade-text';
-import HeroVideoDialog from '../ui/hero-video-dialog';
+import BlurIn from '../../ui/blur-in';
+import { FadeText } from '../../ui/fade-text';
+import HeroVideoDialog from '../../ui/hero-video-dialog';
 
 export default function About({
 	urlThumb,
@@ -23,7 +23,7 @@ export default function About({
 				</BlurIn>
 				<div className='flex flex-col w-full gap-5'>
 					<FadeText framerProps={{ show: { transition: { delay: 0.2 } } }}>
-						<h2 className='font-bold text-3xl md:text-4xl max-w-2xl mx-auto text-slate-950'>
+						<h2 className='font-semibold text-3xl md:text-4xl max-w-2xl mx-auto text-slate-950'>
 							Associação Brasileira de Benefícios para Militares e Autônomos
 						</h2>
 					</FadeText>

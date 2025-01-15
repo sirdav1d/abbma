@@ -3,10 +3,10 @@
 import { ArrowRight } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import BuyModal from '../buy-modal';
-import { Button } from '../ui/button';
-import { FadeText } from '../ui/fade-text';
-import RetroGrid from '../ui/retro-grid';
+import BuyModal from '../../buy-modal';
+import { Button } from '../../ui/button';
+import { FadeText } from '../../ui/fade-text';
+import RetroGrid from '../../ui/retro-grid';
 
 export default async function CTA() {
 	const session = await getServerSession();

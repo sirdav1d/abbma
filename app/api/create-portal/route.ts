@@ -18,6 +18,13 @@ export async function POST(req: NextRequest) {
 
 	const customer = customers.data[0];
 
+	if (!customer) {
+		return NextResponse.json(
+			{ error: 'Cliente não encontrado' },
+			{ status: 404 },
+		);
+	}
+
 	try {
 		const portalSession = await stripe.billingPortal.sessions.create({
 			customer: customer.id,

@@ -1,7 +1,7 @@
 /** @format */
 
 import { CircleCheckBig } from 'lucide-react';
-import BuyModal from '../buy-modal';
+import BuyModal from '../../buy-modal';
 import {
 	Card,
 	CardContent,
@@ -9,8 +9,8 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from '../ui/card';
-import { FadeText } from '../ui/fade-text';
+} from '../../ui/card';
+import { FadeText } from '../../ui/fade-text';
 import { associate } from '@/constants/associate';
 import { getServerSession } from 'next-auth';
 
@@ -26,7 +26,7 @@ export default async function Price() {
 						framerProps={{
 							show: { transition: { delay: 0.2 } },
 						}}>
-						<h2 className='text-3xl lg:text-5xl font-bold text-slate-950'>
+						<h2 className='text-3xl lg:text-5xl font-semibold  text-slate-950'>
 							Seja um Associado
 						</h2>
 					</FadeText>
@@ -42,7 +42,7 @@ export default async function Price() {
 				<div className='mx-auto gap-5 mt-20'>
 					<Card className='border-red-500 max-w-2xl mx-auto bg-slate-50'>
 						<CardHeader>
-							<CardTitle className='font-bold text-slate-950'>
+							<CardTitle className='font-semibold text-slate-950'>
 								6,99 Mensais
 							</CardTitle>
 							<CardDescription className='text-red-500 font-semibold'>

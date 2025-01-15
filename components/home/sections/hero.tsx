@@ -5,11 +5,11 @@ import RetCuboid from '@/assets/ret-cuboid';
 import { ArrowRight } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import BuyModal from '../buy-modal';
-import HeroImage from '../heroImage';
-import BlurIn from '../ui/blur-in';
-import { Button } from '../ui/button';
-import { FadeText } from '../ui/fade-text';
+import BuyModal from '../../buy-modal';
+import HeroImage from '../../heroImage';
+import BlurIn from '../../ui/blur-in';
+import { Button } from '../../ui/button';
+import { FadeText } from '../../ui/fade-text';
 
 export default async function Hero() {
 	const session = await getServerSession();

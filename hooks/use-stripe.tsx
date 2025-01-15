@@ -1,4 +1,5 @@
 /** @format */
+'use client';
 
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { useState, useEffect } from 'react';
@@ -26,7 +27,11 @@ export function useStripe() {
 		});
 
 		const data = await response.json();
+		if (!data.url) {
+			return { ok: false, message: 'Algo deu errado' };
+		}
 		window.location.href = data.url;
+		return { ok: true };
 	}
 
 	return { stripe, handleCreateStripePortal };
