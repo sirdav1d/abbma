@@ -4,10 +4,11 @@ import Footer from '@/components/footer';
 import Faq from '@/components/home/sections/faq';
 import About from '@/components/telemdicina/sections/about';
 import CTA from '@/components/telemdicina/sections/cta';
-import Features from '@/components/telemdicina/sections/features';
+import Benefits from '@/components/telemdicina/sections/benefits';
 import Hero from '@/components/telemdicina/sections/hero';
 import Plans from '@/components/telemdicina/sections/plans';
 import React from 'react';
+import Features from '@/components/telemdicina/sections/features';
 
 export default function TelemedicinaPage() {
 	return (
@@ -18,6 +19,7 @@ export default function TelemedicinaPage() {
 				<Hero />
 			</div>
 			<About />
+			<Benefits />
 			<Features />
 			<Plans />
 			<Faq />

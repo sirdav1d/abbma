@@ -31,14 +31,14 @@ export default function Hero() {
 							show: { transition: { delay: 0.4 } },
 						}}>
 						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							Necessitatibus repudiandae atque voluptates animi reprehenderit
+							Transforme a forma como você cuida da sua saúde com uma solução
+							moderna, eficiente e sempre acessível onde quer que esteja.
 						</p>
 					</FadeText>
 					<Button
 						asChild
 						size={'lg'}
-						className='bg-red-700 hover:bg-red-600 active:bg-red-700 max-w-xs mt-10 md:text-xl text-lg'>
+						className='bg-red-700 hover:bg-red-600 active:bg-red-700 max-w-xs mt-10 text-lg'>
 						<a href='#plans'>
 							Assine Agora <ArrowRight className='w-8 h-8 scale-125' />
 						</a>

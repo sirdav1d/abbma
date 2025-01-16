@@ -16,5 +16,7 @@ export const telemedicine = [
 	'Geriatria',
 	'Psiquiatria',
 	'Psicólogo',
-	'Envio de receita médica, pedido de exame e atestado médico',
+	'Envio de receita médica',
+	'Pedido de exame',
+	'Atestado médico',
 ];

@@ -10,8 +10,9 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
+import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
-import { ArrowRight, Undo2 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ModalAlertProfileIncomplete() {
 	return (
@@ -34,8 +35,12 @@ export default function ModalAlertProfileIncomplete() {
 				</p>
 				<DialogFooter>
 					<DialogClose asChild>
-						<Button className='w-full'>
-							Voltar <Undo2 />
+						<Button
+							asChild
+							className='w-full'>
+							<Link href={'/dashboard/profile'}>
+								Completar Perfil Agora <ArrowRight />
+							</Link>
 						</Button>
 					</DialogClose>
 				</DialogFooter>
