@@ -13,16 +13,12 @@ import Price from '@/components/home/sections/price';
 
 export default async function Home() {
 	const { data } = await datoRequestAction();
-	console.log(data.videoHeroThumb.url);
 
 	return (
 		<main className='bg-slate-100 overflow-x-hidden '>
 			<div className='relative w-full h-full'>
 				<Hero />
-				<About
-					urlThumb={data.videoHeroThumb.url}
-					urlVideo={data.videoHero.url}
-				/>
+				<About urlThumb={data.videoHeroThumb.url} />
 				<Features />
 				<Price />
 				<Faq />

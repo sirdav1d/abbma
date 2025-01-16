@@ -9,12 +9,12 @@ import BgTelemedicina from '@/components/bg-telemedicina-hero';
 
 export default function Hero() {
 	return (
-		<div className='w-full relative h-fit py-56 overflow-hidden scroll-mt-28'>
+		<div className='w-full relative max-h-[660px] md:max-h-full md:h-fit py-56 overflow-hidden md:scroll-mt-28 '>
 			<BgTelemedicina />
-			<div className='max-w-7xl w-full items-center  flex mx-auto gap-20 justify-between z-10 h-full'>
-				<div className='flex flex-col gap-5 w-2/3 justify-center z-10 '>
+			<div className='md:max-w-7xl w-full items-center md:items-start  flex md:mx-auto gap-20 justify-between z-10 h-full flex-col mx-4 max-w-80'>
+				<div className='flex flex-col gap-5 w-full md:w-2/3 justify-center z-10 '>
 					<FadeText
-						className='font-semibold text-2xl lg:text-5xl text-slate-50 md:text-balance capitalize leading-loose '
+						className='font-semibold text-2xl lg:text-5xl text-slate-50 md:text-balance capitalize md:leading-loose '
 						direction='up'
 						framerProps={{
 							show: { transition: { delay: 0.2 } },
@@ -38,13 +38,13 @@ export default function Hero() {
 					<Button
 						asChild
 						size={'lg'}
-						className='bg-red-700 hover:bg-red-600 active:bg-red-700 max-w-xs mt-10 text-xl p-6'>
+						className='bg-red-700 hover:bg-red-600 active:bg-red-700 max-w-xs mt-10 md:text-xl text-lg'>
 						<a href='#plans'>
 							Assine Agora <ArrowRight className='w-8 h-8 scale-125' />
 						</a>
 					</Button>
 				</div>
-				<div className='absolute right-20 z-20'>
+				<div className='md:absolute right-20 z-10 invisible md:visible'>
 					<Image
 						alt='telemedicina'
 						width={1200}

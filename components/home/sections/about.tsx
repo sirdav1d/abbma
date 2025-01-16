@@ -5,13 +5,7 @@ import BlurIn from '../../ui/blur-in';
 import { FadeText } from '../../ui/fade-text';
 import HeroVideoDialog from '../../ui/hero-video-dialog';
 
-export default function About({
-	urlThumb,
-	urlVideo,
-}: {
-	urlThumb: string;
-	urlVideo: string;
-}) {
+export default function About({ urlThumb }: { urlThumb: string }) {
 	return (
 		<div className='w-full h-full px-4 '>
 			<div className='mx-auto max-w-7xl py-20 justify-center items-center flex flex-col md:flex-row gap-5 relative '>
@@ -43,11 +37,9 @@ export default function About({
 					framerProps={{ show: { transition: { delay: 0.5 } } }}
 					className='w-full'>
 					<HeroVideoDialog
+						isTelemedicine={false}
 						animationStyle='top-in-bottom-out'
-						videoSrc={
-							urlVideo ??
-							'https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb'
-						}
+						videoSrc={'https://www.youtube.com/embed/Rww58Jj3eYs'}
 						thumbnailSrc={
 							urlThumb ??
 							'https://startup-template-sage.vercel.app/hero-light.png'

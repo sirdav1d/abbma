@@ -21,11 +21,11 @@ export default function Faq() {
 					<BlurIn className='absolute -right-96 -top-56 scale-75'>
 						<RetCrossDark />
 					</BlurIn>
-					<BlurIn className='absolute -left-40 top-5'>
+					<BlurIn className='absolute -left-60 top-0'>
 						<RetStairs />
 					</BlurIn>
 					<FadeText framerProps={{ show: { transition: { delay: 0.2 } } }}>
-						<h2 className='font-semibold text-3xl lg:text-5xl max-w-2xl mx-auto text-slate-950'>
+						<h2 className='font-semibold text-2xl lg:text-5xl max-w-2xl mx-auto text-slate-950'>
 							Perguntas Frequentes
 						</h2>
 					</FadeText>

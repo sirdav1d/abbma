@@ -20,7 +20,7 @@ const BlurIn = ({
 	word,
 	className,
 	variant,
-	duration,
+	duration = 0.5,
 	children = 1,
 }: BlurInProps) => {
 	const defaultVariants = {

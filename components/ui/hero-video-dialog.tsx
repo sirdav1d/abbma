@@ -25,6 +25,7 @@ interface HeroVideoProps {
 	thumbnailSrc: string;
 	thumbnailAlt?: string;
 	className?: string;
+	isTelemedicine: boolean;
 }
 
 const animationVariants = {
@@ -74,13 +75,15 @@ export default function HeroVideoDialog({
 	animationStyle = 'from-center',
 	thumbnailSrc,
 	thumbnailAlt = 'Video thumbnail',
+	isTelemedicine,
+	videoSrc,
 	className,
 }: HeroVideoProps) {
 	const [isVideoOpen, setIsVideoOpen] = useState(false);
 	const selectedAnimation = animationVariants[animationStyle];
 
 	return (
-		<div className={cn('relative', className)}>
+		<div className={cn('relative ', className)}>
 			<div
 				className='group relative cursor-pointer'
 				onClick={() => setIsVideoOpen(true)}>
@@ -113,17 +116,17 @@ export default function HeroVideoDialog({
 						animate={{ opacity: 1 }}
 						onClick={() => setIsVideoOpen(false)}
 						exit={{ opacity: 0 }}
-						className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md'>
+						className='fixed inset-0 z-[9999999999] flex items-center justify-center bg-black/50 backdrop-blur-md'>
 						<motion.div
 							{...selectedAnimation}
 							transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-							className='relative mx-4 w-full aspect-video hover:aspect-square h-full max-h-full md:mx-0 max-w-md py-16'>
+							className={`relative mx-4 w-full aspect-video hover:aspect-square h-full max-h-full md:mx-0 ${!isTelemedicine ? 'max-w-md' : 'max-w-7xl'}  py-16`}>
 							<motion.button className='absolute -top-16 right-0 rounded-full bg-neutral-900/50 p-2 text-xl text-white ring-1 backdrop-blur-md dark:bg-neutral-100/50 dark:text-black'>
 								<XIcon className='size-5' />
 							</motion.button>
 							<div className='relative isolate z-[1] size-full overflow-hidden rounded-2xl border-2 border-white'>
 								<iframe
-									src={'https://youtube.com/embed/XNShi94MADY'}
+									src={videoSrc}
 									className='size-full rounded-2xl'
 									allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
 									allowFullScreen></iframe>

@@ -14,7 +14,7 @@ export default function TelemedicinaPage() {
 		<main className='overflow-x-hidden w-full h-full min-h-screen bg-slate-50'>
 			<div
 				id='home'
-				className='mt-28 w-full '>
+				className='md:mt-28 w-full '>
 				<Hero />
 			</div>
 			<About />

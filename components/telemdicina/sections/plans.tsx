@@ -21,7 +21,7 @@ export default async function Plans() {
 		<div
 			id='plans'
 			className='max-w-7xl w-full items-center h-full flex mx-auto gap-20 justify-between z-10 py-10 flex-col'>
-			<div className='flex flex-col w-full items-center justify-center gap-5 text-center'>
+			<div className='flex flex-col w-full items-center justify-center gap-5 text-center mx-4 md:mx-0'>
 				<FadeText
 					framerProps={{
 						show: { transition: { delay: 0.2 } },
@@ -40,7 +40,7 @@ export default async function Plans() {
 				</FadeText>
 			</div>
 			<div className='grid md:grid-cols-3 gap-5'>
-				<Card className='max-w-2xl mx-auto bg-slate-50'>
+				<Card className='max-w-2xl mx-auto bg-slate-50 border-none'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950'>
 							24,99 Mensais
@@ -69,7 +69,7 @@ export default async function Plans() {
 						</CardFooter>
 					)}
 				</Card>
-				<Card className=' max-w-2xl mx-auto bg-slate-50'>
+				<Card className=' max-w-2xl mx-auto bg-slate-50 border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950'>
 							44,99 Mensais
@@ -98,7 +98,7 @@ export default async function Plans() {
 						</CardFooter>
 					)}
 				</Card>
-				<Card className='max-w-2xl mx-auto bg-slate-50'>
+				<Card className='max-w-2xl mx-auto bg-slate-50 border-none'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950'>
 							79,99 Mensais
