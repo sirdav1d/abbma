@@ -45,9 +45,7 @@ export default async function Plans() {
 						<CardTitle className='font-bold text-slate-950 '>
 							24,99 Mensais
 						</CardTitle>
-						<CardDescription >
-							Telemedicina Individual
-						</CardDescription>
+						<CardDescription>Telemedicina Individual</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<ul className='flex flex-col  gap-4 w-full '>
@@ -66,7 +64,7 @@ export default async function Plans() {
 									<li
 										key={index}
 										className='flex w-full gap-2 items-center text-slate-700 '>
-										<CircleOff className='text-red-500 w-5 h-5 size-full' />
+										<CircleOff className='text-red-600 w-5 h-5 size-full' />
 										<span className='text-sm w-full'>{item}</span>
 									</li>
 								);
@@ -75,7 +73,7 @@ export default async function Plans() {
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
 						{!session?.user && <BuyModal full={true} />}
-						<p className='text-sm italic text-red-400 text-center'>
+						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
 							limite de 2 sessões por mês
 						</p>
@@ -109,7 +107,7 @@ export default async function Plans() {
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
 						{!session?.user && <BuyModal full={true} />}
-						<p className='text-sm italic text-red-400 text-center'>
+						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
 							limite de 2 sessões por mês
 						</p>
@@ -123,9 +121,7 @@ export default async function Plans() {
 								R$19,99 por pessoa
 							</span>
 						</CardTitle>
-						<CardDescription >
-							Telemedicina Família 4 pessoas
-						</CardDescription>
+						<CardDescription>Telemedicina Família 4 pessoas</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<ul className='flex flex-col  gap-4 w-full '>
@@ -143,7 +139,7 @@ export default async function Plans() {
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
 						{!session?.user && <BuyModal full={true} />}
-						<p className='text-sm italic text-red-400 text-center'>
+						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
 							limite de 2 sessões por mês
 						</p>
