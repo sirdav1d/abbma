@@ -43,7 +43,7 @@ export default async function Plans() {
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950 '>
-							24,99 Mensais 
+							24,99 Mensais
 						</CardTitle>
 						<CardDescription className='font-semibold'>
 							Telemedicina Individual
@@ -72,7 +72,10 @@ export default async function Plans() {
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950 relative'>
-							44,99 Mensais <span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>R$22,45 por pessoa</span>
+							44,99 Mensais{' '}
+							<span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>
+								R$22,45 por pessoa
+							</span>
 						</CardTitle>
 						<CardDescription className=' font-semibold'>
 							Telemedicina Casal
@@ -101,7 +104,10 @@ export default async function Plans() {
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950 relative'>
-							79,99 Mensais <span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>R$19,99 por pessoa</span>
+							79,99 Mensais{' '}
+							<span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>
+								R$19,99 por pessoa
+							</span>
 						</CardTitle>
 						<CardDescription className=' font-semibold'>
 							Telemedicina Família
@@ -121,11 +127,10 @@ export default async function Plans() {
 							})}
 						</ul>
 					</CardContent>
-					{!session?.user && (
-						<CardFooter className='w-full flex items-center justify-center'>
-							<BuyModal full={true} />
-						</CardFooter>
-					)}
+					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
+						{!session?.user && <BuyModal full={true} />}
+						<p>* Limitados a 2 consultas no mês</p>
+					</CardFooter>
 				</Card>
 			</div>
 		</div>

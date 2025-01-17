@@ -9,6 +9,7 @@ import Hero from '@/components/telemdicina/sections/hero';
 import Plans from '@/components/telemdicina/sections/plans';
 import React from 'react';
 import Features from '@/components/telemdicina/sections/features';
+import CTAClub from '@/components/telemdicina/sections/cta-club';
 
 export default function TelemedicinaPage() {
 	return (
@@ -20,6 +21,7 @@ export default function TelemedicinaPage() {
 			</div>
 			<About />
 			<Benefits />
+			<CTAClub/>
 			<Features />
 			<Plans />
 			<Faq />
