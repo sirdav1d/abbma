@@ -7,7 +7,7 @@ import React from 'react';
 export default function Features() {
 	return (
 		<div className='max-w-7xl w-full h-full  mx-auto py-10 '>
-			<div className='mx-4 flex flex-col gap-10 md:gap-14 justify-center items-center '>
+			<div className='mx-4 flex flex-col gap-10 justify-center items-center '>
 				<div className='flex flex-col gap-5 text-center justify-center items-center'>
 					<h2 className='font-semibold text-2xl lg:text-4xl md:text-balance capitalize md:leading-loose'>
 						Principais Especialidades Médicas
@@ -19,12 +19,12 @@ export default function Features() {
 						comodidade.
 					</p>
 				</div>
-				<ul className='grid gap-3.5 md:gap-5 grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 w-full  mx-auto'>
+				<ul className='grid gap-3.5 md:gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 w-full  mx-auto items-center justify-center content-center align-middle'>
 					{telemedicine.map((item, index) => {
 						return (
 							<li
 								key={index}
-								className='flex text-center  md:justify-start items-center justify-center  text-balance gap-2 flex-shrink-0 flex-grow-0 text-base'>
+								className='flex md:justify-start items-center justify-center  text-balance gap-2 flex-shrink-0 flex-grow-0 text-base text-justify mx-auto'>
 								<CircleCheckBig className='w-5 h-5 text-green-500 flex-shrink-0' />
 								{item}
 							</li>
