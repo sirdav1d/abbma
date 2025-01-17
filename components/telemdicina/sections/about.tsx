@@ -22,7 +22,7 @@ export default function About() {
 					<h2 className='font-semibold text-2xl lg:text-4xl md:text-balance capitalize md:leading-loose'>
 						Descubra os Benefícios da ABBMA com a Medicar!
 					</h2>
-					<p className='text-balance'>
+					<p className='text-balance text-sm md:text-base'>
 						A ABBMA traz mais <strong>qualidade de vida</strong> para você e sua
 						família com uma parceria incrível:{' '}
 						<strong>Medicar, o seu plano de telemedicina 24h!</strong> Seja um

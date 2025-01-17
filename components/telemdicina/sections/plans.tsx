@@ -20,7 +20,7 @@ export default async function Plans() {
 	return (
 		<div
 			id='plans'
-			className='max-w-7xl w-full items-center h-full flex mx-auto gap-20 justify-between z-10 py-10 flex-col'>
+			className='max-w-7xl w-full items-center h-full flex mx-auto gap-10 justify-between z-10 py-10 flex-col'>
 			<div className='flex flex-col w-full items-center justify-center gap-5 text-center mx-4 md:mx-0'>
 				<FadeText
 					framerProps={{
@@ -42,8 +42,8 @@ export default async function Plans() {
 			<div className='grid md:grid-cols-3 gap-5'>
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
-						<CardTitle className='font-bold text-slate-950'>
-							24,99 Mensais
+						<CardTitle className='font-bold text-slate-950 '>
+							24,99 Mensais 
 						</CardTitle>
 						<CardDescription className='font-semibold'>
 							Telemedicina Individual
@@ -71,8 +71,8 @@ export default async function Plans() {
 				</Card>
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
-						<CardTitle className='font-bold text-slate-950'>
-							44,99 Mensais
+						<CardTitle className='font-bold text-slate-950 relative'>
+							44,99 Mensais <span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>R$22,45 por pessoa</span>
 						</CardTitle>
 						<CardDescription className=' font-semibold'>
 							Telemedicina Casal
@@ -100,8 +100,8 @@ export default async function Plans() {
 				</Card>
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
-						<CardTitle className='font-bold text-slate-950'>
-							79,99 Mensais
+						<CardTitle className='font-bold text-slate-950 relative'>
+							79,99 Mensais <span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>R$19,99 por pessoa</span>
 						</CardTitle>
 						<CardDescription className=' font-semibold'>
 							Telemedicina Família
