@@ -10,10 +10,10 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { FadeText } from '@/components/ui/fade-text';
-import { CircleCheckBig } from 'lucide-react';
+import { CircleCheckBig, CircleOff } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import React from 'react';
-import { teleIndividual } from '@/constants/tele-plans';
+import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 
 export default async function Plans() {
 	const session = await getServerSession();
@@ -45,7 +45,7 @@ export default async function Plans() {
 						<CardTitle className='font-bold text-slate-950 '>
 							24,99 Mensais
 						</CardTitle>
-						<CardDescription className='font-semibold'>
+						<CardDescription >
 							Telemedicina Individual
 						</CardDescription>
 					</CardHeader>
@@ -61,13 +61,25 @@ export default async function Plans() {
 									</li>
 								);
 							})}
+							{teleIndividual.inabilitado.map((item, index) => {
+								return (
+									<li
+										key={index}
+										className='flex w-full gap-2 items-center text-slate-700 '>
+										<CircleOff className='text-red-500 w-5 h-5 size-full' />
+										<span className='text-sm w-full'>{item}</span>
+									</li>
+								);
+							})}
 						</ul>
 					</CardContent>
-					{!session?.user && (
-						<CardFooter className='w-full flex items-center justify-center'>
-							<BuyModal full={true} />
-						</CardFooter>
-					)}
+					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
+						{!session?.user && <BuyModal full={true} />}
+						<p className='text-sm italic text-red-400 text-center'>
+							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
+							limite de 2 sessões por mês
+						</p>
+					</CardFooter>
 				</Card>
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
@@ -77,45 +89,13 @@ export default async function Plans() {
 								R$22,45 por pessoa
 							</span>
 						</CardTitle>
-						<CardDescription className=' font-semibold'>
-							Telemedicina Casal
+						<CardDescription className=''>
+							Telemedicina Casal 2 Pessoas
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<ul className='flex flex-col gap-4 w-full '>
-							{teleIndividual.habiltado.map((item, index) => {
-								return (
-									<li
-										key={index}
-										className='flex w-full gap-2 items-center text-slate-700 '>
-										<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
-										<span className='text-sm w-full'>{item}</span>
-									</li>
-								);
-							})}
-						</ul>
-					</CardContent>
-					{!session?.user && (
-						<CardFooter className='w-full flex items-center justify-center'>
-							<BuyModal full={true} />
-						</CardFooter>
-					)}
-				</Card>
-				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
-					<CardHeader>
-						<CardTitle className='font-bold text-slate-950 relative'>
-							79,99 Mensais{' '}
-							<span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>
-								R$19,99 por pessoa
-							</span>
-						</CardTitle>
-						<CardDescription className=' font-semibold'>
-							Telemedicina Família
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<ul className='flex flex-col  gap-4 w-full '>
-							{teleIndividual.habiltado.map((item, index) => {
+							{teleCouple.habiltado.map((item, index) => {
 								return (
 									<li
 										key={index}
@@ -129,7 +109,44 @@ export default async function Plans() {
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
 						{!session?.user && <BuyModal full={true} />}
-						<p>* Limitados a 2 consultas no mês</p>
+						<p className='text-sm italic text-red-400 text-center'>
+							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
+							limite de 2 sessões por mês
+						</p>
+					</CardFooter>
+				</Card>
+				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
+					<CardHeader>
+						<CardTitle className='font-bold text-slate-950 relative'>
+							79,99 Mensais{' '}
+							<span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>
+								R$19,99 por pessoa
+							</span>
+						</CardTitle>
+						<CardDescription >
+							Telemedicina Família 4 pessoas
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<ul className='flex flex-col  gap-4 w-full '>
+							{teleFamily.habiltado.map((item, index) => {
+								return (
+									<li
+										key={index}
+										className='flex w-full gap-2 items-center text-slate-700 '>
+										<CircleCheckBig className='text-green-500 w-5 h-5 size-full' />
+										<span className='text-sm w-full'>{item}</span>
+									</li>
+								);
+							})}
+						</ul>
+					</CardContent>
+					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
+						{!session?.user && <BuyModal full={true} />}
+						<p className='text-sm italic text-red-400 text-center'>
+							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
+							limite de 2 sessões por mês
+						</p>
 					</CardFooter>
 				</Card>
 			</div>

@@ -12,6 +12,10 @@ export const teleIndividual = {
 		'Psicologia *',
 		'Neurologia *',
 		'Nutricionista *',
+		'Geriatria *',
+		'Psiquiatria *',
+		'Endocrinologia *'
+
 	],
 	inabilitado: [
 		'Apenas 1 pessoa com direito a consultas',
@@ -31,6 +35,9 @@ export const teleCouple = {
 		'Psicologia *',
 		'Neurologia *',
 		'Nutricionista *',
+		'Geriatria *',
+		'Psiquiatria *',
+		'Endocrinologia *',
 		'2 pessoas com direito a consultas ilimitadas',
 		'R$24,99 por vida excedente ao plano',
 	],
@@ -48,6 +55,9 @@ export const teleFamily = {
 		'Psicologia *',
 		'Neurologia *',
 		'Nutricionista *',
+		'Geriatria *',
+		'Psiquiatria *',
+		'Endocrinologia *',
 		'4 pessoas com direito a consultas ilimitadas',
 		'R$24,99 por vida excedente ao plano',
 	],
