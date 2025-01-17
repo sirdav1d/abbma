@@ -2,9 +2,11 @@
 
 import {
 	BriefcaseMedical,
+	CalendarClock,
 	ClipboardPlus,
 	Clock,
 	Hospital,
+	IdCard,
 	MapPinHouse,
 	Sprout,
 } from 'lucide-react';
@@ -15,6 +17,16 @@ export const telemedicineBenefits = [
 		description:
 			'Consultas disponíveis 24/7, sem necessidade de agendamento prévio.',
 		icon: BriefcaseMedical,
+	}, {
+		title: 'Sem Limite de Idade',
+		description:
+			'Consultas com psicólogos e psiquiatras disponíveis rapidamente.',
+		icon: IdCard,
+	}, {
+		title: 'Sem Carência',
+		description:
+			'Consultas com psicólogos e psiquiatras disponíveis rapidamente.',
+		icon: CalendarClock,
 	},
 	{
 		title: 'Economia de Tempo',
@@ -33,9 +45,9 @@ export const telemedicineBenefits = [
 		icon: Hospital,
 	},
 	{
-		title: 'Exames e Laudos',
+		title: 'Receitas e Pedidos de Exame',
 		description:
-			'Orientação para realização de exames e interpretação dos resultados.',
+			'Receba sua receita ou pedido de exame via SMS, E-mail ou Whatsapp',
 		icon: ClipboardPlus,
 	},
 	{

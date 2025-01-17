@@ -12,7 +12,7 @@ export default function Benefits() {
 		<div
 			id='espec'
 			className='max-w-7xl w-full items-center h-full flex mx-auto gap-20 justify-between z-10 py-10'>
-			<div className='flex flex-col relative gap-10 mx-4 md:mx-0'>
+			<div className='flex flex-col relative gap-10 mx-4 xl:mx-0'>
 				<BlurIn className='absolute -left-40 top-40 scale-75'>
 					<RetStairs />
 				</BlurIn>
@@ -23,11 +23,11 @@ export default function Benefits() {
 					<RetCuboidDark />
 				</BlurIn>
 				<div className='flex flex-col gap-5 items-center justify-center text-center'>
-					<h2 className='font-semibold max-w-lg text-2xl lg:text-4xl md:text-balance capitalize md:leading-loose'>
+					<h2 className='font-semibold max-w-lg text-2xl lg:text-4xl md:text-balance capitalize '>
 						Por que Contratar Nosso Plano de Telemedicina?
 					</h2>
 				</div>
-				<div className='grid md:grid-cols-3 gap-5 '>
+				<div className='grid md:grid-cols-2 xl:grid-cols-4 gap-5 '>
 					{telemedicineBenefits.map((item, index) => {
 						return (
 							<Card

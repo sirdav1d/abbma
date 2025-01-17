@@ -11,8 +11,8 @@ export default function About() {
 		<div
 			id='about'
 			className='mt-10 py-20 mx-4 xl:mx-0'>
-			<div className='max-w-7xl w-full items-center h-full flex flex-col md:flex-row mx-auto gap-20 justify-between z-10 relative text-center md:text-left'>
-				<BlurIn className='absolute -right-80 -top-56 scale-75'>
+			<div className='max-w-7xl w-full items-center h-full flex flex-col xl:flex-row mx-auto gap-20 justify-between z-10 relative text-center md:text-left'>
+				<BlurIn className='absolute -right-96 -top-40 scale-75'>
 					<RetCrossDark />
 				</BlurIn>
 				<BlurIn className='absolute -left-80 bottom-0 scale-75'>
@@ -31,9 +31,9 @@ export default function About() {
 						já e <strong>viva com mais tranquilidade!</strong>
 					</p>
 				</div>
-				<div className='w-full'>
+				<div className='w-full '>
 					<FadeText
-						framerProps={{ show: { transition: { delay: 0.5 } } }}
+						framerProps={{ show: { transition: { delay: 0.2 } } }}
 						className='w-full'>
 						<HeroVideoDialog
 							className='z-50'

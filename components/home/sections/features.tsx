@@ -49,7 +49,7 @@ export default function Features() {
 						<div
 							id={f.id}
 							key={index}
-							className={`flex flex-col md:flex-row items-center gap-20 py-10  w-full h-full ${
+							className={`flex flex-col md:flex-row items-center gap-5 md:gap-20 py-10  w-full h-full ${
 								index == 1 && 'md:flex-row-reverse'
 							}`}>
 							<div className='flex flex-col gap-5 w-full'>

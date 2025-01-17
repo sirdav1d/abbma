@@ -8,14 +8,14 @@ import HeroVideoDialog from '../../ui/hero-video-dialog';
 export default function About({ urlThumb }: { urlThumb: string }) {
 	return (
 		<div className='w-full h-full px-4 '>
-			<div className='mx-auto max-w-7xl py-20 justify-center items-center flex flex-col md:flex-row gap-5 relative '>
+			<div className='mx-auto max-w-7xl py-20 justify-center md:justify-start items-center flex flex-col md:flex-row gap-5 relative  '>
 				<BlurIn className='absolute -left-96 bottom-5 scale-75'>
 					<RetCrossDark />
 				</BlurIn>
 				<BlurIn className='absolute -right-40 -top-40'>
 					<RetCrossDark />
 				</BlurIn>
-				<div className='flex flex-col w-full gap-5'>
+				<div className='flex flex-col w-full gap-5 items-start'>
 					<FadeText framerProps={{ show: { transition: { delay: 0.2 } } }}>
 						<h2 className='font-semibold text-3xl md:text-4xl max-w-2xl mx-auto text-slate-950'>
 							Associação Brasileira de Benefícios para Militares e Autônomos

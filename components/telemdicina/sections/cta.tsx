@@ -3,13 +3,15 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import React from 'react';
+import Image from 'next/image';
+import app2 from '@/assets/app2.jpeg'
 
 export default function CTA() {
 	return (
-		<div className='max-w-7xl w-full items-center h-full flex mx-auto gap-20 justify-between z-10 py-40 relative'>
-			<div className="bg-blue-900 absolute left-0 h-96 w-full rounded-3xl bg-[url('/blue-gradient-background-cta.jpg')]" />
-			<div className='z-10 mx-10 text-slate-50 flex flex-col gap-5 w-1/2'>
-				<h2 className='font-semibold text-2xl lg:text-4xl md:text-balance capitalize md:leading-loose'>
+		<div className='max-w-7xl w-full items-center h-full flex mx-auto gap-20 justify-between z-10 py-10 px-10 m-10  relative'>
+			<div className="bg-blue-900 absolute left-0 h-full w-full xl:rounded-3xl bg-[url('/blue-gradient-background-cta.jpg')]" />
+			<div className='z-10 mx-4 xl:mx-10 text-slate-50 flex flex-col gap-5 w-full md:w-1/2'>
+				<h2 className='font-semibold text-3xl xl:text-4xl md:text-balance capitalize md:leading-loose'>
 					Plano Corporativo
 				</h2>
 				<p>
@@ -17,7 +19,7 @@ export default function CTA() {
 					<strong>teleconsulta 24h por dia 7 dias na semana</strong> e
 					teleconsulta Especializada com agenda Médica com{' '}
 					<strong>diversos especialistas</strong>, tudo isso sem sair do local
-					de trabalho. <br />
+					de trabalho. <br /><br />
 					Nosso plano Corporativo inclui <strong>seguro de vida</strong> que
 					protege a todos aqueles que fazem o{' '}
 					<strong>melhor para sua empresa</strong>. Esses benefícios, trazem
@@ -26,11 +28,12 @@ export default function CTA() {
 				</p>
 				<Button
 					size={'lg'}
-					className='w-fit text-lg'>
+					className='w-fit xl:text-lg bg-red-700 hover:bg-red-600 active:bg-red-600'>
 					Entre em contato com nosso consultor{' '}
 					<ArrowRight className='scale-125' />
 				</Button>
-			</div>
+				
+			</div><div className='absolute right-10'><Image src={app2} width={1200} height={880} alt='Imagem app madicar' className='object-contain max-w-[480px] invisible lg:visible'></Image></div>
 		</div>
 	);
 }

@@ -26,7 +26,7 @@ export default async function Plans() {
 					framerProps={{
 						show: { transition: { delay: 0.2 } },
 					}}>
-					<h2 className='text-3xl lg:text-5xl font-semibold  text-slate-950'>
+					<h2 className='text-3xl lg:text-4xl font-semibold  text-slate-950'>
 						Seja um Associado
 					</h2>
 				</FadeText>
@@ -40,7 +40,7 @@ export default async function Plans() {
 				</FadeText>
 			</div>
 			<div className='grid md:grid-cols-3 gap-5'>
-				<Card className='max-w-2xl mx-auto bg-slate-50 border-none'>
+				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950'>
 							24,99 Mensais
@@ -69,7 +69,7 @@ export default async function Plans() {
 						</CardFooter>
 					)}
 				</Card>
-				<Card className=' max-w-2xl mx-auto bg-slate-50 border-blue-400'>
+				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950'>
 							44,99 Mensais
@@ -98,7 +98,7 @@ export default async function Plans() {
 						</CardFooter>
 					)}
 				</Card>
-				<Card className='max-w-2xl mx-auto bg-slate-50 border-none'>
+				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950'>
 							79,99 Mensais
