@@ -56,7 +56,7 @@ export default function Hero() {
 						width={1200}
 						height={1000}
 						src={app1}
-						className='md:max-w-[480px] object-contain object-center -translate-x-80  -translate-y-20 md:translate-x-64 2xl:translate-x-20 scale-90  md:-translate-y-20  xl:-translate-y-10 2xl:scale-100 z-40'></Image>
+						className='md:max-w-[480px] object-contain object-center -translate-x-[360px]  -translate-y-20 md:translate-x-64 2xl:translate-x-20 scale-90  md:-translate-y-20  xl:-translate-y-10 2xl:scale-100 z-40'></Image>
 				</div>
 			</div>
 		</div>

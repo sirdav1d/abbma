@@ -75,7 +75,7 @@ export default async function Plans() {
 						{!session?.user && <BuyModal full={true} />}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
-							limite de 2 sessões por mês
+							limite de 2 consultas por mês
 						</p>
 					</CardFooter>
 				</Card>
@@ -109,7 +109,7 @@ export default async function Plans() {
 						{!session?.user && <BuyModal full={true} />}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
-							limite de 2 sessões por mês
+							limite de 2 consultas por mês
 						</p>
 					</CardFooter>
 				</Card>
@@ -141,7 +141,7 @@ export default async function Plans() {
 						{!session?.user && <BuyModal full={true} />}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
-							limite de 2 sessões por mês
+							limite de 2 consultas por mês
 						</p>
 					</CardFooter>
 				</Card>
