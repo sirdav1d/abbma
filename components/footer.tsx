@@ -14,9 +14,8 @@ import {
 
 export default function Footer() {
 	const links = [
-		{ label: 'Clube de Vantagens', href: '#club' },
-		{ label: 'Telemedicina', href: '#tele' },
-		{ label: 'Saúde e Seguros', href: '#seg' },
+		{ label: 'Home', href: '/homepage' },
+		{ label: 'Telemedicina', href: '/telemedicina' },
 		{ label: 'Entrar', href: '/login' },
 		{ label: 'Cadastrar', href: '/register' },
 	];
@@ -28,7 +27,7 @@ export default function Footer() {
 		{ icon: <FaLinkedin size={28} />, href: '#insta' },
 	];
 	return (
-		<div className='w-full h-full px-4 bg-slate-950'>
+		<div className='w-full h-full px-4 bg-gradient-to-b from-blue-950 to-blue-900'>
 			<div className='mx-auto max-w-7xl py-20 text-center flex flex-col gap-10 relative '>
 				<div className='flex flex-col gap-10 md:gap-0 md:flex-row items-center w-full justify-between'>
 					<Link href='/'>
