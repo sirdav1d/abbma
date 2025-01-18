@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import React from 'react';
 import Image from 'next/image';
-import app2 from '@/assets/app2.jpeg'
+import app1 from '@/assets/app1.jpeg';
 
 export default function CTA() {
 	return (
@@ -15,7 +15,11 @@ export default function CTA() {
 					Plano Corporativo
 				</h2>
 				<p>
-					Os Colaboradores terão acesso a <strong>Teleconsulta 24h por dia, 7 dias por semana</strong> e consultas agendadas com diversos especialistas, tudo isso, <strong>sem sair do local de trabalho.</strong> <br /><br />
+					Os Colaboradores terão acesso a{' '}
+					<strong>Teleconsulta 24h por dia, 7 dias por semana</strong> e
+					consultas agendadas com diversos especialistas, tudo isso,{' '}
+					<strong>sem sair do local de trabalho.</strong> <br />
+					<br />
 					Nosso plano Corporativo inclui <strong>seguro de vida</strong> que
 					protege a todos aqueles que fazem o{' '}
 					<strong>melhor para sua empresa</strong>. Esses benefícios, trazem
@@ -28,8 +32,15 @@ export default function CTA() {
 					Entre em contato com nosso consultor{' '}
 					<ArrowRight className='scale-125' />
 				</Button>
-				
-			</div><div className='absolute right-10'><Image src={app2} width={1200} height={880} alt='Imagem app madicar' className='object-contain max-w-[480px] invisible lg:visible'></Image></div>
+			</div>
+			<div className='absolute right-10'>
+				<Image
+					src={app1}
+					width={1200}
+					height={880}
+					alt='Imagem app madicar'
+					className='object-contain max-w-[480px] invisible lg:visible'></Image>
+			</div>
 		</div>
 	);
 }
