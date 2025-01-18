@@ -50,7 +50,7 @@ export default function Hero() {
 						width={1200}
 						height={1000}
 						src={app1}
-						className='md:max-w-[480px] 2xl:max-w-[600px] w-full object-contain object-center  md:translate-x-40 2xl:translate-x-24  md:translate-y-40 xl:scale-110  xl:translate-y-28   z-40 rounded-xl'></Image>
+						className='md:max-w-[480px] 2xl:max-w-[600px] w-full object-contain object-center  md:translate-x-40 2xl:translate-x-20 2xl:translate-y-0  md:translate-y-40 xl:scale-110  xl:translate-y-28   z-40 rounded-xl'></Image>
 				</div>
 			</div>
 		</div>
