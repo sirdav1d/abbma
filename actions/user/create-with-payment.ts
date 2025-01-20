@@ -42,7 +42,7 @@ export async function createUserWithPaymentAction({
 						title: 'Clube de Vantagens',
 						description:
 							'usuário já fez o pagamento e aguarda acesso ao clube de vantagens',
-						status: 'OPEN',
+						status: 'PENDING',
 						type: 'CLUB_VANTAGES',
 					},
 				},
