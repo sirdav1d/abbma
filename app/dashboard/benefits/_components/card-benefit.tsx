@@ -28,7 +28,7 @@ export default function CardBenefit(props: CardBenefitProps) {
 					<CardTitle className='flex items-center justify-between'>
 						{props.ticket?.title}{' '}
 						<Badge
-							className={`${props.ticket?.status == 'PENDING' && 'bg-yellow-600 hover:bg-yellow-700'} ${props.ticket?.status == 'COMPLETED' && 'bg-blue-500 hover:bg-blue-600'} text-xs`}>
+							className={`${props.ticket?.status == 'PENDING' && 'bg-yellow-600 hover:bg-yellow-700'} ${props.ticket?.status == 'COMPLETED' && 'bg-green-500 hover:bg-green-600'} text-xs`}>
 							{props.ticket?.status}
 						</Badge>
 					</CardTitle>
