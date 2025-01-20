@@ -72,7 +72,9 @@ export async function AppSidebar() {
 								<DropdownMenuItem
 									className='cursor-pointer w-full flex items-center justify-start h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
 									asChild>
-									<Link href={'/dashboard/profile'}>
+									<Link
+										prefetch={false}
+										href={'/dashboard/profile'}>
 										<CircleUserRound />
 										Perfil
 									</Link>

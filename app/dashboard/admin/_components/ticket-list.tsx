@@ -41,12 +41,12 @@ const benefitTypeIcons = {
 };
 
 type Ticket = {
-	id: number;
-	number: string;
-	clientName: string;
-	benefitType: string;
+	id: string;
+	number: number;
+	name: string;
+	type: string;
 	status: string;
-	openDate: string;
+	createdAt: Date;
 };
 
 export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
@@ -61,19 +61,19 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 	const filteredTickets = tickets.filter(
 		(ticket) =>
 			(statusFilter === 'Todos' || ticket.status === statusFilter) &&
-			(benefitFilter === 'Todos' || ticket.benefitType === benefitFilter) &&
+			(benefitFilter === 'Todos' || ticket.type === benefitFilter) &&
 			(dateFilter === '' ||
-				new Date(ticket.openDate) >= new Date(dateFilter)) &&
+				new Date(ticket.createdAt) >= new Date(dateFilter)) &&
 			(searchQuery === '' ||
-				ticket.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				ticket.clientName.toLowerCase().includes(searchQuery.toLowerCase())),
+				ticket.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+				ticket.name.toLowerCase().includes(searchQuery.toLowerCase())),
 	);
 
 	const sortedTickets = [...filteredTickets].sort((a, b) => {
 		if (sortOrder === 'asc') {
-			return new Date(a.openDate).getTime() - new Date(b.openDate).getTime();
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		} else {
-			return new Date(b.openDate).getTime() - new Date(a.openDate).getTime();
+			return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
 		}
 	});
 
@@ -168,20 +168,20 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 							{sortedTickets.map((ticket) => {
 								const BenefitIcon =
 									benefitTypeIcons[
-										ticket.benefitType as keyof typeof benefitTypeIcons
+										ticket.type as keyof typeof benefitTypeIcons
 									];
 								return (
 									<TableRow key={ticket.id}>
-										<TableCell>{ticket.number}</TableCell>
+										<TableCell>{`T-000${ticket.number}`}</TableCell>
 										<TableCell className=' text-nowrap'>
-											{ticket.clientName}
+											{ticket.name}
 										</TableCell>
 										<TableCell className=' text-nowrap'>
 											<div className='flex items-center text-sm '>
 												{BenefitIcon && (
 													<BenefitIcon className='mr-2 h-3 w-3' />
 												)}
-												{ticket.benefitType}
+												{ticket.type}
 											</div>
 										</TableCell>
 										<TableCell>
@@ -207,7 +207,7 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 											</Badge>
 										</TableCell>
 										<TableCell className='text-center'>
-											{new Date(ticket.openDate).toLocaleDateString('pt-BR')}
+											{new Date(ticket.createdAt).toLocaleDateString('pt-BR')}
 										</TableCell>
 										<TableCell>
 											<Button

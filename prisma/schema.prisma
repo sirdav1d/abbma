@@ -36,6 +36,8 @@ model User {
   Dependent    Dependent[]
   isActive     Boolean?    @default(true)
   isSubscribed Boolean?    @default(false)
+
+ 
 }
 
 model Dependent {
@@ -60,10 +62,11 @@ model Dependent {
 
 model Ticket {
   id               String     @id @default(cuid())
+  number           Int        @default(autoincrement())
   title            String
   description      String?
   type             TicketType @default(CLUB_VANTAGES)
-  status           Status     @default(OPEN)
+  status           Status     @default(PENDING)
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   credential_email String?
@@ -72,12 +75,25 @@ model Ticket {
   userId           String
   user             User       @relation(fields: [userId], references: [id])
   isActive         Boolean?   @default(true)
+  Updates          Updates[]
+}
+
+model Updates {
+  id         String   @id @default(cuid())
+  message    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  ticket     Ticket   @relation(fields: [ticketId], references: [id])
+  authorName String
+  ticketId   String
+
 }
 
 enum Status {
-  OPEN
-  CLOSED
+  IN_PROGRESS
+  COMPLETED
   PENDING
+  CANCELED
 }
 
 enum Role {

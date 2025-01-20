@@ -20,12 +20,12 @@ const benefitTypeIcons = {
 };
 
 type Ticket = {
-	id: number;
-	number: string;
-	clientName: string;
-	benefitType: string;
+	id: string;
+	number: number;
+	name: string;
+	type: string;
 	status: string;
-	openDate: string;
+	createdAt: Date;
 };
 
 export function TicketCards({ tickets }: { tickets: Ticket[] }) {
@@ -33,12 +33,12 @@ export function TicketCards({ tickets }: { tickets: Ticket[] }) {
 		<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
 			{tickets.map((ticket) => {
 				const BenefitIcon =
-					benefitTypeIcons[ticket.benefitType as keyof typeof benefitTypeIcons];
+					benefitTypeIcons[ticket.type as keyof typeof benefitTypeIcons];
 				return (
 					<Card key={ticket.id}>
 						<CardHeader>
 							<CardTitle className='flex justify-between items-center'>
-								<span>{ticket.number}</span>
+								<span>{`T-000${ticket.number}`}</span>
 								<Badge
 									variant={
 										ticket.status === 'Pendente'
@@ -61,14 +61,14 @@ export function TicketCards({ tickets }: { tickets: Ticket[] }) {
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className='font-semibold'>{ticket.clientName}</p>
+							<p className='font-semibold'>{ticket.name}</p>
 							<div className='flex items-center mt-2'>
 								{BenefitIcon && <BenefitIcon className='mr-2 h-4 w-4' />}
-								<span>{ticket.benefitType}</span>
+								<span>{ticket.type}</span>
 							</div>
 							<p className='text-sm text-gray-500 mt-2'>
 								Aberto em:{' '}
-								{new Date(ticket.openDate).toLocaleDateString('pt-BR')}
+								{new Date(ticket.createdAt).toLocaleDateString('pt-BR')}
 							</p>
 						</CardContent>
 						<CardFooter>

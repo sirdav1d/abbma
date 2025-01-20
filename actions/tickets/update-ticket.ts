@@ -10,6 +10,7 @@ interface UpdateTicketProps {
 	type: $Enums.TicketType;
 	title?: string;
 	ticketId: string;
+	status?: $Enums.Status;
 }
 
 function getTitle(type: $Enums.TicketType) {
@@ -34,6 +35,7 @@ export async function updateTicketAction({
 	type,
 	ticketId,
 	title,
+	status
 }: UpdateTicketProps) {
 	const credentialPassword = Math.random().toString(36).slice(2);
 
@@ -41,6 +43,11 @@ export async function updateTicketAction({
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
 	});
+
+
+	if (!user) {
+		return { success: false, message: 'Usuário não encontrado' };
+	}
 	try {
 		const newTicket = await prisma.ticket.update({
 			where: { id: ticketId },
@@ -50,8 +57,18 @@ export async function updateTicketAction({
 				title: title ?? newTitle,
 				credential_email: user?.email,
 				credential_pass: credentialPassword,
+				status: status ?? 'PENDING',
 			},
 		});
+
+		await prisma.updates.create({
+			data: {
+				ticketId: newTicket.id,
+				message: `Usuário ${user.name} solicitou o plano ${type}, cadastrar suas credenciais ${credentialPassword} e ${user.email} na plataforma`,
+				authorName: user.name
+
+			}
+		})
 
 		if (!newTicket) {
 			return { success: false, message: 'Plano Não Atualizado' };

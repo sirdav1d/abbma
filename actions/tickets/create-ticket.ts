@@ -18,11 +18,18 @@ export async function createTicketAction({
 	title,
 	stripeId,
 }: CreateTicketProps) {
-	const credentialPassword = Math.random().toString(36).slice(2);
+	const credentialPassword = Math.random().toString(36).slice(2, 12);
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
 	});
+
+
 	try {
+
+		if (!user) {
+			return { success: false, message: 'Usuário não encontrado' };
+		}
+
 		const newTicket = await prisma.ticket.create({
 			data: {
 				userId: userId,
@@ -34,6 +41,15 @@ export async function createTicketAction({
 				status: 'PENDING',
 			},
 		});
+
+		await prisma.updates.create({
+			data: {
+				ticketId: newTicket.id,
+				message: `Usuário ${user.name} solicitou o plano ${type}, cadastrar suas credenciais ${credentialPassword} e ${user.email} na plataforma`,
+				authorName: user.name
+
+			}
+		})
 
 		if (!newTicket) {
 			return { success: false, message: 'Plano Não Solicitado' };

@@ -4,23 +4,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-type Ticket = {
-	id: number;
-	number: string;
-	clientName: string;
-	benefitType: string;
-	status: string;
-	openDate: string;
+type TicketCounts = {
+	total: number;
+	pending: number;
+	inProgress: number;
+	completed: number;
 };
 
-export function TicketStats({ tickets }: { tickets: Ticket[] }) {
-	const ticketCounts = {
-		total: tickets.length,
-		pending: tickets.filter((t) => t.status === 'Pendente').length,
-		inProgress: tickets.filter((t) => t.status === 'Em Andamento').length,
-		completed: tickets.filter((t) => t.status === 'Concluído').length,
-	};
-
+export function TicketStats({ tickets }: { tickets: TicketCounts }) {
 	return (
 		<div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-6'>
 			<Card>
@@ -28,9 +19,7 @@ export function TicketStats({ tickets }: { tickets: Ticket[] }) {
 					<CardTitle>Total</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<p className='text-2xl font-bold text-blue-500'>
-						{ticketCounts.total}
-					</p>
+					<p className='text-2xl font-bold text-blue-500'>{tickets.total}</p>
 				</CardContent>
 			</Card>
 			<Card>
@@ -39,7 +28,7 @@ export function TicketStats({ tickets }: { tickets: Ticket[] }) {
 				</CardHeader>
 				<CardContent>
 					<p className='text-2xl font-bold text-yellow-500'>
-						{ticketCounts.pending}
+						{tickets.pending}
 					</p>
 				</CardContent>
 			</Card>
@@ -48,7 +37,7 @@ export function TicketStats({ tickets }: { tickets: Ticket[] }) {
 					<CardTitle>Em Andamento</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<p className='text-2xl font-bold '>{ticketCounts.inProgress}</p>
+					<p className='text-2xl font-bold '>{tickets.inProgress}</p>
 				</CardContent>
 			</Card>
 			<Card>
@@ -57,7 +46,7 @@ export function TicketStats({ tickets }: { tickets: Ticket[] }) {
 				</CardHeader>
 				<CardContent>
 					<p className='text-2xl font-bold text-green-500'>
-						{ticketCounts.completed}
+						{tickets.completed}
 					</p>
 				</CardContent>
 			</Card>
