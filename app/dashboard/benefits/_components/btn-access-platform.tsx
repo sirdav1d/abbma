@@ -14,7 +14,7 @@ interface BtnAccessPlatformProps {
 export default function BtnAccessPlatform(props: BtnAccessPlatformProps) {
 	return (
 		<>
-			{props.status === 'CLOSED' ? (
+			{props.status === 'COMPLETED' ? (
 				<Button
 					asChild
 					className='w-full'>
