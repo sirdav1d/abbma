@@ -28,7 +28,7 @@ export default function CardBenefit(props: CardBenefitProps) {
 					<CardTitle className='flex items-center justify-between'>
 						{props.ticket?.title}{' '}
 						<Badge
-							className={`${props.ticket?.status == 'PENDING' && 'bg-orange-600 hover:bg-orange-700'} ${props.ticket?.status == 'CLOSED' && 'bg-blue-500 hover:bg-blue-600'} text-xs`}>
+							className={`${props.ticket?.status == 'PENDING' && 'bg-yellow-600 hover:bg-yellow-700'} ${props.ticket?.status == 'COMPLETED' && 'bg-blue-500 hover:bg-blue-600'} text-xs`}>
 							{props.ticket?.status}
 						</Badge>
 					</CardTitle>
@@ -55,7 +55,7 @@ export default function CardBenefit(props: CardBenefitProps) {
 							status={props.ticket?.status}
 						/>
 					)}
-					{props.ticket.status == 'CLOSED' ? (
+					{props.ticket.status == 'COMPLETED' ? (
 						<CancelSubModal
 							planName={String(props.ticket?.title)}
 							id={String(props.ticket?.id)}
