@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/sidebar';
 import { ChevronUp, CircleUserRound, User2 } from 'lucide-react';
 import { getServerSession } from 'next-auth';
-import Link from 'next/link';
 import { AdminSidebarMenu } from './admin-sidebar-menu';
 import { MySidebarMenu } from './my-sidebar-menu';
 import PortalBtn from './portal-btn';
@@ -72,12 +71,10 @@ export async function AppSidebar() {
 								<DropdownMenuItem
 									className='cursor-pointer w-full flex items-center justify-start h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
 									asChild>
-									<Link
-										prefetch={false}
-										href={'/dashboard/profile'}>
+									<a href={'/dashboard/profile'}>
 										<CircleUserRound />
 										Perfil
-									</Link>
+									</a>
 								</DropdownMenuItem>
 								<DropdownMenuItem
 									className='cursor-pointer w-full flex items-center justify-center h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
