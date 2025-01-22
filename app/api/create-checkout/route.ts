@@ -1,6 +1,7 @@
 /** @format */
 
 import { getUserAction } from '@/actions/user/get-user';
+import { updateUserAction } from '@/actions/user/update-user';
 import stripe from '@/lib/stripe';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
@@ -63,6 +64,10 @@ export async function POST(req: NextRequest) {
 			metadata: {
 				...metadata,
 			},
+		});
+
+		await updateUserAction({
+			user: { email: userEmail, customer_id: newCustomer.id },
 		});
 
 		customerId = newCustomer.id;

@@ -45,7 +45,7 @@ export default async function Hero() {
 							size={'lg'}
 							className='w-fit text-lg z-20 bg-slate-50 hover:bg-transparent border-slate-50 border text-blue-600 hover:text-slate-50'>
 							<Link href='/dashboard'>
-								Ir para Dahsboard <ArrowRight className='scale-150' />
+								Meus Benefícios <ArrowRight className='scale-150' />
 							</Link>
 						</Button>
 					) : (

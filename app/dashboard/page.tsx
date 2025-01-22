@@ -201,10 +201,10 @@ export default async function DashboardPage() {
 												size={100}
 											/>
 											<CardHeader>
-												<CardTitle className='font-bold text-xl'>
+												<CardTitle className='font-bold text-xl relative'>
 													R$44,99{' '}
-													<span className='text-sm font-normal text-red-500'>
-														( R$22,49 por vida )
+													<span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>
+														R$22,49 por pessoa
 													</span>
 												</CardTitle>
 												<CardDescription>
@@ -248,10 +248,10 @@ export default async function DashboardPage() {
 
 										<Card>
 											<CardHeader>
-												<CardTitle className='font-bold text-xl'>
+												<CardTitle className='font-bold text-xl relative'>
 													R$79,99{' '}
-													<span className='text-sm font-normal text-red-500'>
-														( R$19,99 por vida )
+													<span className='absolute bg-gradient-to-r from-blue-600 to-blue-800 w-fit p-3 font-normal h-fit text-sm text-white -top-10 -right-5 rounded-lg'>
+														R$19,49 por pessoa
 													</span>
 												</CardTitle>
 												<CardDescription>
