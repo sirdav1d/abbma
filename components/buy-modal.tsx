@@ -56,11 +56,7 @@ export default function BuyModal({ full = false }: { full: boolean }) {
 				</DialogHeader>
 				{show ? (
 					<DialogFooter className='flex justify-center items-center w-full'>
-						<BuyButton
-							email={String(emailState)}
-							cpf={String(cpfState)}
-							priceType={'CLUB_VANTAGES'}
-						/>
+						<BuyButton priceType={'CLUB_VANTAGES'} />
 					</DialogFooter>
 				) : (
 					<form
