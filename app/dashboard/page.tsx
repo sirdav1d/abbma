@@ -225,7 +225,7 @@ export default async function DashboardPage() {
 													})}
 												</ul>
 											</CardContent>
-											<CardFooter>
+											<CardFooter className='flex-col gap-5'>
 												{isActive &&
 												activeTicketTypesUp.includes('TELEMEDICINE_COUPLE') ? (
 													<Button
@@ -243,9 +243,14 @@ export default async function DashboardPage() {
 														priceType={'TELEMEDICINE_COUPLE'}
 													/>
 												)}
+												<a
+													href='/dashboard/dependents'
+													className=' text-sm w-full text-center hover:underline'>
+													É necessário cadastrar o dependente após a contratação
+													do plano
+												</a>
 											</CardFooter>
 										</Card>
-
 										<Card>
 											<CardHeader>
 												<CardTitle className='font-bold text-xl relative'>
@@ -272,7 +277,7 @@ export default async function DashboardPage() {
 													})}
 												</ul>
 											</CardContent>
-											<CardFooter>
+											<CardFooter className='flex-col gap-5'>
 												{isActive &&
 												activeTicketTypesUp.includes('TELEMEDICINE_FAMILY') ? (
 													<Button
@@ -290,6 +295,13 @@ export default async function DashboardPage() {
 														priceType={'TELEMEDICINE_FAMILY'}
 													/>
 												)}
+
+												<a
+													href='/dashboard/dependents'
+													className=' text-sm w-full text-center hover:underline'>
+													É necessário cadastrar os dependentes após a
+													contratação do plano
+												</a>
 											</CardFooter>
 										</Card>
 									</div>

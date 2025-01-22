@@ -9,6 +9,7 @@ import React from 'react';
 interface BtnAccessPlatformProps {
 	href: string;
 	status: $Enums.Status;
+	text?: string;
 }
 
 export default function BtnAccessPlatform(props: BtnAccessPlatformProps) {
@@ -21,7 +22,7 @@ export default function BtnAccessPlatform(props: BtnAccessPlatformProps) {
 					<Link
 						target='_blank'
 						href={props.href}>
-						Acessar Plataforma <ArrowRight />
+						{props.text ?? 'Acessar Plataforma'} <ArrowRight />
 					</Link>
 				</Button>
 			) : (
