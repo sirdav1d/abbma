@@ -62,7 +62,6 @@ export async function POST(req: NextRequest) {
 			name: userName,
 			metadata: {
 				...metadata,
-				userId: user?.id,
 			},
 		});
 

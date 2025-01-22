@@ -9,7 +9,7 @@ import { $Enums } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 
 export default function BuyButton({
-	priceType = 'CLUB_VANTAGES',
+	priceType,
 	size,
 }: {
 	size?: 'default' | 'sm' | 'lg' | 'icon';

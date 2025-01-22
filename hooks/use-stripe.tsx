@@ -42,16 +42,20 @@ export function useStripe() {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		metadata: any;
 	}) {
-		const response = await fetch('/api/create-checkout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ priceType, metadata }),
-		});
+		try {
+			const response = await fetch('/api/create-checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ priceType, metadata }),
+			});
 
-		const data = await response.json();
-		await stripe?.redirectToCheckout({ sessionId: data.sessionId });
+			const data = await response.json();
+			await stripe?.redirectToCheckout({ sessionId: data.sessionId });
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	return { stripe, handleCreateStripePortal, handleCreateStripeCheckout };
