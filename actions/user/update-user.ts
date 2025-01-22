@@ -2,56 +2,35 @@
 
 'use server';
 
-import bcrypt from 'bcrypt';
-
 import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export async function updateUserAction({ user }: { user: Partial<User> }) {
 	try {
-		if (user.password) {
-			const hashedPassword = await bcrypt.hash(user.password, 10);
-
-			const resp = await prisma.user.update({
-				where: { email: user.email },
-				data: {
-					name: user.name,
-					phone: user.phone,
-					date_birth: user.date_birth,
-					address: user.address,
-					city: user.city,
-					cep: user.cep,
-					state: user.state,
-					password: hashedPassword,
-					occupation: user.occupation,
-					is_militar: user.is_militar,
-					neighborhood: user.neighborhood,
-					updatedAt: new Date(),
-				},
-			});
-			console.log(resp);
-			revalidatePath('/dashboard/profile');
-		} else {
-			const resp2 = await prisma.user.update({
-				where: { email: user.email },
-				data: {
-					name: user.name,
-					phone: user.phone,
-					date_birth: user.date_birth,
-					address: user.address,
-					city: user.city,
-					cep: user.cep,
-					state: user.state,
-					occupation: user.occupation,
-					is_militar: user.is_militar,
-					neighborhood: user.neighborhood,
-					updatedAt: new Date(),
-				},
-			});
-			console.log(resp2);
-			revalidatePath('/dashboard/profile');
-		}
+		const resp2 = await prisma.user.update({
+			where: { email: user.email },
+			data: {
+				name: user.name,
+				phone: user.phone,
+				date_birth: user.date_birth,
+				address: user.address,
+				city: user.city,
+				cep: user.cep,
+				state: user.state,
+				occupation: user.occupation,
+				is_militar: user.is_militar,
+				neighborhood: user.neighborhood,
+				updatedAt: new Date(),
+				customer_id: user.customer_id,
+				isSubscribed: user.isSubscribed,
+				isActive: user.isActive,
+				password: user.password,
+				role: user.role,
+			},
+		});
+		console.log(resp2);
+		revalidatePath('/dashboard/profile');
 
 		console.log('atualizado');
 		//enviar e-mail de confirmação de cadastro

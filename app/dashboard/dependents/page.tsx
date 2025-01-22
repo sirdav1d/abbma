@@ -14,7 +14,7 @@ import ModalCreateDependent from './_components/modal-create-dependent';
 import TableDependent from './_components/table-dependent';
 
 export default async function DependentsPage() {
-	const tickets = await GetAllTicketsAction();
+	const tickets = await GetAllTicketsAction({ email: null });
 	const { data } = await GetAllDependentsAction();
 
 	const valoresProcurados = ['TELEMEDICINE_COUPLE', 'TELEMEDICINE_FAMILY'];

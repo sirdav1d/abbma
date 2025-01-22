@@ -1,10 +1,12 @@
 /** @format */
 
+import { getUserAction } from '@/actions/user/get-user';
 import stripe from '@/lib/stripe';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-	const { email, cpf, priceType } = await req.json();
+	const { priceType, metadata } = await req.json();
 
 	const priceAssociate = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
 
@@ -32,51 +34,44 @@ export async function POST(req: NextRequest) {
 		}
 	}
 
-	if (!email || !cpf || !priceType) {
+	const priceTypeId = getPrice(priceType);
+
+	const userSession = await getServerSession();
+
+	if (!userSession) {
 		return NextResponse.json({
-			message: 'Parâmetros obrigatórios ausentes.',
+			message: 'Usuário não autenticado.',
 			ok: false,
 		});
 	}
 
-	const priceTypeId = getPrice(priceType);
+	const userEmail = userSession.user.email;
+	const userName = userSession.user.name;
+
+	const { user } = await getUserAction(userEmail);
+
+	let customerId;
+
+	if (user?.customer_id) {
+		customerId = user?.customer_id;
+	}
+
+	if (!user?.customer_id) {
+		const newCustomer = await stripe.customers.create({
+			email: userEmail,
+			name: userName,
+			metadata: {
+				...metadata,
+				userId: user?.id,
+			},
+		});
+
+		customerId = newCustomer.id;
+	}
 
 	try {
-		const customers = await stripe.customers.list({
-			email: String(email),
-		});
-
-		let customer = customers.data[0];
-
-		if (!customer) {
-			customer = await stripe.customers.create({
-				email: String(email),
-				metadata: { cpf },
-			});
-		}
-
-		const subscriptions = await stripe.subscriptions.list({
-			customer: customer.id,
-			status: 'active',
-		});
-
-		const hasActiveSubscription = subscriptions.data.some((sub) =>
-			sub.items.data.some((item) => item.price.id === priceTypeId),
-		);
-
-		if (hasActiveSubscription) {
-			console.log('assinatura duplicada identificada');
-			// 3. Se o cliente já tiver uma assinatura ativa, evitar nova criação
-			return NextResponse.json({
-				message: 'Cliente já apresenta este plano ativo.',
-				ok: false,
-				sessionId: null,
-				priceId: null,
-			});
-		}
-
 		const session = await stripe.checkout.sessions.create({
-			customer: customer.id,
+			customer: customerId,
 			line_items: [
 				{
 					price: priceTypeId,
@@ -87,11 +82,12 @@ export async function POST(req: NextRequest) {
 			mode: 'subscription',
 			payment_method_types: ['card'],
 			success_url: `${req.headers.get('origin')}/success`,
-			cancel_url: `${req.headers.get('origin')}/homepage`,
+			cancel_url: `${req.headers.get('origin')}/dashboard`,
 			metadata: {
-				email,
-				cpf,
+				...metadata,
+				priceTypeId,
 				priceType,
+				customerId,
 			},
 			phone_number_collection: { enabled: true },
 		});

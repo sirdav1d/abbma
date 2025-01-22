@@ -46,8 +46,8 @@ export default function SuccessPage() {
 								asChild
 								size='lg'
 								className='text-lg'>
-								<Link href='/login'>
-									Fazer Login
+								<Link href='/dashboard'>
+									Área do Associado{' '}
 									<ArrowRight className=' h-4 w-4 scale-150' />
 								</Link>
 							</Button>

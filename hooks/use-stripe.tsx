@@ -34,5 +34,25 @@ export function useStripe() {
 		return { ok: true };
 	}
 
-	return { stripe, handleCreateStripePortal };
+	async function handleCreateStripeCheckout({
+		priceType,
+		metadata,
+	}: {
+		priceType: string;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		metadata: any;
+	}) {
+		const response = await fetch('/api/create-checkout', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ priceType, metadata }),
+		});
+
+		const data = await response.json();
+		await stripe?.redirectToCheckout({ sessionId: data.sessionId });
+	}
+
+	return { stripe, handleCreateStripePortal, handleCreateStripeCheckout };
 }

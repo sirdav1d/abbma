@@ -5,32 +5,24 @@
 import { prisma } from '@/lib/prisma';
 
 interface CreateDependentProps {
-	address: string;
-	cep: string;
-	city: string;
 	cpf: string;
 	date_birth: string;
 	degree: string;
 	email: string;
 	name: string;
 	phone: string;
-	neighborhood: string;
-	state: string;
+
 	userId: string;
 }
 
 export async function createDependentAction({
-	address,
-	cep,
-	city,
 	cpf,
 	date_birth,
 	degree,
 	email,
 	name,
 	phone,
-	neighborhood,
-	state,
+
 	userId,
 }: CreateDependentProps) {
 	try {
@@ -38,15 +30,13 @@ export async function createDependentAction({
 			data: {
 				name: name,
 				degree: degree,
-				address: address,
-				cep: cep,
-				city: city,
+
 				cpf: cpf,
 				date_birth: date_birth,
 				email: email,
-				neighborhood: neighborhood,
+
 				phone: phone,
-				state: state,
+
 				userId: userId,
 				isActive: true,
 			},

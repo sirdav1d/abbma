@@ -7,13 +7,13 @@ import { $Enums } from '@prisma/client';
 
 interface UpdateTicketProps {
 	userId: string;
-	type: $Enums.TicketType;
+	type?: $Enums.TicketType;
 	title?: string;
 	ticketId: string;
 	status?: $Enums.Status;
 }
 
-function getTitle(type: $Enums.TicketType) {
+function getTitle(type?: $Enums.TicketType) {
 	if (type == 'CLUB_VANTAGES') {
 		return 'Clube de Vantagens';
 	}
@@ -35,7 +35,7 @@ export async function updateTicketAction({
 	type,
 	ticketId,
 	title,
-	status
+	status,
 }: UpdateTicketProps) {
 	const credentialPassword = Math.random().toString(36).slice(2);
 
@@ -43,7 +43,6 @@ export async function updateTicketAction({
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
 	});
-
 
 	if (!user) {
 		return { success: false, message: 'Usuário não encontrado' };
@@ -64,11 +63,10 @@ export async function updateTicketAction({
 		await prisma.updates.create({
 			data: {
 				ticketId: newTicket.id,
-				message: `Usuário ${user.name} solicitou o plano ${type}, cadastrar suas credenciais ${credentialPassword} e ${user.email} na plataforma`,
-				authorName: user.name
-
-			}
-		})
+				message: `Usuário ${user.name} solicitou o plano ${getTitle(type)}, cadastrar suas credenciais ${credentialPassword} e ${user.email} na plataforma`,
+				authorName: user.name,
+			},
+		});
 
 		if (!newTicket) {
 			return { success: false, message: 'Plano Não Atualizado' };

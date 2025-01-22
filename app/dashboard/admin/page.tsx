@@ -30,15 +30,6 @@ export default async function AdminPage() {
 		completed: tickets.filter((t) => t.status === 'COMPLETED').length,
 	};
 
-	// const ticketItem = {
-	// 	id: number;
-	// 	number: string;
-	// 	clientName: string;
-	// 	benefitType: string;
-	// 	status: string;
-	// 	openDate: string;
-	// };
-
 	const ticketItems = tickets.map((ticket) => {
 		return {
 			id: ticket.id,

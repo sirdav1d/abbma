@@ -1,9 +1,7 @@
 /** @format */
 
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
-import { getUserAction } from '@/actions/user/get-user';
 import BuyButton from '@/components/buy-button';
-import ModalAlertProfileIncomplete from '@/components/modal-alert-profile-incomplete';
 import { BorderTrail } from '@/components/ui/border-trail';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,15 +16,11 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 import { ArrowRight, CircleCheckBig, CircleSlash2 } from 'lucide-react';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { benefits } from './_constants/benefits';
 
 export default async function DashboardPage() {
-	const tickets = await GetAllTicketsAction();
-	const session = await getServerSession();
-
-	const { user } = await getUserAction(String(session?.user?.email));
+	const tickets = await GetAllTicketsAction({ email: null });
 
 	const benefitTypeMapping: Record<string, string> = {
 		TELEMEDICINE_INDIVIDUAL: 'TELEMEDICINE',
@@ -116,8 +110,6 @@ export default async function DashboardPage() {
 													<BuyButton
 														priceType='CLUB_VANTAGES'
 														size='default'
-														email={String(session?.user?.email)}
-														cpf={String(session?.user?.cpf)}
 													/>
 												)}
 
@@ -184,28 +176,18 @@ export default async function DashboardPage() {
 														variant={'link'}
 														className='w-full md:w-fit'
 														asChild>
-														<Link href={'/dashboard/benefits'}>
+														<Link
+															href={'/dashboard/benefits'}
+															prefetch={false}>
 															Verificar meu benefício
 															<ArrowRight className='h-4 w-4' />
 														</Link>
 													</Button>
 												) : (
-													<>
-														{user?.cep ||
-														user?.neighborhood ||
-														user?.date_birth ||
-														user?.city ||
-														user?.address ? (
-															<BuyButton
-																size='default'
-																email={String(session?.user?.email)}
-																cpf={String(session?.user?.cpf)}
-																priceType={'TELEMEDICINE_INDIVIDUAL'}
-															/>
-														) : (
-															<ModalAlertProfileIncomplete />
-														)}
-													</>
+													<BuyButton
+														size='default'
+														priceType={'TELEMEDICINE_INDIVIDUAL'}
+													/>
 												)}
 											</CardFooter>
 										</Card>
@@ -256,22 +238,10 @@ export default async function DashboardPage() {
 														</Link>
 													</Button>
 												) : (
-													<>
-														{user?.cep ||
-														user?.neighborhood ||
-														user?.date_birth ||
-														user?.city ||
-														user?.address ? (
-															<BuyButton
-																size='default'
-																email={String(session?.user?.email)}
-																cpf={String(session?.user?.cpf)}
-																priceType={'TELEMEDICINE_COUPLE'}
-															/>
-														) : (
-															<ModalAlertProfileIncomplete />
-														)}
-													</>
+													<BuyButton
+														size='default'
+														priceType={'TELEMEDICINE_COUPLE'}
+													/>
 												)}
 											</CardFooter>
 										</Card>
@@ -315,22 +285,10 @@ export default async function DashboardPage() {
 														</Link>
 													</Button>
 												) : (
-													<>
-														{user?.cep ||
-														user?.neighborhood ||
-														user?.date_birth ||
-														user?.city ||
-														user?.address ? (
-															<BuyButton
-																size='default'
-																email={String(session?.user?.email)}
-																cpf={String(session?.user?.cpf)}
-																priceType={'TELEMEDICINE_FAMILY'}
-															/>
-														) : (
-															<ModalAlertProfileIncomplete />
-														)}
-													</>
+													<BuyButton
+														size='default'
+														priceType={'TELEMEDICINE_FAMILY'}
+													/>
 												)}
 											</CardFooter>
 										</Card>

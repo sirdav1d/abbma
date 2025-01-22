@@ -8,7 +8,7 @@ import Link from 'next/link';
 import CardBenefit from './_components/card-benefit';
 
 export default async function BenefitsPage() {
-	const tickets = await GetAllTicketsAction();
+	const tickets = await GetAllTicketsAction({ email: null });
 
 	return (
 		<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5'>

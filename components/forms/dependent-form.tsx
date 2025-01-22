@@ -27,9 +27,9 @@ import {
 	SelectValue,
 } from '../ui/select';
 
+import { updateDependentAction } from '@/actions/dependents/update';
 import { Dependent } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { updateDependentAction } from '@/actions/dependents/update';
 
 const formSchema = z.object({
 	name: z.string().min(2, {
@@ -49,19 +49,6 @@ const formSchema = z.object({
 	phone: z.string().regex(/^(\+?\d{1,3})?\s?\(?\d{2,3}\)?\s?\d{4,5}-?\d{4}$/, {
 		message: 'O número de telefone celular não é válido',
 	}),
-	address: z
-		.string()
-		.min(5, { message: 'O endereço deve ter pelo menos 5 caracteres.' }),
-	neighborhood: z.string().min(2, {
-		message: 'O bairro deve ter pelo menos 2 caracteres.',
-	}),
-	city: z
-		.string()
-		.min(2, { message: 'A cidade deve ter pelo menos 2 caracteres.' }),
-	state: z
-		.string()
-		.length(2, { message: 'Use a sigla de 2 letras para o estado.' }),
-	cep: z.string().length(8, { message: 'O CEP deve ter 8 dígitos.' }),
 });
 
 export default function DependentForm({
@@ -82,11 +69,6 @@ export default function DependentForm({
 			degree: user?.degree || '',
 			email: user?.email || '',
 			phone: user?.phone || '',
-			address: user?.address || '',
-			city: user?.city || '',
-			state: user?.state || '',
-			neighborhood: user?.neighborhood || '',
-			cep: user?.cep || '',
 		},
 	});
 
@@ -97,29 +79,23 @@ export default function DependentForm({
 			name,
 			degree,
 			date_birth,
-			address,
-			cep,
-			city,
+
 			cpf,
 			email,
-			neighborhood,
+
 			phone,
-			state,
 		} = values;
 		try {
 			if (!isUpdating) {
 				const response = await createDependentAction({
-					address: address,
-					cep: cep,
-					city: city,
 					cpf: cpf,
 					date_birth: date_birth,
 					degree: degree,
 					email: email,
 					name: name,
-					neighborhood: neighborhood,
+
 					phone: phone,
-					state: state,
+
 					userId: userId,
 				});
 
@@ -132,17 +108,12 @@ export default function DependentForm({
 				}
 			} else {
 				const response = await updateDependentAction({
-					address: address,
-					cep: cep,
-					city: city,
 					cpf: cpf,
 					date_birth: date_birth,
 					degree: degree,
 					email: email,
 					name: name,
-					neighborhood: neighborhood,
 					phone: phone,
-					state: state,
 					id: userId,
 				});
 
@@ -270,87 +241,6 @@ export default function DependentForm({
 								<FormControl>
 									<Input
 										placeholder='(00) 00000-0000'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='address'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Endereço</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Rua, número, complemento'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>{' '}
-					<FormField
-						control={form.control}
-						name='neighborhood'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Endereço</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Bairro'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='city'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Cidade</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Cidade'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='state'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Estado</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='UF'
-										maxLength={2}
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='cep'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>CEP</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='00000-000'
 										{...field}
 									/>
 								</FormControl>

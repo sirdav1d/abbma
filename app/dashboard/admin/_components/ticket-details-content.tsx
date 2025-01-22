@@ -191,7 +191,11 @@ export function TicketDetailContent({ Ticket }: { Ticket: Ticket }) {
 									key={index}
 									className='bg-muted p-3 rounded-md'>
 									<p className='text-sm text-muted-foreground'>
-										{new Date(update.createdAt).toLocaleDateString('pt-BR')} -
+										{new Date(update.createdAt).toLocaleDateString('pt-BR')} /{' '}
+										{new Date(update.createdAt).toLocaleTimeString('pt-BR', {
+											localeMatcher: 'lookup',
+										})}{' '}
+										- {''}
 										{update.authorName}
 									</p>
 									<p>{update.message}</p>

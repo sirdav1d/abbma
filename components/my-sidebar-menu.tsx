@@ -41,7 +41,9 @@ export function MySidebarMenu() {
 					<SidebarMenuButton
 						asChild
 						className={pathname === item.url ? 'bg-primary text-slate-50' : ''}>
-						<Link href={item.url}>
+						<Link
+							href={item.url}
+							prefetch={false}>
 							<item.icon className='mr-2 h-4 w-4' />
 							<span className='text-base md:text-sm'>{item.title}</span>
 						</Link>

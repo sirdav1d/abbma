@@ -48,8 +48,7 @@ const formSchema = z
 		is_militar: z.enum(['military', 'autonomous']),
 
 		date_birth: z
-			.string()
-			.optional() // Campo opcional
+			.string() // Campo opcional
 			.refine((val) => !val || /^\d{4}-\d{2}-\d{2}$/.test(val), {
 				message: "A data deve estar no formato 'YYYY-MM-DD'.",
 			}),
@@ -76,7 +75,6 @@ export default function RegisterForm() {
 			confirmPass: '',
 			is_militar: 'military',
 			date_birth: '',
-
 			terms: false,
 		},
 	});
@@ -84,7 +82,8 @@ export default function RegisterForm() {
 	const router = useRouter();
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-		const { email, name, password, phone, cpf } = values;
+		const { email, name, password, phone, cpf, is_militar, date_birth } =
+			values;
 
 		try {
 			const response = await createUserAction({
@@ -93,6 +92,8 @@ export default function RegisterForm() {
 				password,
 				phone,
 				cpf,
+				isMilitary: is_militar,
+				date_birth,
 			});
 			const resp = await WelcomeEmailAction({ email, name, password });
 			console.log(resp);
@@ -138,23 +139,7 @@ export default function RegisterForm() {
 									</FormItem>
 								)}
 							/>
-							<FormField
-								control={form.control}
-								name='phone'
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Telefone/Celular</FormLabel>
-										<FormControl>
-											<Input
-												type='tel'
-												placeholder='(00) 00000 0000'
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+
 							<FormField
 								control={form.control}
 								name='cpf'
@@ -182,6 +167,23 @@ export default function RegisterForm() {
 											<Input
 												type='email'
 												placeholder='email@email.com'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='phone'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Telefone/Celular</FormLabel>
+										<FormControl>
+											<Input
+												type='tel'
+												placeholder='(00) 00000 0000'
 												{...field}
 											/>
 										</FormControl>

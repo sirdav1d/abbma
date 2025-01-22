@@ -29,7 +29,11 @@ export default function CardBenefit(props: CardBenefitProps) {
 						{props.ticket?.title}{' '}
 						<Badge
 							className={`${props.ticket?.status == 'PENDING' && 'bg-yellow-600 hover:bg-yellow-700'} ${props.ticket?.status == 'COMPLETED' && 'bg-green-500 hover:bg-green-600'} text-xs`}>
-							{props.ticket?.status}
+							{props.ticket?.status == 'PENDING'
+								? 'Pendente'
+								: props.ticket?.status == 'COMPLETED'
+									? 'Concluído'
+									: 'Em Andamento'}
 						</Badge>
 					</CardTitle>
 					<CardDescription>
