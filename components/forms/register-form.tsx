@@ -2,6 +2,7 @@
 
 'use client';
 
+import WelcomeEmailAction from '@/actions/email/welcome';
 import { createUserAction } from '@/actions/user/create';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,15 +23,15 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight, CalendarIcon, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { Checkbox } from '../ui/checkbox';
-import WelcomeEmailAction from '@/actions/email/welcome';
 import { cpf } from 'zod-br-tax-id';
+import { Checkbox } from '../ui/checkbox';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
 const formSchema = z
 	.object({
@@ -43,6 +44,14 @@ const formSchema = z
 			.string()
 			.regex(/^(\+?\d{1,3})?\s?\(?\d{2,3}\)?\s?\d{4,5}-?\d{4}$/, {
 				message: 'O número de telefone celular não é válido',
+			}),
+		is_militar: z.enum(['military', 'autonomous']),
+
+		date_birth: z
+			.string()
+			.optional() // Campo opcional
+			.refine((val) => !val || /^\d{4}-\d{2}-\d{2}$/.test(val), {
+				message: "A data deve estar no formato 'YYYY-MM-DD'.",
 			}),
 		cpf: cpf(),
 		confirmPass: z
@@ -65,6 +74,9 @@ export default function RegisterForm() {
 			cpf: '',
 			phone: '',
 			confirmPass: '',
+			is_militar: 'military',
+			date_birth: '',
+
 			terms: false,
 		},
 	});
@@ -97,7 +109,7 @@ export default function RegisterForm() {
 
 	return (
 		<Form {...form}>
-			<Card className='bg-slate-50 w-full xl:max-w-md'>
+			<Card className='bg-slate-50 w-full xl:max-w-xl'>
 				<CardHeader>
 					<CardTitle className='text-2xl'>Cadastrar</CardTitle>
 					<CardDescription>
@@ -107,70 +119,157 @@ export default function RegisterForm() {
 				<CardContent>
 					<form
 						onSubmit={form.handleSubmit(onSubmit)}
-						className='space-y-3'>
+						className='space-y-5'>
+						<div className='h-full w-full grid md:grid-cols-2 gap-5'>
+							<FormField
+								control={form.control}
+								name='name'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Nome Completo</FormLabel>
+										<FormControl>
+											<Input
+												type='text'
+												placeholder='Nome Completo'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='phone'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Telefone/Celular</FormLabel>
+										<FormControl>
+											<Input
+												type='tel'
+												placeholder='(00) 00000 0000'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='cpf'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>CPF</FormLabel>
+										<FormControl>
+											<Input
+												type='text'
+												placeholder='000.000.000-00'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='email'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>E-mail</FormLabel>
+										<FormControl>
+											<Input
+												type='email'
+												placeholder='email@email.com'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name='password'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Senha</FormLabel>
+										<FormControl>
+											<Input
+												type='password'
+												placeholder='********'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name='confirmPass'
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Confirmar Senha</FormLabel>
+										<FormControl>
+											<Input
+												type='password'
+												placeholder='********'
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
 						<FormField
 							control={form.control}
-							name='name'
+							name='date_birth'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Nome Completo</FormLabel>
+									<FormLabel>Data de Nascimento</FormLabel>
 									<FormControl>
-										<Input
-											type='text'
-											placeholder='Nome Completo'
-											{...field}
-										/>
+										<div className='relative'>
+											<CalendarIcon className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
+											<Input
+												type='date'
+												className='pl-8 w-full'
+												{...field}
+											/>
+										</div>
 									</FormControl>
+
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
 						<FormField
 							control={form.control}
-							name='phone'
+							name='is_militar'
 							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Telefone/Celular</FormLabel>
+								<FormItem className='space-y-3'>
+									<FormLabel>Tipo de Usuário</FormLabel>
 									<FormControl>
-										<Input
-											type='tel'
-											placeholder='(00) 00000 0000'
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='cpf'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>CPF</FormLabel>
-									<FormControl>
-										<Input
-											type='text'
-											placeholder='000.000.000-00'
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='email'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>E-mail</FormLabel>
-									<FormControl>
-										<Input
-											type='email'
-											placeholder='email@email.com'
-											{...field}
-										/>
+										<RadioGroup
+											onValueChange={field.onChange}
+											defaultValue={field.value}
+											className='flex flex-col space-y-1'>
+											<FormItem className='flex items-center space-x-3 space-y-0'>
+												<FormControl>
+													<RadioGroupItem value='military' />
+												</FormControl>
+												<FormLabel className='font-normal'>Militar</FormLabel>
+											</FormItem>
+											<FormItem className='flex items-center space-x-3 space-y-0'>
+												<FormControl>
+													<RadioGroupItem value='autonomous' />
+												</FormControl>
+												<FormLabel className='font-normal'>Autônomo</FormLabel>
+											</FormItem>
+										</RadioGroup>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -179,43 +278,9 @@ export default function RegisterForm() {
 
 						<FormField
 							control={form.control}
-							name='password'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Senha</FormLabel>
-									<FormControl>
-										<Input
-											type='password'
-											placeholder='********'
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name='confirmPass'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Confirmar Senha</FormLabel>
-									<FormControl>
-										<Input
-											type='password'
-											placeholder='********'
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
 							name='terms'
 							render={({ field }) => (
-								<FormItem className='flex items-center gap-3'>
+								<FormItem className='flex items-center md:items-end gap-3'>
 									<FormControl>
 										<Checkbox
 											checked={field.value}
@@ -260,7 +325,7 @@ export default function RegisterForm() {
 						Já tem uma conta?{' '}
 						<a
 							href='/login'
-							className='underline underline-offset-4 '>
+							className='underline underline-offset-4 hover:text-red-600 transition-all ease-linear duration-200'>
 							Entrar
 						</a>
 					</div>

@@ -108,7 +108,7 @@ export default function LoginForm() {
 										<FormLabel>Senha</FormLabel>
 										<a
 											href='/forgot-password'
-											className='ml-auto underline inline-block text-sm underline-offset-4 hover:underline'>
+											className='ml-auto underline inline-block text-sm underline-offset-4 hover:underline hover:text-red-600 transition-all ease-linear duration-200'>
 											Esqueceu sua senha?
 										</a>
 									</div>
@@ -149,7 +149,7 @@ export default function LoginForm() {
 						Não tem uma conta?{' '}
 						<a
 							href='/register'
-							className='underline underline-offset-4 '>
+							className='text-foreground underline hover:text-red-600 transition-all ease-linear duration-200'>
 							Cadastrar
 						</a>
 					</div>

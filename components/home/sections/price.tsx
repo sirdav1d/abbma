@@ -1,7 +1,10 @@
 /** @format */
 
-import { CircleCheckBig } from 'lucide-react';
-import BuyModal from '../../buy-modal';
+import { Button } from '@/components/ui/button';
+import { associate } from '@/constants/associate';
+import { ArrowRight, CircleCheckBig } from 'lucide-react';
+import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 import {
 	Card,
 	CardContent,
@@ -11,8 +14,6 @@ import {
 	CardTitle,
 } from '../../ui/card';
 import { FadeText } from '../../ui/fade-text';
-import { associate } from '@/constants/associate';
-import { getServerSession } from 'next-auth';
 
 export default async function Price() {
 	const session = await getServerSession();
@@ -65,7 +66,14 @@ export default async function Price() {
 						</CardContent>
 						{!session?.user && (
 							<CardFooter className='w-full flex items-center justify-center'>
-								<BuyModal full={true} />
+								<Button
+									size='lg'
+									asChild
+									className='text-lg w-full bg-red-700 active:bg-red-600 hover:bg-red-600'>
+									<Link href={'/register'}>
+										Assinar <ArrowRight className='scale-125' />
+									</Link>
+								</Button>
 							</CardFooter>
 						)}
 					</Card>

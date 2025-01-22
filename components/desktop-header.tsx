@@ -5,7 +5,7 @@ import { AppWindow } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
-import DesktopHeaderLinks from './descktop-header-links';
+import DesktopHeaderLinks from './desktop-header-links';
 import SignOutBtn from './sign-out';
 import { Button } from './ui/button';
 
@@ -57,7 +57,7 @@ export default async function DektopHeader() {
 									size={40}
 									className='scale-125 mr-1.5'
 								/>
-								Área Do Cliente
+								Minha Área
 							</Link>
 						</Button>
 						<SignOutBtn />

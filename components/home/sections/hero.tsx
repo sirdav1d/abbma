@@ -5,7 +5,6 @@ import RetCuboid from '@/assets/ret-cuboid';
 import { ArrowRight } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import BuyModal from '../../buy-modal';
 import HeroImage from '../../heroImage';
 import BlurIn from '../../ui/blur-in';
 import { Button } from '../../ui/button';
@@ -56,7 +55,14 @@ export default async function Hero() {
 								framerProps={{
 									show: { transition: { delay: 0.6 } },
 								}}>
-								<BuyModal full={false} />
+								<Button
+									size='lg'
+									asChild
+									className='text-lg bg-red-700 active:bg-red-600 hover:bg-red-600'>
+									<Link href={'/register'}>
+										Assinar <ArrowRight className='scale-125' />
+									</Link>
+								</Button>
 							</FadeText>
 							<FadeText
 								direction='up'

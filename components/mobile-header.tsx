@@ -26,7 +26,7 @@ import { usePathname } from 'next/navigation';
 export default function MobileHeader() {
 	const session = useSession();
 	const pathname = usePathname();
-	
+
 	return (
 		<Drawer modal={false}>
 			<DrawerTrigger
@@ -105,7 +105,7 @@ export default function MobileHeader() {
 										size={40}
 										className='scale-125 mr-1.5'
 									/>
-									Área Do Cliente
+									Minha Área
 								</Link>
 							</Button>
 							<SignOutBtn />

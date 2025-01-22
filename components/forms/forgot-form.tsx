@@ -159,7 +159,7 @@ export default function ForgotForm() {
 						Não tem uma conta?{' '}
 						<a
 							href='/register'
-							className='underline underline-offset-4 '>
+							className='underline underline-offset-4 hover:text-red-600 transition-all ease-linear duration-200 '>
 							Cadastrar
 						</a>
 					</div>

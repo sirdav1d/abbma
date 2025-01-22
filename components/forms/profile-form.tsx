@@ -23,13 +23,11 @@ import { Button } from '@/components/ui/button';
 import { User } from '@prisma/client';
 import {
 	ArrowRight,
-	Briefcase,
 	CalendarIcon,
 	CreditCard,
 	Loader2,
 	Lock,
 	Mail,
-	MapPin,
 	Phone,
 	Shield,
 	UserIcon,
@@ -61,41 +59,7 @@ const profileFormSchema = z
 			.refine((val) => !val || /^\d{4}-\d{2}-\d{2}$/.test(val), {
 				message: "A data deve estar no formato 'YYYY-MM-DD'.",
 			}), // Valida o formato da data // Prisma aceita null
-		address: z
-			.string()
-			.min(5, {
-				message: 'O endereço deve ter pelo menos 5 caracteres.',
-			})
-			.or(z.literal(''))
-			.optional(),
-		neighborhood: z
-			.string()
-			.min(2, {
-				message: 'O bairro deve ter pelo menos 2 caracteres.',
-			})
-			.or(z.literal(''))
-			.optional(),
-		city: z
-			.string()
-			.min(2, {
-				message: 'A cidade deve ter pelo menos 2 caracteres.',
-			})
-			.or(z.literal(''))
-			.optional(),
-		state: z
-			.string()
-			.length(2, {
-				message: 'Use a sigla de 2 letras para o estado.',
-			})
-			.or(z.literal(''))
-			.optional(),
-		cep: z
-			.string()
-			.length(8, {
-				message: 'O CEP deve ter 8 dígitos.',
-			})
-			.or(z.literal(''))
-			.optional(),
+
 		is_militar: z.enum(['military', 'autonomous']),
 		occupation: z.string().or(z.literal('')).optional(),
 		currentPassword: z
@@ -134,12 +98,6 @@ export default function ProfileForm({ user }: { user: Partial<User> }) {
 		email: user?.email || '',
 		phone: user?.phone || '',
 		cpf: user?.cpf || '',
-		date_birth: user?.date_birth || '',
-		address: user?.address || '',
-		neighborhood: user?.neighborhood || '',
-		city: user?.city || '',
-		state: user?.state || '',
-		cep: user?.cep || '',
 		is_militar: user?.is_militar ? 'military' : 'autonomous',
 		occupation: user?.occupation || '',
 		currentPassword: '',
@@ -188,7 +146,7 @@ export default function ProfileForm({ user }: { user: Partial<User> }) {
 				<Tabs
 					defaultValue='personal'
 					className='w-full'>
-					<TabsList className='grid w-full grid-cols-4 mb-2'>
+					<TabsList className='grid w-full grid-cols-2 mb-2'>
 						<TabsTrigger
 							value='personal'
 							className='flex gap-3'>
@@ -198,24 +156,7 @@ export default function ProfileForm({ user }: { user: Partial<User> }) {
 							/>
 							<span className='hidden md:inline'>Pessoal</span>
 						</TabsTrigger>
-						<TabsTrigger
-							value='address'
-							className='flex gap-3'>
-							<MapPin
-								size={20}
-								className='w-6 h-6 md:w-5 md:h-5'
-							/>
-							<span className='hidden md:inline'>Endereço</span>
-						</TabsTrigger>
-						<TabsTrigger
-							value='professional'
-							className='flex gap-3'>
-							<Briefcase
-								size={20}
-								className='w-6 h-6 md:w-5 md:h-5'
-							/>
-							<span className='hidden md:inline'>Profissional</span>
-						</TabsTrigger>
+
 						<TabsTrigger
 							value='security'
 							className='flex gap-3'>
@@ -316,6 +257,39 @@ export default function ProfileForm({ user }: { user: Partial<User> }) {
 									/>
 									<FormField
 										control={form.control}
+										name='is_militar'
+										render={({ field }) => (
+											<FormItem className='space-y-3'>
+												<FormLabel>Tipo de Usuário</FormLabel>
+												<FormControl>
+													<RadioGroup
+														onValueChange={field.onChange}
+														defaultValue={field.value}
+														className='flex flex-col space-y-1'>
+														<FormItem className='flex items-center space-x-3 space-y-0'>
+															<FormControl>
+																<RadioGroupItem value='military' />
+															</FormControl>
+															<FormLabel className='font-normal'>
+																Militar
+															</FormLabel>
+														</FormItem>
+														<FormItem className='flex items-center space-x-3 space-y-0'>
+															<FormControl>
+																<RadioGroupItem value='autonomous' />
+															</FormControl>
+															<FormLabel className='font-normal'>
+																Autônomo
+															</FormLabel>
+														</FormItem>
+													</RadioGroup>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
 										name='date_birth'
 										render={({ field }) => (
 											<FormItem className='flex flex-col'>
@@ -338,156 +312,8 @@ export default function ProfileForm({ user }: { user: Partial<User> }) {
 								</div>
 							</TabsContent>
 							<TabsContent
-								value='address'
-								className='space-y-4'>
-								<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-									<FormField
-										control={form.control}
-										name='address'
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Endereço</FormLabel>
-												<FormControl>
-													<div className='relative'>
-														<MapPin className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-														<Input
-															placeholder='Rua, número, complemento'
-															className='pl-8'
-															{...field}
-														/>
-													</div>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name='neighborhood'
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Bairro</FormLabel>
-												<FormControl>
-													<Input
-														placeholder='Seu bairro'
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name='city'
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Cidade</FormLabel>
-												<FormControl>
-													<Input
-														placeholder='Sua cidade'
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name='state'
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Estado</FormLabel>
-												<FormControl>
-													<Input
-														placeholder='UF'
-														maxLength={2}
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name='cep'
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>CEP</FormLabel>
-												<FormControl>
-													<Input
-														type='text'
-														placeholder='00000-000'
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
-							</TabsContent>
-							<TabsContent
 								value='professional'
-								className='space-y-4'>
-								<FormField
-									control={form.control}
-									name='is_militar'
-									render={({ field }) => (
-										<FormItem className='space-y-3'>
-											<FormLabel>Tipo de Usuário</FormLabel>
-											<FormControl>
-												<RadioGroup
-													onValueChange={field.onChange}
-													defaultValue={field.value}
-													className='flex flex-col space-y-1'>
-													<FormItem className='flex items-center space-x-3 space-y-0'>
-														<FormControl>
-															<RadioGroupItem value='military' />
-														</FormControl>
-														<FormLabel className='font-normal'>
-															Militar
-														</FormLabel>
-													</FormItem>
-													<FormItem className='flex items-center space-x-3 space-y-0'>
-														<FormControl>
-															<RadioGroupItem value='autonomous' />
-														</FormControl>
-														<FormLabel className='font-normal'>
-															Autônomo
-														</FormLabel>
-													</FormItem>
-												</RadioGroup>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-								{form.watch('is_militar') === 'autonomous' && (
-									<FormField
-										control={form.control}
-										name='occupation'
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Profissão</FormLabel>
-												<FormControl>
-													<div className='relative'>
-														<Briefcase className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
-														<Input
-															placeholder='Sua profissão'
-															className='pl-8'
-															{...field}
-														/>
-													</div>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								)}
-							</TabsContent>
+								className='space-y-4'></TabsContent>
 							<TabsContent
 								value='security'
 								className='space-y-4'>

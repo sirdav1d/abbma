@@ -3,7 +3,6 @@
 import { ArrowRight } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import BuyModal from '../../buy-modal';
 import { Button } from '../../ui/button';
 import { FadeText } from '../../ui/fade-text';
 import RetroGrid from '../../ui/retro-grid';
@@ -34,7 +33,14 @@ export default async function CTA() {
 					</Link>
 				</Button>
 			) : (
-				<BuyModal full={false} />
+				<Button
+					size='lg'
+					asChild
+					className='text-lg z-40 max-w-xs w-full bg-red-700 active:bg-red-600 hover:bg-red-600'>
+					<Link href={'/register'}>
+						Assinar <ArrowRight className='scale-125' />
+					</Link>
+				</Button>
 			)}
 
 			<RetroGrid />
