@@ -1,6 +1,6 @@
 /** @format */
 
-import BuyModal from '@/components/buy-modal';
+import BuyButton from '@/components/buy-button';
 import {
 	Card,
 	CardContent,
@@ -10,10 +10,9 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { FadeText } from '@/components/ui/fade-text';
+import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 import { CircleCheckBig, CircleOff } from 'lucide-react';
 import { getServerSession } from 'next-auth';
-import React from 'react';
-import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 
 export default async function Plans() {
 	const session = await getServerSession();
@@ -72,7 +71,12 @@ export default async function Plans() {
 						</ul>
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
-						{!session?.user && <BuyModal full={true} />}
+						{!session?.user && (
+							<BuyButton
+								size='default'
+								priceType={'TELEMEDICINE_INDIVIDUAL'}
+							/>
+						)}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
 							limite de 2 consultas por mês
@@ -106,7 +110,12 @@ export default async function Plans() {
 						</ul>
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
-						{!session?.user && <BuyModal full={true} />}
+						{!session?.user && (
+							<BuyButton
+								size='default'
+								priceType={'TELEMEDICINE_COUPLE'}
+							/>
+						)}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
 							limite de 2 consultas por mês
@@ -138,7 +147,12 @@ export default async function Plans() {
 						</ul>
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
-						{!session?.user && <BuyModal full={true} />}
+						{!session?.user && (
+							<BuyButton
+								size='default'
+								priceType={'TELEMEDICINE_FAMILY'}
+							/>
+						)}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
 							limite de 2 consultas por mês

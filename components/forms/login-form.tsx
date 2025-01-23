@@ -56,7 +56,7 @@ export default function LoginForm() {
 
 			if (response?.ok) {
 				router.refresh();
-				router.push('/');
+				router.push('/dashboard');
 				toast.success('Usuário Logado com sucesso');
 			} else {
 				toast.error('E-mail ou senha inválidos');

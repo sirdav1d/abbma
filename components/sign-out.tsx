@@ -12,7 +12,7 @@ export default function SignOutBtn() {
 			variant={'destructive'}
 			type='submit'
 			className='w-full'
-			onClick={() => signOut()}>
+			onClick={() => signOut({ redirect: true })}>
 			Sair
 			<LogOut />
 		</Button>
