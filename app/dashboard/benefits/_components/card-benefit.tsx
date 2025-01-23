@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/card';
 import { Ticket } from '@prisma/client';
 import BtnAccessPlatform from './btn-access-platform';
-import BtnReveal from './btn-reveal';
+import CancelSubModal from '@/components/cancel-sub-modal';
 
 interface CardBenefitProps {
 	ticket?: Ticket;
@@ -35,21 +35,13 @@ export default function CardBenefit(props: CardBenefitProps) {
 									: 'Em Andamento'}
 						</Badge>
 					</CardTitle>
-					<CardDescription>
-						Ao entrar na plataforma parceira, faça login com suas credenciais
-						abaixo:
-					</CardDescription>
+					<CardDescription></CardDescription>
 				</CardHeader>
-				<CardContent>
-					<BtnReveal
-						email={String(props.ticket?.credential_email)}
-						password={String(props.ticket?.credential_pass)}
-					/>
-				</CardContent>
+				<CardContent></CardContent>
 				<CardFooter className='flex flex-col gap-2'>
 					{props.ticket?.type == 'CLUB_VANTAGES' ? (
 						<BtnAccessPlatform
-							href={'https://abbma.clubeparcerias.com.br/member/login'}
+							href={'https://abbma.clubeparcerias.com.br/member/register'}
 							status={props.ticket?.status}
 						/>
 					) : (
@@ -67,14 +59,14 @@ export default function CardBenefit(props: CardBenefitProps) {
 							/>
 						</div>
 					)}
-					{/* {props.ticket.status == 'COMPLETED' ? (
+					{props.ticket.status == 'COMPLETED' ? (
 						<CancelSubModal
 							planName={String(props.ticket?.title)}
 							id={String(props.ticket?.id)}
 						/>
 					) : (
 						<></>
-					)} */}
+					)}
 				</CardFooter>
 			</Card>
 		)

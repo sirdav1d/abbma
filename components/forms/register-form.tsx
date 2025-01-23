@@ -24,14 +24,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight, CalendarIcon, Loader2 } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { cpf } from 'zod-br-tax-id';
 import { Checkbox } from '../ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z
 	.object({
@@ -101,7 +102,12 @@ export default function RegisterForm() {
 				toast.error(response.message);
 			} else {
 				toast.success(response.message);
-				router.push('/login');
+				await signIn('credentials', {
+					email,
+					password,
+					redirect: false,
+				});
+				router.refresh();
 			}
 		} catch (error) {
 			toast.error(`Algo deu errado - ${error}`);

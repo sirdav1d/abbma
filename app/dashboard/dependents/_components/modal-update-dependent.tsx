@@ -31,7 +31,7 @@ export default function ModalUpdateDependent({
 					<Pencil />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-4xl overflow-scroll'>
+			<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-4xl '>
 				<DialogHeader>
 					<DialogTitle>Adicionar Novo Dependente</DialogTitle>
 					<DialogDescription>

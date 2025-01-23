@@ -4,26 +4,14 @@ import { getUserAction } from '@/actions/user/get-user';
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarGroupLabel,
 	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { ChevronUp, CircleUserRound, User2 } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import { AdminSidebarMenu } from './admin-sidebar-menu';
 import { MySidebarMenu } from './my-sidebar-menu';
-import PortalBtn from './portal-btn';
-import SignOutBtn from './sign-out';
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from './ui/dropdown-menu';
 
 export async function AppSidebar() {
 	const session = await getServerSession();
@@ -55,40 +43,6 @@ export async function AppSidebar() {
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
-			<SidebarFooter>
-				<SidebarMenu>
-					<SidebarMenuItem>
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<SidebarMenuButton>
-									<User2 /> {user?.user?.name}
-									<ChevronUp className='ml-auto' />
-								</SidebarMenuButton>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent
-								side='top'
-								className='w-[--radix-popper-anchor-width] space-y-2'>
-								<DropdownMenuItem
-									className='cursor-pointer w-full flex items-center justify-start h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
-									asChild>
-									<a href={'/dashboard/profile'}>
-										<CircleUserRound />
-										Perfil
-									</a>
-								</DropdownMenuItem>
-								<DropdownMenuItem
-									className='cursor-pointer w-full flex items-center justify-center h-10 px-4 py-2 hover:bg-primary hover:text-slate-50'
-									asChild>
-									<PortalBtn />
-								</DropdownMenuItem>
-								<DropdownMenuItem asChild>
-									<SignOutBtn />
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</SidebarMenuItem>
-				</SidebarMenu>
-			</SidebarFooter>
 		</Sidebar>
 	);
 }

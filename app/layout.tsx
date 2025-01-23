@@ -6,6 +6,9 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
+import { getServerSession } from 'next-auth';
+import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import ModalSub from './dashboard/_components/modal-sub';
 
 const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -19,11 +22,17 @@ export const metadata: Metadata = {
 	icons: ['/logo-principal.png'],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const session = await getServerSession();
+
+	const { data } = await GetAllTicketsAction({
+		email: session?.user?.email ?? null,
+	});
+
 	return (
 		<html
 			lang='pt-BR'
@@ -35,6 +44,7 @@ export default function RootLayout({
 					disableTransitionOnChange>
 					<AuthProvider>
 						<>
+							{data?.length === 0 && <ModalSub />}
 							{children}
 							<Toaster />
 						</>

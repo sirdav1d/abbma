@@ -159,6 +159,7 @@ export default function DependentForm({
 								<FormLabel>CPF</FormLabel>
 								<FormControl>
 									<Input
+										disabled={isUpdating}
 										placeholder='000.000.000-00'
 										{...field}
 									/>

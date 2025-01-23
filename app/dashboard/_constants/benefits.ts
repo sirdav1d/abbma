@@ -1,8 +1,7 @@
 /** @format */
 
 import { associate } from '@/constants/associate';
-import { healthPlan } from '@/constants/health-plan';
-import { Gift, ScanHeart, Stethoscope } from 'lucide-react';
+import { Gift, Stethoscope } from 'lucide-react';
 
 export const benefits = [
 	{
@@ -18,12 +17,5 @@ export const benefits = [
 		icon: Stethoscope,
 		content: `Nosso serviço de Telemedicina proporciona acesso rápido e conveniente a cuidados médicos de qualidade, 24 horas por dia, 7 dias por semana.`,
 		item_benefits: [],
-	},
-	{
-		id: 'HEALTH_PLAN',
-		title: 'Seguros e Planos de Saúde',
-		icon: ScanHeart,
-		content: `Proteja o que é mais importante! Conte com vantagens exclusivas em diversos Seguros e Planos de Saúdes, garantindo mais tranquilidade para você e sua família. As possibiliades de planos e seguros são:`,
-		item_benefits: healthPlan,
 	},
 ];

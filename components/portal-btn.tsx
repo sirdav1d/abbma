@@ -30,7 +30,7 @@ export default function PortalBtn() {
 	return (
 		<Button
 			variant={'ghost'}
-			className='w-full flex justify-start font-normal '
+			className='w-full flex justify-start items-center font-normal text-base md:text-sm hover:bg-primary hover:text-slate-50 px-2.5'
 			onClick={handleClick}>
 			<Wallet />
 			Financeiro

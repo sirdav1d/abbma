@@ -98,7 +98,7 @@ export async function createUserAction({
 		//enviar e-mail de confirmação de cadastro
 		return {
 			success: true,
-			message: 'Usuário cadastrado com sucesso - cheque seu e-mail',
+			message: 'Usuário cadastrado com sucesso',
 			user: user,
 		};
 	} catch (error) {

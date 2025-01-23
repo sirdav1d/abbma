@@ -49,7 +49,7 @@ export default async function DashboardPage() {
 				<Tabs
 					defaultValue={benefits[0].id}
 					className='w-full'>
-					<TabsList className='grid w-full grid-cols-3 gap-2'>
+					<TabsList className='grid w-full grid-cols-2 gap-2'>
 						{benefits.map((benefit) => (
 							<TabsTrigger
 								key={benefit.id}
