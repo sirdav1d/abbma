@@ -4,6 +4,8 @@
 
 import { prisma } from '@/lib/prisma';
 import { $Enums } from '@prisma/client';
+import SendEmailAction from '../email/sendEmail';
+import { generateContentNewTicket } from '@/constants/email-contents';
 
 interface CreateTicketProps {
 	userId: string;
@@ -18,14 +20,11 @@ export async function createTicketAction({
 	title,
 	stripeId,
 }: CreateTicketProps) {
-	const credentialPassword = Math.random().toString(36).slice(2, 12);
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
 	});
 
-
 	try {
-
 		if (!user) {
 			return { success: false, message: 'Usuário não encontrado' };
 		}
@@ -35,21 +34,28 @@ export async function createTicketAction({
 				userId: userId,
 				type: type,
 				title: title,
-				credential_email: user?.email,
-				credential_pass: credentialPassword,
+				isActive: true,
 				stripeId: stripeId ?? '',
 				status: 'PENDING',
 			},
 		});
 
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Novo Plano Contratado',
+			htmlContent: generateContentNewTicket({
+				name: user.name,
+				message: `Usuário ${user.name} solicitou o plano ${type}, fazer cadastro na plataforma em até 48 horas`,
+			}),
+		});
+
 		await prisma.updates.create({
 			data: {
 				ticketId: newTicket.id,
-				message: `Usuário ${user.name} solicitou o plano ${type}, cadastrar suas credenciais ${credentialPassword} e ${user.email} na plataforma`,
-				authorName: user.name
-
-			}
-		})
+				message: `Usuário ${user.name} solicitou o plano ${type}, fazer cadastro na plataforma em até 48 horas`,
+				authorName: user.name,
+			},
+		});
 
 		if (!newTicket) {
 			return { success: false, message: 'Plano Não Solicitado' };

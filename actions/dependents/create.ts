@@ -3,6 +3,8 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import SendEmailAction from '../email/sendEmail';
+import { generateContentNewDependent } from '@/constants/email-contents';
 
 interface CreateDependentProps {
 	cpf: string;
@@ -43,6 +45,12 @@ export async function createDependentAction({
 		});
 		console.log('depedente cadastrado');
 		//enviar e-mail de confirmação de cadastro
+
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Usuário Cadastrou Novo Dependente',
+			htmlContent: generateContentNewDependent({ name: user?.name ?? '' }),
+		});
 		return {
 			success: true,
 			message: 'Dependente cadastrado com sucesso',

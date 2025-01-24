@@ -4,6 +4,8 @@
 
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+import SendEmailAction from '../email/sendEmail';
+import { generateContentUpdateDependent } from '@/constants/email-contents';
 
 interface UpdateDependentProps {
 	cpf: string;
@@ -40,6 +42,14 @@ export async function updateDependentAction({
 			},
 		});
 		console.log('depedente atualizado');
+
+		
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Usuário Atualizou Dados de Dependene',
+			htmlContent: generateContentUpdateDependent({ name: name }),
+		});
+
 		revalidatePath('/dashboard/dependents');
 		//enviar e-mail de confirmação de cadastro
 		return {

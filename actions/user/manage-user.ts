@@ -5,6 +5,8 @@
 import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import SendEmailAction from '../email/sendEmail';
+import { generateContentUpdateUser } from '@/constants/email-contents';
 
 export async function manageUserAction({ user }: { user: Partial<User> }) {
 	try {
@@ -18,6 +20,12 @@ export async function manageUserAction({ user }: { user: Partial<User> }) {
 			},
 		});
 		console.log(resp);
+
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Usuário Atualizado',
+			htmlContent: generateContentUpdateUser({ name: user?.name ?? '' }),
+		});
 		revalidatePath('/dashboard/admin/users', 'layout');
 
 		console.log('atualizado');

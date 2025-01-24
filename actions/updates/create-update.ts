@@ -2,7 +2,9 @@
 
 'use server';
 
+import { generateContentUpdates } from '@/constants/email-contents';
 import { prisma } from '@/lib/prisma';
+import SendEmailAction from '../email/sendEmail';
 
 interface createUpdatesActionProps {
 	ticketId: string;
@@ -23,6 +25,15 @@ export async function createUpdatesAction({
 				authorName: authorName,
 				createdAt: new Date(),
 			},
+		});
+
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Nova Tarefa',
+			htmlContent: generateContentUpdates({
+				name: authorName,
+				message: message,
+			}),
 		});
 
 		return {

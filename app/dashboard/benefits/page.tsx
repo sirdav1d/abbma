@@ -8,7 +8,13 @@ import Link from 'next/link';
 import CardBenefit from './_components/card-benefit';
 
 export default async function BenefitsPage() {
-	const tickets = await GetAllTicketsAction({ email: null });
+	const { data, success } = await GetAllTicketsAction({ email: null });
+
+	if (!success || !data) {
+		return <div>Nenhum chamado foi encontrado</div>;
+	}
+
+	const activeTickets = data.filter((ticket) => ticket.isActive == true);
 
 	return (
 		<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5'>
@@ -16,7 +22,7 @@ export default async function BenefitsPage() {
 				<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 					Meus Benefícios Ativos
 				</h2>
-				{tickets?.data?.length === 0 && (
+				{activeTickets?.length === 0 && (
 					<div className='flex flex-col items-center justify-center gap-5 w-full'>
 						<h3 className='text-muted-foreground'>
 							Você não possui benefícios ativos
@@ -32,7 +38,7 @@ export default async function BenefitsPage() {
 					</div>
 				)}
 				<div className='w-full grid grid-cols-1 mx-auto md:grid-cols-2 gap-5'>
-					{tickets?.data?.map((item, index) => {
+					{activeTickets?.map((item, index) => {
 						return (
 							<CardBenefit
 								ticket={item}

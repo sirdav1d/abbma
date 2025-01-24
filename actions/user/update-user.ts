@@ -5,6 +5,8 @@
 import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import SendEmailAction from '../email/sendEmail';
+import { generateContentUpdateUser } from '@/constants/email-contents';
 
 export async function updateUserAction({ user }: { user: Partial<User> }) {
 	try {
@@ -31,6 +33,12 @@ export async function updateUserAction({ user }: { user: Partial<User> }) {
 		});
 		console.log(resp2);
 		revalidatePath('/dashboard/profile');
+
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Usuário Atualizado',
+			htmlContent: generateContentUpdateUser({ name: user?.name ?? '' }),
+		});
 
 		console.log('atualizado');
 		//enviar e-mail de confirmação de cadastro

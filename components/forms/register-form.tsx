@@ -2,7 +2,6 @@
 
 'use client';
 
-import WelcomeEmailAction from '@/actions/email/welcome';
 import { createUserAction } from '@/actions/user/create';
 import { Button } from '@/components/ui/button';
 import {
@@ -26,13 +25,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight, CalendarIcon, Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { cpf } from 'zod-br-tax-id';
 import { Checkbox } from '../ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { useRouter } from 'next/navigation';
 
 const formSchema = z
 	.object({
@@ -96,8 +95,6 @@ export default function RegisterForm() {
 				isMilitary: is_militar,
 				date_birth,
 			});
-			const resp = await WelcomeEmailAction({ email, name, password });
-			console.log(resp);
 			if (!response.success) {
 				toast.error(response.message);
 			} else {

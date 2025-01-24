@@ -5,6 +5,11 @@
 import bcrypt from 'bcrypt';
 
 import { prisma } from '@/lib/prisma';
+import SendEmailAction from '../email/sendEmail';
+import {
+	generateContenNewUser,
+	generateContentWelcome,
+} from '@/constants/email-contents';
 
 interface CreateUserProps {
 	email: string;
@@ -34,17 +39,6 @@ export async function createUserAction({
 		};
 	}
 
-	const htmlContent = `
-			<html>
-				<body>
-					<p>Olá ${name},</p>
-					<p>Nosso compromisso é proporcionar aos associados e dependentes, acesso a uma ampla gama de benefícios, através de parcerias privadas, que visam facilitar o bem-estar, educação e saúde, além de oferecer vantagens financeiras, através de descontos e gratuidades.</p><br/>
-					<p>Suas credenciais de acesso: <strong>${email} - ${password}</strong></p>
-					<br/>	<br/>
-					<p>Se você não solicitou essa assinatura, por favor, ignore este e-mail.</p>
-				</body>
-			</html>
-		`;
 	try {
 		const existUser = await prisma.user.findUnique({
 			where: { email: email },
@@ -70,31 +64,18 @@ export async function createUserAction({
 			},
 		});
 
-		const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'api-key': apiKey,
-			} as HeadersInit, // Casting explícito para HeadersInit
-			body: JSON.stringify({
-				sender: {
-					email: process.env.BREVO_SENDER_EMAIL,
-					name: process.env.BREVO_SENDER_NAME,
-				},
-				to: [{ email }],
-				subject: 'Bem vindo a ABBMA',
-				htmlContent,
-			}),
+		await SendEmailAction({
+			email: email,
+			subject: 'Bem vindo a ABBMA',
+			htmlContent: generateContentWelcome({ name: name }),
 		});
 
-		if (!response.ok) {
-			const error = await response.json();
-			return {
-				error: error.message || 'Erro ao enviar o e-mail.',
-				succes: false,
-				user: null,
-			};
-		}
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Novo Usuário Cadastrado',
+			htmlContent: generateContenNewUser({ name: name }),
+		});
+
 		//enviar e-mail de confirmação de cadastro
 		return {
 			success: true,

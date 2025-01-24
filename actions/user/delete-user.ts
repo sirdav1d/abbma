@@ -3,6 +3,8 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import SendEmailAction from '../email/sendEmail';
+import { generateContentDeleteUser } from '@/constants/email-contents';
 
 export async function deleteUserAction(email: string) {
 	try {
@@ -14,10 +16,17 @@ export async function deleteUserAction(email: string) {
 			},
 		});
 
-		if (user) {
+		if (user && user.name) {
 			console.log('usuario encontrado', user);
 
 			//enviar e-mail de confirmação de cadastro
+
+			await SendEmailAction({
+				email: 'contato@abbma.org.br',
+				subject: 'Usuário Deletado',
+				htmlContent: generateContentDeleteUser({ name: user.name }),
+			});
+
 			return {
 				ok: true,
 				message: 'Usuário deletado com sucesso',

@@ -9,7 +9,7 @@ import { getAllUserAction } from '@/actions/user/get-all-users';
 export default async function UsersAdminPage() {
 	const session = await getServerSession();
 
-	if (!session?.user?.email) {
+	if (!session?.user?.email && session?.user.role !== 'ADMIN') {
 		redirect('/dashboard');
 	}
 	const { users, success } = await getAllUserAction();

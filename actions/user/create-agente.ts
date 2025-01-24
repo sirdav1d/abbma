@@ -5,6 +5,8 @@
 import bcrypt from 'bcrypt';
 
 import { prisma } from '@/lib/prisma';
+import SendEmailAction from '../email/sendEmail';
+import { generateContenNewUser } from '@/constants/email-contents';
 
 interface CreateAgentProps {
 	email: string;
@@ -38,11 +40,17 @@ export default async function createAgenteAction({
 				name: agent.name,
 				password: await bcrypt.hash('password', 10),
 				cpf: agent.cpf,
-				role:agent.role
+				role: agent.role,
 			},
 		});
 		console.log('cadastrado');
 		//enviar e-mail de confirmação de cadastro
+		await SendEmailAction({
+			email: 'contato@abbma.org.br',
+			subject: 'Novo Usuário Cadastrado',
+			htmlContent: generateContenNewUser({ name: agent.name }),
+		});
+
 		return {
 			success: true,
 			message: 'Usuário cadastrado com sucesso',
