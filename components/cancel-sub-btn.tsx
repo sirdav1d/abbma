@@ -44,7 +44,7 @@ export default function CancelSubBtn({
 			} else {
 				console.log('Assinatura cancelada:', data);
 				toast.success('Assinatura cancelada', { description: data.message });
-				router.push('/dashboard');
+				router.refresh();
 			}
 
 			// Caso o cancelamento seja bem-sucedido

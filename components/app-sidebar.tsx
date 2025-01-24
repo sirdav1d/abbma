@@ -12,10 +12,15 @@ import {
 import { getServerSession } from 'next-auth';
 import { AdminSidebarMenu } from './admin-sidebar-menu';
 import { MySidebarMenu } from './my-sidebar-menu';
+import { redirect } from 'next/navigation';
 
 export async function AppSidebar() {
 	const session = await getServerSession();
 	const user = session && (await getUserAction(session.user.email));
+
+	if (!user?.user) {
+		redirect('/login');
+	}
 
 	return (
 		<Sidebar
@@ -28,20 +33,22 @@ export async function AppSidebar() {
 						<SidebarGroupContent>
 							<SidebarMenu>
 								<>
-									<AdminSidebarMenu />
+									<AdminSidebarMenu user={user?.user} />
 								</>
 							</SidebarMenu>
 						</SidebarGroupContent>
 					</SidebarGroup>
 				)}{' '}
-				<SidebarGroup>
-					<SidebarGroupLabel>Aplicação</SidebarGroupLabel>
-					<SidebarGroupContent>
-						<SidebarMenu>
-							<MySidebarMenu />
-						</SidebarMenu>{' '}
-					</SidebarGroupContent>
-				</SidebarGroup>
+				{user?.user?.role !== 'AGENT' && (
+					<SidebarGroup>
+						<SidebarGroupLabel>Aplicação</SidebarGroupLabel>
+						<SidebarGroupContent>
+							<SidebarMenu>
+								<MySidebarMenu />
+							</SidebarMenu>{' '}
+						</SidebarGroupContent>
+					</SidebarGroup>
+				)}
 			</SidebarContent>
 		</Sidebar>
 	);

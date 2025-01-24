@@ -3,39 +3,43 @@
 'use client';
 
 import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { User } from '@prisma/client';
 import { ListTodo, UserCog } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
-const items = [
-	{
-		title: 'Gestão de Tarefas',
-		url: '/dashboard/admin',
-		icon: ListTodo,
-	},
-	{
-		title: 'Gestão de usuários',
-		url: '/dashboard/admin/users',
-		icon: UserCog,
-	},
-];
-
-export function AdminSidebarMenu() {
+export function AdminSidebarMenu({ user }: { user?: User }) {
 	const pathname = usePathname();
 
 	return (
 		<div className='space-y-2'>
-			{items.map((item) => (
-				<SidebarMenuItem key={item.title}>
+			<SidebarMenuItem>
+				<SidebarMenuButton
+					asChild
+					className={
+						pathname === '/dashboard/admin' ? 'bg-primary text-slate-50' : ''
+					}>
+					<a href={'/dashboard/admin'}>
+						<ListTodo className='mr-2 h-4 w-4' />
+						<span className='text-base md:text-sm'>Gestão de Tarefas</span>
+					</a>
+				</SidebarMenuButton>
+			</SidebarMenuItem>
+			{user?.role == 'ADMIN' && (
+				<SidebarMenuItem>
 					<SidebarMenuButton
 						asChild
-						className={pathname === item.url ? 'bg-primary text-slate-50' : ''}>
-						<a href={item.url}>
-							<item.icon className='mr-2 h-4 w-4' />
-							<span className='text-base md:text-sm'>{item.title}</span>
+						className={
+							pathname === '/dashboard/admin/users'
+								? 'bg-primary text-slate-50'
+								: ''
+						}>
+						<a href={'/dashboard/admin/users'}>
+							<UserCog className='mr-2 h-4 w-4' />
+							<span className='text-base md:text-sm'>Gestão de usuários</span>
 						</a>
 					</SidebarMenuButton>
 				</SidebarMenuItem>
-			))}
+			)}
 		</div>
 	);
 }

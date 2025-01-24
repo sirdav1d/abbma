@@ -20,12 +20,13 @@ export default async function deleteTicketsAction({ id }: { id: string }) {
 			where: { id: id },
 			data: {
 				isActive: false,
+				status: 'PENDING',
 			},
 		});
 
 		await SendEmailAction({
 			email: 'contato@abbma.org.br',
-			subject: 'Usuário Solica Cancelamento de Plano',
+			subject: 'Usuário Solicita Cancelamento de Plano',
 			htmlContent: generateContentDeleteTicket({
 				name: session.user.name,
 				ticketName: ticket.title,
@@ -41,7 +42,7 @@ export default async function deleteTicketsAction({ id }: { id: string }) {
 			},
 		});
 
-		revalidatePath('/', 'layout');
+		revalidatePath('/dashboard/benefits', 'page');
 		return { ok: true, message: `Plano ${ticket.title} deletado com sucesso` };
 	} catch (error) {
 		return {
