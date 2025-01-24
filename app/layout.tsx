@@ -33,6 +33,8 @@ export default async function RootLayout({
 		email: session?.user?.email ?? null,
 	});
 
+	const isClient = session?.user.role =='CLIENT'
+
 	return (
 		<html
 			lang='pt-BR'
@@ -44,7 +46,7 @@ export default async function RootLayout({
 					disableTransitionOnChange>
 					<AuthProvider>
 						<>
-							{data?.length === 0 && <ModalSub />}
+							{data?.length === 0 && isClient && <ModalSub />}
 							{children}
 							<Toaster />
 						</>

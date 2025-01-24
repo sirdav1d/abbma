@@ -37,7 +37,7 @@ export default function ModalDeleteUser({ user }: { user: Partial<User> }) {
 			if (!response.ok) {
 				toast.error('Algo deu errado');
 			} else {
-				toast.success('Dependente deletado com sucesso');
+				toast.success('Usuário deletado com sucesso');
 				router.refresh();
 			}
 		} catch (error) {
