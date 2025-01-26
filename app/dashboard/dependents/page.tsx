@@ -24,7 +24,7 @@ export default async function DependentsPage() {
 	);
 
 	const session = await getServerSession();
-	const user = session && (await getUserAction(session?.user.email));
+	const user = session && (await getUserAction({ email: session.user.email }));
 
 	if (!user) {
 		redirect('/login');

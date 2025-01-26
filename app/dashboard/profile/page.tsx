@@ -10,7 +10,7 @@ import { getServerSession } from 'next-auth';
 export default async function ProfilePage() {
 	const session = await getServerSession();
 	const email = session?.user?.email;
-	const user = email && (await getUserAction(email));
+	const user = email && (await getUserAction({ email }));
 
 	return (
 		<div className='max-w-7xl mx-auto px-4 py-5 w-full 2xl:px-0'>
