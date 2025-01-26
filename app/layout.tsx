@@ -10,6 +10,7 @@ import { getServerSession } from 'next-auth';
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
 import ModalSub from './dashboard/_components/modal-sub';
 import { getUserAction } from '@/actions/user/get-user';
+import { Analytics } from '@vercel/analytics/next';
 
 const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -56,6 +57,7 @@ export default async function RootLayout({
 							{data?.length === 0 && isClient && <ModalSub />}
 							{children}
 							<Toaster />
+							<Analytics />
 						</>
 					</AuthProvider>
 				</ThemeProvider>
