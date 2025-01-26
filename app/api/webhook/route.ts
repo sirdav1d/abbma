@@ -56,7 +56,7 @@ export async function POST(req: Request) {
 						});
 
 						console.log(resp);
-						const myUser = await getUserAction(email);
+						const myUser = await getUserAction({ email: email });
 						const tickets = await GetAllTicketsAction({ email: email });
 
 						const customers = await stripe.customers.list({ email });
