@@ -6,6 +6,7 @@ import { FadeText } from '@/components/ui/fade-text';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import app1 from '../../../assets/telemedicina.jpg';
+import Link from 'next/link';
 
 export default function Hero() {
 	return (
@@ -39,9 +40,9 @@ export default function Hero() {
 						asChild
 						size={'lg'}
 						className='bg-red-700 hover:bg-red-600 active:bg-red-700 max-w-xs md:mt-10 text-lg'>
-						<a href='#plans'>
+						<Link href='/register'>
 							Assine Agora <ArrowRight className='w-8 h-8 scale-125' />
-						</a>
+						</Link>
 					</Button>
 				</div>
 				<div className='md:absolute md:right-28 lg:right-60 2xl:right-44 2xl:top-60 lg:top-20  md:top-60 z-10 flex gap-0 '>
