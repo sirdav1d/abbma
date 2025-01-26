@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 	const userEmail = userSession.user.email;
 	const userName = userSession.user.name;
 
-	const { user } = await getUserAction(userEmail);
+	const { user } = await getUserAction({email:userEmail});
 
 	let customerId;
 
