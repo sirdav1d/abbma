@@ -58,9 +58,8 @@ export function MySidebarMenu() {
 					</a>
 				</SidebarMenuButton>
 			))}
-			<SidebarMenuButton asChild>
-				<PortalBtn />
-			</SidebarMenuButton>
+
+			<PortalBtn />
 		</SidebarMenuItem>
 	);
 }

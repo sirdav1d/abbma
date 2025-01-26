@@ -221,7 +221,7 @@ export function TicketDetailContent({ Ticket }: { Ticket: Ticket }) {
 							onClick={() => router.push('/dashboard/admin')}>
 							Voltar
 						</Button>
-						<Button onClick={handleSaveChanges}>Salvar Alterações </Button>
+						<Button onClick={handleSaveChanges}>Salvar Comentário </Button>
 					</div>
 				</div>
 			</div>

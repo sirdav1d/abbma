@@ -4,10 +4,9 @@
 
 import { useStripe } from '@/hooks/use-stripe';
 
-import React from 'react';
-import { Button } from './ui/button';
 import { Wallet } from 'lucide-react';
 import { toast } from 'sonner';
+import { SidebarMenuButton } from './ui/sidebar';
 
 export default function PortalBtn() {
 	const { handleCreateStripePortal } = useStripe();
@@ -28,12 +27,11 @@ export default function PortalBtn() {
 	}
 
 	return (
-		<Button
-			variant={'ghost'}
+		<SidebarMenuButton
 			className='w-full flex justify-start items-center font-normal text-base md:text-sm hover:bg-primary hover:text-slate-50 px-2.5'
 			onClick={handleClick}>
 			<Wallet />
 			Financeiro
-		</Button>
+		</SidebarMenuButton>
 	);
 }

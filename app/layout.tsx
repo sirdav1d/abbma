@@ -9,6 +9,7 @@ import './globals.css';
 import { getServerSession } from 'next-auth';
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
 import ModalSub from './dashboard/_components/modal-sub';
+import { getUserAction } from '@/actions/user/get-user';
 
 const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -29,11 +30,17 @@ export default async function RootLayout({
 }>) {
 	const session = await getServerSession();
 
+	if (!session) {
+		console.log('Não Logado');
+	}
+
 	const { data } = await GetAllTicketsAction({
 		email: session?.user?.email ?? null,
 	});
 
-	const isClient = session?.user.role =='CLIENT'
+	const { user } = await getUserAction({ email: null });
+
+	const isClient = user?.role === 'CLIENT';
 
 	return (
 		<html
