@@ -1,6 +1,6 @@
 /** @format */
 
-import BuyButton from '@/components/buy-button';
+import { Button } from '@/components/ui/button';
 import {
 	Card,
 	CardContent,
@@ -11,8 +11,9 @@ import {
 } from '@/components/ui/card';
 import { FadeText } from '@/components/ui/fade-text';
 import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
-import { CircleCheckBig, CircleOff } from 'lucide-react';
+import { ArrowRight, CircleCheckBig, CircleOff } from 'lucide-react';
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 
 export default async function Plans() {
 	const session = await getServerSession();
@@ -72,10 +73,14 @@ export default async function Plans() {
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
 						{!session?.user && (
-							<BuyButton
-								size='default'
-								priceType={'TELEMEDICINE_INDIVIDUAL'}
-							/>
+							<Button
+								size='lg'
+								asChild
+								className='text-lg w-full bg-red-700 active:bg-red-600 hover:bg-red-600'>
+								<Link href={'/register'}>
+									Assinar <ArrowRight className='scale-125' />
+								</Link>
+							</Button>
 						)}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
@@ -111,10 +116,14 @@ export default async function Plans() {
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
 						{!session?.user && (
-							<BuyButton
-								size='default'
-								priceType={'TELEMEDICINE_COUPLE'}
-							/>
+							<Button
+								size='lg'
+								asChild
+								className='text-lg w-full bg-red-700 active:bg-red-600 hover:bg-red-600'>
+								<Link href={'/register'}>
+									Assinar <ArrowRight className='scale-125' />
+								</Link>
+							</Button>
 						)}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
@@ -148,10 +157,14 @@ export default async function Plans() {
 					</CardContent>
 					<CardFooter className='w-full flex-col gap-5 flex items-center justify-center'>
 						{!session?.user && (
-							<BuyButton
-								size='default'
-								priceType={'TELEMEDICINE_FAMILY'}
-							/>
+							<Button
+								size='lg'
+								asChild
+								className='text-lg w-full bg-red-700 active:bg-red-600 hover:bg-red-600'>
+								<Link href={'/register'}>
+									Assinar <ArrowRight className='scale-125' />
+								</Link>
+							</Button>
 						)}
 						<p className='text-xs italic text-muted-foreground text-center'>
 							* Psicologia, Psiquiatria, Nutrição, Geriatria, Endocrinologia com
