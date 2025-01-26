@@ -5,16 +5,19 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 import { DataTableDemo } from './_components/users-table';
 import { getAllUserAction } from '@/actions/user/get-all-users';
+import { getUserAction } from '@/actions/user/get-user';
 
 export default async function UsersAdminPage() {
 	const session = await getServerSession();
 
-	if (!session?.user?.email) {
-		redirect('/dashboard');
+	if (!session) {
+		redirect('/login');
 	}
 
-	if (session?.user?.role == 'AGENT') {
-		redirect('/dashboard/admin');
+	const user = await getUserAction({ email: session.user.email });
+
+	if (user.user?.role !== 'ADMIN') {
+		redirect('/dashboard');
 	}
 	const { users, success } = await getAllUserAction();
 	return (
