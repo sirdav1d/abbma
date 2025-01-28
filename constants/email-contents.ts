@@ -15,7 +15,7 @@ export function generateContentWelcome({ name }: { name: string }) {
 export function generateContenNewUser({ name }: { name: string }) {
 	return `<html>
         <body>
-          <p>Novo usuário cadastrado -  ${name},</p>
+          <p>Novo Cliente cadastrado -  ${name},</p>
           </br>
           <p>Vá até o quadro de tarefas na plataforma e faça as ações necessárias</p>
           <br/>
@@ -27,7 +27,7 @@ export function generateContenNewUser({ name }: { name: string }) {
 export function generateContentDeleteUser({ name }: { name: string }) {
 	return `<html>
         <body>
-          <p>Novo usuário deletado -  ${name},</p>
+          <p>Novo Cliente deletado -  ${name},</p>
           </br>
           <p>Vá até o quadro de tarefas na plataforma e faça as ações necessárias</p>
           <br/>
@@ -39,7 +39,7 @@ export function generateContentDeleteUser({ name }: { name: string }) {
 export function generateContentUpdateUser({ name }: { name: string }) {
 	return `<html>
         <body>
-          <p>Usuário Atualizado -  ${name},</p>
+          <p>Cliente Atualizado -  ${name},</p>
           </br>
           <p>Vá até o quadro de tarefas na plataforma e faça as ações necessárias</p>
           <br/>
@@ -81,7 +81,7 @@ export function generateContentNewDependent({ name }: { name: string }) {
 export function generateContentDeleteDependent({ name }: { name: string }) {
 	return `<html>
         <body>
-          <p>Usuário -  ${name}, deletou um dependente</p>
+          <p>Cliente -  ${name}, deletou um dependente</p>
           </br>
           <p>Vá até o quadro de tarefas na plataforma e faça as ações necessárias</p>
             <br/>
@@ -93,7 +93,7 @@ export function generateContentDeleteDependent({ name }: { name: string }) {
 export function generateContentUpdateDependent({ name }: { name: string }) {
 	return `<html>
         <body>
-          <p>Usuário -  ${name}, atualizou os dados de um dependente</p>
+          <p>Cliente -  ${name}, atualizou os dados de um dependente</p>
           </br>
           <p>Vá até o quadro de tarefas na plataforma e faça as ações necessárias</p>
             <br/>
@@ -111,7 +111,7 @@ export function generateContentNewTicket({
 }) {
 	return `<html>
         <body>
-          <p>Usuário ${name} solicitou novo plano</p>
+          <p>Cliente ${name} solicitou novo plano</p>
           </br>
           <p>Vá até o quadro de tarefas na plataforma e faça as ações necessárias</p>
             <br/>
@@ -131,7 +131,7 @@ export function generateContentDeleteTicket({
 }) {
 	return `<html>
         <body>
-          <p>Usuário ${name} cancelou o plano ${ticketName}</p>
+          <p>Cliente ${name} cancelou o plano ${ticketName}</p>
           </br>
           <p>Vá até o quadro de tarefas na plataforma e faça as ações necessárias</p>
             <br/>

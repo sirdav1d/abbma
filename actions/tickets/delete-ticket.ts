@@ -27,23 +27,23 @@ export default async function deleteTicketsAction({ id }: { id: string }) {
 
 		await SendEmailAction({
 			email: 'contato@abbma.org.br',
-			subject: 'Usuário Solicita Cancelamento de Plano',
+			subject: 'Cliente Solicita Cancelamento de Plano',
 			htmlContent: generateContentDeleteTicket({
 				name: session.user.name,
 				ticketName: ticket.title,
-				message: `Usuário ${session.user.name} solicitou o cancelamento do plano, remover das plataformas parceiras`,
+				message: `Cliente ${session.user.name} solicitou o cancelamento do plano, remover das plataformas parceiras`,
 			}),
 		});
 
 		await prisma.updates.create({
 			data: {
 				ticketId: ticket.id,
-				message: `Usuário ${session.user.name} solicitou o cancelamento do plano ${getTitle(ticket.type)}`,
+				message: `Cliente ${session.user.name} solicitou o cancelamento do plano ${getTitle(ticket.type)}`,
 				authorName: session.user.name,
 			},
 		});
 
-		revalidatePath('/dashboard/benefits', 'page');
+		revalidatePath('/dashboard/benefits', 'layout');
 		return { ok: true, message: `Plano ${ticket.title} deletado com sucesso` };
 	} catch (error) {
 		return {

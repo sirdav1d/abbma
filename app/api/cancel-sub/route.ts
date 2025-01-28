@@ -2,12 +2,11 @@
 
 import stripe from '@/lib/stripe'; // Configuração da biblioteca Stripe
 import { getServerSession } from 'next-auth'; // Função para obter sessão/autenticação do cliente
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { options } from '../auth/[...nextauth]/options';
-import deleteTicketsAction from '@/actions/tickets/delete-ticket';
 // import { updateSubscriptionStatus } from '@/lib/db'; // Função para atualizar o status no banco
 
-export async function POST(req: NextRequest) {
+export async function POST() {
 	try {
 		// Autenticar o usuário
 		const session = await getServerSession(options);
@@ -17,12 +16,6 @@ export async function POST(req: NextRequest) {
 				ok: false,
 				status: 401,
 			});
-		}
-
-		const { id } = await req.json();
-
-		if (id) {
-			await deleteTicketsAction({ id: id });
 		}
 
 		const { email } = session?.user;

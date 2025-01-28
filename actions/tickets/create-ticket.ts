@@ -48,7 +48,7 @@ export async function createTicketAction({
 			subject: 'Novo Plano Contratado',
 			htmlContent: generateContentNewTicket({
 				name: user.name,
-				message: `Usuário ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
+				message: `Cliente ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
 			}),
 		});
 
@@ -57,7 +57,7 @@ export async function createTicketAction({
 				ticketId: newTicket.id,
 				message:
 					messageUpdates ??
-					`Usuário ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
+					`Cliente ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
 				authorName: user.name,
 			},
 		});

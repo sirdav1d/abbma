@@ -7,14 +7,10 @@ import { Button } from './ui/button';
 import { toast } from 'sonner';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import deleteTicketsAction from '@/actions/tickets/delete-ticket';
+import { Ticket } from '@prisma/client';
 
-export default function CancelSubBtn({
-	planName,
-	id,
-}: {
-	planName: string;
-	id: string;
-}) {
+export default function CancelSubBtn({ tickets }: { tickets: Ticket[] }) {
 	const [loading, setLoading] = useState(false);
 
 	const router = useRouter();
@@ -28,13 +24,13 @@ export default function CancelSubBtn({
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					planName: planName,
-					id: id, // Aqui você substitui pelo nome do plano que o usuário deseja cancelar
-				}),
 			});
 
 			const data = await response.json();
+
+			tickets.map(async (item) => {
+				await deleteTicketsAction({ id: item.id });
+			});
 
 			if (!data.ok) {
 				toast.error('Erro ao cancelar assinatura', {

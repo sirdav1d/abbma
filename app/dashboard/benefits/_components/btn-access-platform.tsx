@@ -15,7 +15,7 @@ interface BtnAccessPlatformProps {
 export default function BtnAccessPlatform(props: BtnAccessPlatformProps) {
 	return (
 		<>
-			{props.status === 'COMPLETED' ? (
+			{props.status === 'COMPLETED' && (
 				<Button
 					asChild
 					className='w-full'>
@@ -24,12 +24,6 @@ export default function BtnAccessPlatform(props: BtnAccessPlatformProps) {
 						href={props.href}>
 						{props.text ?? 'Acessar Plataforma'} <ArrowRight />
 					</Link>
-				</Button>
-			) : (
-				<Button
-					variant={'ghost'}
-					className='w-full cursor-not-allowed'>
-					Estamos Liberando Seu Acesso em até 48hrs
 				</Button>
 			)}
 		</>

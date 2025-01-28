@@ -46,7 +46,7 @@ export async function updateDependentAction({
 		
 		await SendEmailAction({
 			email: 'contato@abbma.org.br',
-			subject: 'Usuário Atualizou Dados de Dependene',
+			subject: 'Cliente Atualizou Dados de Dependene',
 			htmlContent: generateContentUpdateDependent({ name: name }),
 		});
 

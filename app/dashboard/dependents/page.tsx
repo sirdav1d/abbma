@@ -12,14 +12,18 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ModalCreateDependent from './_components/modal-create-dependent';
 import TableDependent from './_components/table-dependent';
+import BuyButton from '@/components/buy-button';
+import { howMuchIsAble } from '@/utils/is-able-to-add-dependents';
 
 export default async function DependentsPage() {
 	const tickets = await GetAllTicketsAction({ email: null });
 	const { data } = await GetAllDependentsAction();
 
+	const activeTickets = tickets.data?.filter((item) => item.isActive);
+
 	const valoresProcurados = ['TELEMEDICINE_COUPLE', 'TELEMEDICINE_FAMILY'];
 
-	const isAble = tickets?.data?.some((elemento) =>
+	const isTelemedicine = activeTickets?.some((elemento) =>
 		valoresProcurados.includes(elemento.type),
 	);
 
@@ -29,12 +33,16 @@ export default async function DependentsPage() {
 	if (!user) {
 		redirect('/login');
 	}
+
+	const respIsAble = await howMuchIsAble();
+	console.log(respIsAble);
+
 	return (
 		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty capitalize'>
 				Gerencie Seus Dependentes
 			</h2>
-			{tickets.data?.length === 0 ? (
+			{!isTelemedicine && !respIsAble ? (
 				<>
 					{' '}
 					<div className='flex flex-col items-center justify-center mt-10 gap-5 w-full'>
@@ -55,11 +63,25 @@ export default async function DependentsPage() {
 				<Card className='mt-5'>
 					<CardHeader>
 						<div className='flex justify-between md:items-center md:flex-row flex-col gap-5'>
-							<CardTitle>Dependentes</CardTitle>
-							<ModalCreateDependent
-								isAble={isAble!}
-								userId={String(user.user?.id)}
-							/>
+							<CardTitle className='text-xl'>
+								Você Pode Adicionar mais {respIsAble?.number ?? 0} dependentes
+							</CardTitle>
+							<div className='flex items-center gap-5'>
+								{respIsAble?.type && (
+									<BuyButton
+										size='sm'
+										priceType={respIsAble.type}
+										isAddOn={true}
+										content='Comprar Benefício Extra -  R$24,99 por vida'
+									/>
+								)}
+								{respIsAble?.number && (
+									<ModalCreateDependent
+										isAble={respIsAble.number > 0 && isTelemedicine!}
+										userId={String(user.user?.id)}
+									/>
+								)}
+							</div>
 						</div>
 					</CardHeader>
 					<CardContent>

@@ -12,34 +12,40 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from './ui/button';
 import CancelSubBtn from './cancel-sub-btn';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
 
-export default function CancelSubModal({
-	planName,
-	id,
-}: {
-	planName: string;
-	id: string;
-}) {
+export default async function CancelSubModal() {
+	const session = await getServerSession();
+
+	if (!session) {
+		redirect('/login');
+	}
+
+	const { data } = await GetAllTicketsAction({ email: session.user.email });
+	console.log(data?.filter((item) => item.isActive));
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
 					variant={'outline'}
-					className='border-red-500 w-full text-red-500 hover:text-slate-50 hover:bg-red-600'>
+					className='border-red-500 w-fit ml-auto text-red-500 hover:text-slate-50 hover:bg-red-600'>
 					Cancelar Assinatura
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Cancelar {planName}</DialogTitle>
+					<DialogTitle>Cancelar Benfícios</DialogTitle>
 					<DialogDescription>Essa ação não pode ser desfeita</DialogDescription>
 				</DialogHeader>
-				<p>Tem certeza que deseja cancelar seu plano?</p>
+				<p>
+					Tem certeza que deseja cancelar seu plano e perder todos os seus
+					benefícicios?
+				</p>
 				<DialogFooter className='w-full '>
-					<CancelSubBtn
-						planName={planName}
-						id={id}
-					/>
+					{data && <CancelSubBtn tickets={data} />}
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

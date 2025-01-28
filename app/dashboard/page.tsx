@@ -22,6 +22,8 @@ import { benefits } from './_constants/benefits';
 export default async function DashboardPage() {
 	const tickets = await GetAllTicketsAction({ email: null });
 
+	const activeTickets = tickets.data?.filter((item) => item.isActive);
+
 	const benefitTypeMapping: Record<string, string> = {
 		TELEMEDICINE_INDIVIDUAL: 'TELEMEDICINE',
 		TELEMEDICINE_COUPLE: 'TELEMEDICINE',
@@ -29,13 +31,13 @@ export default async function DashboardPage() {
 	};
 
 	const activeTicketTypes =
-		tickets?.data?.map((ticket) => {
+		activeTickets?.map((ticket) => {
 			// Mapear o tipo do ticket para a categoria principal, se aplicável
 			return benefitTypeMapping[ticket.type] || ticket.type;
 		}) || [];
 
 	const activeTicketTypesUp =
-		tickets?.data?.map((ticket) => {
+		activeTickets?.map((ticket) => {
 			// Mapear o tipo do ticket para a categoria principal, se aplicável
 			return ticket.type;
 		}) || [];

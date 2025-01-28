@@ -46,7 +46,7 @@ export async function updateTicketAction({
 		await prisma.updates.create({
 			data: {
 				ticketId: newTicket.id,
-				message: `Usuário ${user.name} atualizou/alterou o plano ${getTitle(type)}, cadastrar na plataforma parceira em até 48 horas`,
+				message: `Cliente ${user.name} atualizou/alterou o plano ${getTitle(type)}, cadastrar na plataforma parceira em até 48 horas`,
 				authorName: user.name,
 			},
 		});

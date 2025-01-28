@@ -72,7 +72,7 @@ export async function createUserAction({
 
 		await SendEmailAction({
 			email: 'contato@abbma.org.br',
-			subject: 'Novo Usuário Cadastrado',
+			subject: 'Novo Cliente Cadastrado',
 			htmlContent: generateContenNewUser({ name: name }),
 		});
 

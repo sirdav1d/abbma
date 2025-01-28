@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import CardBenefit from './_components/card-benefit';
+import CancelSubModal from '@/components/cancel-sub-modal';
 
 export default async function BenefitsPage() {
 	const { data, success } = await GetAllTicketsAction({ email: null });
@@ -14,7 +15,7 @@ export default async function BenefitsPage() {
 		return <div>Nenhum chamado foi encontrado</div>;
 	}
 
-	const activeTickets = data.filter((ticket) => ticket.isActive == true);
+	const activeTickets = data.filter((ticket) => ticket.isActive);
 
 	return (
 		<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5'>
@@ -47,6 +48,7 @@ export default async function BenefitsPage() {
 						);
 					})}
 				</div>
+				<CancelSubModal />
 			</div>
 		</div>
 	);

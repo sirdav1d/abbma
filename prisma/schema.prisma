@@ -36,7 +36,7 @@ model User {
   Dependent    Dependent[]
   isActive     Boolean?    @default(true)
   isSubscribed Boolean?    @default(false)
-  customer_id  String?     
+  customer_id  String?
 }
 
 model Dependent {
@@ -45,7 +45,7 @@ model Dependent {
   email        String? // Opcional, caso o dependente não tenha e-mail
   userId       String
   user         User     @relation(fields: [userId], references: [id]) // Relacionamento com o usuário principal
-  cpf          String?
+  cpf          String?  @unique
   date_birth   String?
   degree       String
   cep          String?

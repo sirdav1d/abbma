@@ -27,7 +27,7 @@ export async function deleteDependentAction(id: string) {
 
 			await SendEmailAction({
 				email: 'contato@abbma.org.br',
-				subject: 'Usuário Deletou Um Dependente',
+				subject: 'Cliente Deletou Um Dependente',
 				htmlContent: generateContentDeleteDependent({
 					name: session.user.name ?? '',
 				}),

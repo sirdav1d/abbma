@@ -11,9 +11,13 @@ import { useSession } from 'next-auth/react';
 export default function BuyButton({
 	priceType,
 	size,
+	isAddOn = false,
+	content,
 }: {
 	size?: 'default' | 'sm' | 'lg' | 'icon';
 	priceType: $Enums.TicketType;
+	isAddOn?: boolean;
+	content?: string;
 }) {
 	const { handleCreateStripeCheckout } = useStripe();
 	const session = useSession();
@@ -26,13 +30,18 @@ export default function BuyButton({
 				handleCreateStripeCheckout({
 					priceType: priceType,
 					metadata: session.data?.user,
+					isAddOn: isAddOn,
 				})
 			}>
-			Assinar{' '}
-			<ArrowRight
-				size={40}
-				className='scale-125'
-			/>
+			{content ?? (
+				<>
+					Assinar{' '}
+					<ArrowRight
+						size={40}
+						className='scale-110'
+					/>
+				</>
+			)}
 		</Button>
 	);
 }

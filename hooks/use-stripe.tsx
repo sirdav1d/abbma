@@ -37,10 +37,12 @@ export function useStripe() {
 	async function handleCreateStripeCheckout({
 		priceType,
 		metadata,
+		isAddOn,
 	}: {
 		priceType: string;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		metadata: any;
+		isAddOn:boolean
 	}) {
 		try {
 			const response = await fetch('/api/create-checkout', {
@@ -48,7 +50,7 @@ export function useStripe() {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ priceType, metadata }),
+				body: JSON.stringify({ priceType, metadata, isAddOn }),
 			});
 
 			const data = await response.json();

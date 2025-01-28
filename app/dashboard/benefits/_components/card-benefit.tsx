@@ -1,6 +1,7 @@
 /** @format */
 
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
 	Card,
 	CardContent,
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/card';
 import { Ticket } from '@prisma/client';
 import BtnAccessPlatform from './btn-access-platform';
-import CancelSubModal from '@/components/cancel-sub-modal';
 
 interface CardBenefitProps {
 	ticket?: Ticket;
@@ -59,13 +59,12 @@ export default function CardBenefit(props: CardBenefitProps) {
 							/>
 						</div>
 					)}
-					{props.ticket.status == 'COMPLETED' ? (
-						<CancelSubModal
-							planName={String(props.ticket?.title)}
-							id={String(props.ticket?.id)}
-						/>
-					) : (
-						<></>
+					{props.ticket.status == 'PENDING' && (
+						<Button
+							variant={'ghost'}
+							className='w-full cursor-not-allowed'>
+							Estamos Liberando Seu Acesso em até 48hrs
+						</Button>
 					)}
 				</CardFooter>
 			</Card>

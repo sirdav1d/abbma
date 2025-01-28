@@ -23,7 +23,7 @@ export async function deleteUserAction(email: string) {
 
 			await SendEmailAction({
 				email: 'contato@abbma.org.br',
-				subject: 'Usuário Deletado',
+				subject: 'Cliente Deletado',
 				htmlContent: generateContentDeleteUser({ name: user.name }),
 			});
 

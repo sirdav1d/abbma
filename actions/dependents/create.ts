@@ -13,7 +13,6 @@ interface CreateDependentProps {
 	email: string;
 	name: string;
 	phone: string;
-
 	userId: string;
 }
 
@@ -24,21 +23,17 @@ export async function createDependentAction({
 	email,
 	name,
 	phone,
-
 	userId,
 }: CreateDependentProps) {
 	try {
-		const user = await prisma.dependent.create({
+		const dependent = await prisma.dependent.create({
 			data: {
 				name: name,
 				degree: degree,
-
 				cpf: cpf,
 				date_birth: date_birth,
 				email: email,
-
 				phone: phone,
-
 				userId: userId,
 				isActive: true,
 			},
@@ -48,13 +43,22 @@ export async function createDependentAction({
 
 		await SendEmailAction({
 			email: 'contato@abbma.org.br',
-			subject: 'Usuário Cadastrou Novo Dependente',
-			htmlContent: generateContentNewDependent({ name: user?.name ?? '' }),
+			subject: 'Cliente Cadastrou Novo Dependente',
+			htmlContent: generateContentNewDependent({ name: dependent?.name ?? '' }),
 		});
+
+		// await prisma.updates.create({
+		// 	data: {
+		// 		ticketId: newTicket.id,
+		// 		message: `Usuário ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
+		// 		authorName: user.name,
+		// 	},
+		// });
+
 		return {
 			success: true,
 			message: 'Dependente cadastrado com sucesso',
-			dependent: user,
+			dependent: dependent,
 		};
 	} catch (error) {
 		console.log('não cadastrado');

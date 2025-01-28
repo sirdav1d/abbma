@@ -7,7 +7,7 @@ import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-	const { priceType, metadata } = await req.json();
+	const { priceType, metadata, isAddOn } = await req.json();
 
 	const priceAssociate = process.env.STRIPE_SUBSCRIPTION_PRICE_ID;
 
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 	const userEmail = userSession.user.email;
 	const userName = userSession.user.name;
 
-	const { user } = await getUserAction({email:userEmail});
+	const { user } = await getUserAction({ email: userEmail });
 
 	let customerId;
 
@@ -92,8 +92,10 @@ export async function POST(req: NextRequest) {
 				priceTypeId,
 				priceType,
 				customerId,
+				isAddOn,
 			},
 			phone_number_collection: { enabled: true },
+			payment_method_collection: 'always',
 		});
 
 		return NextResponse.json({
