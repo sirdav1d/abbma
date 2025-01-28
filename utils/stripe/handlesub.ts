@@ -1,7 +1,6 @@
 /** @format */
 
-'use server'
-
+'use server';
 
 import stripe from '@/lib/stripe';
 
@@ -131,5 +130,3 @@ async function updatePlan(subscriptionId: string, priceTypeId: string) {
 		throw error;
 	}
 }
-
-module.exports = { handleSubscription };
