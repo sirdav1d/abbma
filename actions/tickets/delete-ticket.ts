@@ -8,6 +8,7 @@ import SendEmailAction from '../email/sendEmail';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { generateContentDeleteTicket } from '@/constants/email-contents';
+import { getTitle } from '@/utils/get-title-ticket';
 
 export default async function deleteTicketsAction({ id }: { id: string }) {
 	const session = await getServerSession();
@@ -37,7 +38,7 @@ export default async function deleteTicketsAction({ id }: { id: string }) {
 		await prisma.updates.create({
 			data: {
 				ticketId: ticket.id,
-				message: `Usuário ${session.user.name} solicitou o cancelamento do plano ${ticket.type}`,
+				message: `Usuário ${session.user.name} solicitou o cancelamento do plano ${getTitle(ticket.type)}`,
 				authorName: session.user.name,
 			},
 		});

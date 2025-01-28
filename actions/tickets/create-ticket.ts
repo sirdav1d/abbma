@@ -2,16 +2,18 @@
 
 'use server';
 
+import { generateContentNewTicket } from '@/constants/email-contents';
 import { prisma } from '@/lib/prisma';
+import { getTitle } from '@/utils/get-title-ticket';
 import { $Enums } from '@prisma/client';
 import SendEmailAction from '../email/sendEmail';
-import { generateContentNewTicket } from '@/constants/email-contents';
 
 interface CreateTicketProps {
 	userId: string;
 	type: $Enums.TicketType;
 	title: string;
 	stripeId?: string;
+	messageUpdates?: string;
 }
 
 export async function createTicketAction({
@@ -19,6 +21,7 @@ export async function createTicketAction({
 	type,
 	title,
 	stripeId,
+	messageUpdates,
 }: CreateTicketProps) {
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
@@ -45,14 +48,16 @@ export async function createTicketAction({
 			subject: 'Novo Plano Contratado',
 			htmlContent: generateContentNewTicket({
 				name: user.name,
-				message: `Usuário ${user.name} solicitou o plano ${type}, fazer cadastro na plataforma em até 48 horas`,
+				message: `Usuário ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
 			}),
 		});
 
 		await prisma.updates.create({
 			data: {
 				ticketId: newTicket.id,
-				message: `Usuário ${user.name} solicitou o plano ${type}, fazer cadastro na plataforma em até 48 horas`,
+				message:
+					messageUpdates ??
+					`Usuário ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
 				authorName: user.name,
 			},
 		});
@@ -61,9 +66,12 @@ export async function createTicketAction({
 			return { success: false, message: 'Plano Não Solicitado' };
 		}
 
-		console.log(`Plano ${type} solicitado`);
+		console.log(`Plano ${getTitle(type)} solicitado`);
 		//enviar e-mail de confirmação de cadastro
-		return { success: true, message: `Plano ${type} solicitado com sucesso` };
+		return {
+			success: true,
+			message: `Plano ${getTitle(type)} solicitado com sucesso`,
+		};
 	} catch (error) {
 		console.log('não solicitado');
 		return { success: false, message: `Algo deu errado - ${error}` };

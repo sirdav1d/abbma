@@ -3,6 +3,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { getTicketStatus } from '@/utils/get-ticket-status';
 import { $Enums } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 
@@ -30,16 +31,6 @@ export async function updateTicketStatusAction({
 			},
 		});
 
-		function getTicketStatus(status: $Enums.Status) {
-			if (status === 'COMPLETED') {
-				return 'Concluído';
-			} else if (status === 'IN_PROGRESS') {
-				return 'Em Andamento';
-			} else {
-				return 'Pendente';
-			}
-		}
-
 		await prisma.updates.create({
 			data: {
 				ticketId: newTicket.id,
@@ -55,7 +46,7 @@ export async function updateTicketStatusAction({
 		//enviar e-mail de confirmação de cadastro
 		return {
 			success: true,
-			message: `Chamado atualizado para ${status}`,
+			message: `Chamado atualizado para ${getTicketStatus(status)}`,
 			data: null,
 		};
 	} catch (error) {

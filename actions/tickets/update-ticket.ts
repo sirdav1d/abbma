@@ -3,6 +3,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { getTitle } from '@/utils/get-title-ticket';
 import { $Enums } from '@prisma/client';
 
 interface UpdateTicketProps {
@@ -13,22 +14,7 @@ interface UpdateTicketProps {
 	status?: $Enums.Status;
 }
 
-function getTitle(type?: $Enums.TicketType) {
-	if (type == 'CLUB_VANTAGES') {
-		return 'Clube de Vantagens';
-	}
 
-	if (type == 'TELEMEDICINE_INDIVIDUAL') {
-		return 'Telemedicina Individual';
-	}
-
-	if (type == 'TELEMEDICINE_COUPLE') {
-		return 'Telemedicina Casal';
-	}
-	if (type == 'TELEMEDICINE_FAMILY') {
-		return 'Telemedicina Família';
-	}
-}
 
 export async function updateTicketAction({
 	userId,
@@ -37,8 +23,7 @@ export async function updateTicketAction({
 	title,
 	status,
 }: UpdateTicketProps) {
-	const credentialPassword = Math.random().toString(36).slice(2);
-
+	
 	const newTitle = getTitle(type);
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
@@ -54,8 +39,6 @@ export async function updateTicketAction({
 				userId: userId,
 				type: type,
 				title: title ?? newTitle,
-				credential_email: user?.email,
-				credential_pass: credentialPassword,
 				status: status ?? 'PENDING',
 			},
 		});
@@ -63,7 +46,7 @@ export async function updateTicketAction({
 		await prisma.updates.create({
 			data: {
 				ticketId: newTicket.id,
-				message: `Usuário ${user.name} solicitou o plano ${getTitle(type)}, cadastrar suas credenciais ${credentialPassword} e ${user.email} na plataforma`,
+				message: `Usuário ${user.name} atualizou/alterou o plano ${getTitle(type)}, cadastrar na plataforma parceira em até 48 horas`,
 				authorName: user.name,
 			},
 		});
