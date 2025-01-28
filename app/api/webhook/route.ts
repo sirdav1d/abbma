@@ -14,7 +14,7 @@ import Stripe from 'stripe';
 
 const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
 	try {
 		const body = await req.text();
 		const signature = (await headers()).get('stripe-signature');
