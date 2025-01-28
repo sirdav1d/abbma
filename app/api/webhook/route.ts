@@ -14,7 +14,7 @@ import Stripe from 'stripe';
 
 const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
-export async function POST(req: NextRequest) {
+export default async function POST(req: NextRequest) {
 	try {
 		const body = await req.text();
 		const signature = (await headers()).get('stripe-signature');
@@ -138,15 +138,19 @@ export async function POST(req: NextRequest) {
 				break;
 		}
 
-		return NextResponse.json({ result: event, ok: true });
+		return NextResponse.json({
+			result: event,
+			ok: true,
+			status: 200,
+			message: 'Deu tudo certo - webhook rodando',
+		});
 	} catch (error) {
 		console.log(error);
-		return NextResponse.json(
-			{
-				message: `Webhook error: ${error}`,
-				ok: false,
-			},
-			{ status: 500 },
-		);
+		return NextResponse.json({
+			message: `Webhook error: ${error}`,
+			ok: false,
+			status: 500,
+			result: null,
+		});
 	}
 }
