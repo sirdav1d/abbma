@@ -44,7 +44,7 @@ export async function AppSidebar() {
 						<SidebarGroupLabel>Aplicação</SidebarGroupLabel>
 						<SidebarGroupContent>
 							<SidebarMenu>
-								<MySidebarMenu />
+								<MySidebarMenu isSub={user?.user?.isSubscribed ?? false} />
 							</SidebarMenu>{' '}
 						</SidebarGroupContent>
 					</SidebarGroup>

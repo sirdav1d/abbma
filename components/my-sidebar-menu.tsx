@@ -43,7 +43,7 @@ const items = [
 	},
 ];
 
-export function MySidebarMenu() {
+export function MySidebarMenu({ isSub }: { isSub: boolean }) {
 	const pathname = usePathname();
 
 	return (
@@ -61,8 +61,7 @@ export function MySidebarMenu() {
 					</Link>
 				</SidebarMenuButton>
 			))}
-
-			<PortalBtn />
+			{isSub && <PortalBtn />}
 		</SidebarMenuItem>
 	);
 }
