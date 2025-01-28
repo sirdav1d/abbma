@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import PortalBtn from './portal-btn';
+import Link from 'next/link';
 
 const items = [
 	{
@@ -52,10 +53,12 @@ export function MySidebarMenu() {
 					key={item.title}
 					asChild
 					className={pathname === item.url ? 'bg-primary text-slate-50' : ''}>
-					<a href={item.url}>
+					<Link
+						prefetch
+						href={item.url}>
 						<item.icon className='mr-2 h-4 w-4' />
 						<span className='text-base md:text-sm'>{item.title}</span>
-					</a>
+					</Link>
 				</SidebarMenuButton>
 			))}
 

@@ -1,10 +1,9 @@
 /** @format */
 
+import app1 from '@/assets/app1.jpeg';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import React from 'react';
 import Image from 'next/image';
-import app1 from '@/assets/app1.jpeg';
 
 export default function CTA() {
 	return (
@@ -27,10 +26,16 @@ export default function CTA() {
 					<strong>ambiente saudável</strong> e atraente para todos.
 				</p>
 				<Button
+					asChild
 					size={'lg'}
 					className='w-fit xl:text-lg bg-red-700 hover:bg-red-600 active:bg-red-600'>
-					Entre em contato com nosso consultor{' '}
-					<ArrowRight className='scale-125' />
+					<a
+						href='https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda'
+						rel='noopener noreferrer'
+						target='_blank'>
+						Entre em contato com nosso consultor
+						<ArrowRight className='scale-125' />
+					</a>
 				</Button>
 			</div>
 			<div className='absolute right-10'>

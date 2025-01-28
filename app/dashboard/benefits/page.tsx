@@ -48,7 +48,7 @@ export default async function BenefitsPage() {
 						);
 					})}
 				</div>
-				<CancelSubModal />
+				{activeTickets?.length !== 0 && <CancelSubModal />}
 			</div>
 		</div>
 	);
