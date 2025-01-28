@@ -1,4 +1,6 @@
 /** @format */
+'use server'
+
 
 import { createTicketAction } from '@/actions/tickets/create-ticket';
 import { updateTicketAction } from '@/actions/tickets/update-ticket';

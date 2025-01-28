@@ -1,4 +1,5 @@
 /** @format */
+'use server';
 
 import GetAllDependentsAction from '@/actions/dependents/get-all';
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';

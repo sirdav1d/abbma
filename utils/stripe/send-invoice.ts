@@ -1,8 +1,9 @@
 /** @format */
+'use server';
 
-import SendInvoiceLinkAction from "@/actions/email/invoice-link";
-import stripe from "@/lib/stripe";
-import Stripe from "stripe";
+import SendInvoiceLinkAction from '@/actions/email/invoice-link';
+import stripe from '@/lib/stripe';
+import Stripe from 'stripe';
 
 export async function sendInvoiceIfAvailable(
 	session: Stripe.Checkout.Session,
