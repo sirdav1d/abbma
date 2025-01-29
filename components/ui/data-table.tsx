@@ -8,6 +8,7 @@ import {
 	getCoreRowModel,
 	useReactTable,
 	getPaginationRowModel,
+	getSortedRowModel,
 } from '@tanstack/react-table';
 
 import {
@@ -34,6 +35,7 @@ export function DataTable<TData, TValue>({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 	});
 
@@ -70,7 +72,7 @@ export function DataTable<TData, TValue>({
 									{row.getVisibleCells().map((cell) => (
 										<TableCell
 											key={cell.id}
-											className={`${cell.column.id == 'name' ? 'text-left' : 'text-center'}`}>
+											className={`${cell.column.id == 'Nome' ? 'text-left' : 'text-center'}`}>
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext(),

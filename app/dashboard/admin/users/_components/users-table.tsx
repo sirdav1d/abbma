@@ -69,19 +69,19 @@ export function DataTableDemo({ data }: { data: User[] }) {
 	return (
 		<div className='w-full mx-auto md:pr-10 px-3 pb-5'>
 			<div className='flex items-center py-4 flex-col md:flex-row gap-5 mx-auto w-full'>
-				<div className='flex items-center w-full md:max-w-md justify-start bg-slate-100 rounded pl-2 '>
+				<div className='flex items-center gap-2 w-full md:max-w-md justify-start rounded pl-2 '>
 					<Search
-						className='text-slate-400'
+						className=''
 						size={24}
 					/>
-					<span className='h-5 w-[1.5px] mx-1.5 rounded-full  bg-zinc-600/40'></span>
+
 					<Input
 						placeholder='Procure pelo nome'
 						value={(table.getColumn('Nome')?.getFilterValue() as string) ?? ''}
 						onChange={(event) =>
 							table.getColumn('Nome')?.setFilterValue(event.target.value)
 						}
-						className='md:max-w-sm h-fit border-none outline-none ring-0 focus-within:ring-0 text-slate-950 bg-transparent'></Input>
+						className='md:max-w-sm h-fit text-slate-950 bg-transparent'></Input>
 				</div>
 				<div className='flex items-center justify-between md:justify-start  md:ml-auto md:flex-row mx-auto w-full gap-3'>
 					<ModalCreateUser />

@@ -14,7 +14,7 @@ export const columns: ColumnDef<User | undefined | unknown>[] = [
 		accessorKey: 'role',
 		header: 'Cargo',
 		cell: ({ row }) => (
-			<div className='capitalize'>{row.getValue('Cargo')}</div>
+			<div className='capitalize font-medium'>{row.getValue('Cargo')}</div>
 		),
 	},
 	{
@@ -30,9 +30,7 @@ export const columns: ColumnDef<User | undefined | unknown>[] = [
 				</Button>
 			);
 		},
-		cell: ({ row }) => (
-			<div className='font-medium '>{row.getValue('Nome')}</div>
-		),
+		cell: ({ row }) => <div>{row.getValue('Nome')}</div>,
 	},
 	{
 		id: 'CPF',

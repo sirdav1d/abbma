@@ -22,6 +22,7 @@ import {
 	LayoutGrid,
 	LayoutList,
 	Phone,
+	Search,
 	Shield,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -49,7 +50,7 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 	const [benefitFilter, setBenefitFilter] = useState('Todos');
 	const [searchQuery, setSearchQuery] = useState('');
 	const [dateFilter, setDateFilter] = useState('');
-	const [sorting, setSorting] = useState<'asc' | 'desc'>('desc');
+
 	const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
 
 	const filteredTickets = useMemo(() => {
@@ -60,29 +61,10 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 				(dateFilter === '' ||
 					new Date(ticket.createdAt) >= new Date(dateFilter)) &&
 				(searchQuery === '' ||
-					ticket.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					ticket.number.toString().includes(searchQuery.toLowerCase()) ||
 					ticket.name.toLowerCase().includes(searchQuery.toLowerCase())),
 		);
-	}, [
-		tickets,
-		statusFilter,
-		benefitFilter,
-		dateFilter,
-		searchQuery,
-		// sortOrder,
-	]);
-
-	const sortedTickets = [...filteredTickets].sort((a, b) => {
-		if (sorting === 'asc') {
-			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-		} else {
-			return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-		}
-	});
-
-	const toggleSortOrder = () => {
-		setSorting(sorting === 'asc' ? 'desc' : 'asc');
-	};
+	}, [tickets, statusFilter, benefitFilter, dateFilter, searchQuery]);
 
 	const toggleViewMode = () => {
 		setViewMode(viewMode === 'table' ? 'cards' : 'table');
@@ -98,8 +80,21 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 			},
 		},
 		{
+			id: 'Nome',
 			accessorKey: 'name',
-			header: 'Cliente',
+			header: ({ column }) => {
+				return (
+					<Button
+						variant='ghost'
+						onClick={() =>
+							column.toggleSorting(column.getIsSorted() === 'asc')
+						}>
+						Nome
+						<ArrowUpDown className='ml-2 h-4 w-4' />
+					</Button>
+				);
+			},
+			cell: ({ row }) => <div>{row.getValue('Nome')}</div>,
 		},
 		{
 			accessorKey: 'type',
@@ -140,12 +135,14 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 		},
 		{
 			accessorKey: 'createdAt',
-			header: ({}) => {
+			header: ({ column }) => {
 				return (
 					<Button
 						variant='ghost'
 						className='w-full justify-center'
-						onClick={() => toggleSortOrder()}>
+						onClick={() =>
+							column.toggleSorting(column.getIsSorted() === 'asc')
+						}>
 						Data de Abertura
 						<ArrowUpDown className='ml-2 h-4 w-4' />
 					</Button>
@@ -174,9 +171,13 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 	return (
 		<>
 			<div className='flex flex-col md:flex-row gap-4 mb-6'>
-				<div className='flex-1'>
+				<div className='flex-1 gap-2 flex items-center'>
+					<Search
+						className=''
+						size={24}
+					/>
 					<Input
-						placeholder='Pesquisar por número ou nome do cliente'
+						placeholder='Pesquisar pelo número ou nome do cliente'
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						className='w-full'
@@ -231,11 +232,11 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 				<>
 					<DataTable
 						columns={columns}
-						data={sortedTickets}
+						data={filteredTickets}
 					/>
 				</>
 			) : (
-				<TicketCards tickets={sortedTickets} />
+				<TicketCards tickets={filteredTickets} />
 			)}
 		</>
 	);
