@@ -53,10 +53,10 @@ export default async function AdminPage() {
 
 	return (
 		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
-			<h2 className='font-semibold text-lg md:text-2xl text-pretty capitalize'>
+			{/* <h2 className='font-semibold text-lg md:text-2xl text-pretty capitalize'>
 				Gerencie as solicitações de seus clientes
-			</h2>
-			<Card className='mt-10'>
+			</h2> */}
+			<Card className='mt-0'>
 				<CardHeader>
 					<div className='flex flex-col md:flex-row gap-5 justify-between items-center'>
 						<div>

@@ -35,6 +35,7 @@ import * as React from 'react';
 import { columns } from './columns';
 import { User } from '@prisma/client';
 import ModalCreateUser from './modal-create-user';
+import DataTablePagination from '@/components/ui/data-table-pagination';
 // import { ModalCreateUser } from './ModalCreateUser';
 
 export function DataTableDemo({ data }: { data: User[] }) {
@@ -66,7 +67,7 @@ export function DataTableDemo({ data }: { data: User[] }) {
 	});
 
 	return (
-		<div className='w-full mx-auto md:pr-10 px-3'>
+		<div className='w-full mx-auto md:pr-10 px-3 pb-5'>
 			<div className='flex items-center py-4 flex-col md:flex-row gap-5 mx-auto w-full'>
 				<div className='flex items-center w-full md:max-w-md justify-start bg-slate-100 rounded pl-2 '>
 					<Search
@@ -114,8 +115,8 @@ export function DataTableDemo({ data }: { data: User[] }) {
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
-			<div className='rounded-md w-full'>
-				<Table className='bg-slate-100 w-full mr-auto text-slate-900'>
+			<div className='rounded-xl border w-full'>
+				<Table className='bg-white  w-full mr-auto text-slate-900'>
 					<TableHeader className='bg-blue-600 rounded-lg text-slate-50 hover:bg-blue-700'>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow key={headerGroup.id}>
@@ -160,30 +161,7 @@ export function DataTableDemo({ data }: { data: User[] }) {
 					</TableBody>
 				</Table>
 			</div>
-			<div className='flex items-center justify-end space-x-2 py-4'>
-				<div className='flex-1 text-sm text-muted-foreground'>
-					{table.getFilteredSelectedRowModel().rows.length} de{' '}
-					{table.getFilteredRowModel().rows.length} linha(s) selecionada.
-				</div>
-				<div className='space-x-2'>
-					<Button
-						variant='default'
-						className='disabled:grayscale'
-						size='sm'
-						onClick={() => table.previousPage()}
-						disabled={!table.getCanPreviousPage()}>
-						Anterior
-					</Button>
-					<Button
-						variant='default'
-						size='sm'
-						className='disabled:grayscale'
-						onClick={() => table.nextPage()}
-						disabled={!table.getCanNextPage()}>
-						Próximo
-					</Button>
-				</div>
-			</div>
+			<DataTablePagination table={table} />
 		</div>
 	);
 }

@@ -4,6 +4,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { DataTable } from '@/components/ui/data-table';
 import { Input } from '@/components/ui/input';
 import {
 	Select,
@@ -12,14 +13,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from '@/components/ui/table';
+import type { ColumnDef } from '@tanstack/react-table';
 import {
 	ArrowUpDown,
 	CheckCircle,
@@ -31,7 +25,7 @@ import {
 	Shield,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { TicketCards } from './ticket-card';
 
 const benefitTypeIcons = {
@@ -55,22 +49,31 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 	const [benefitFilter, setBenefitFilter] = useState('Todos');
 	const [searchQuery, setSearchQuery] = useState('');
 	const [dateFilter, setDateFilter] = useState('');
-	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+	const [sorting, setSorting] = useState<'asc' | 'desc'>('desc');
 	const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
 
-	const filteredTickets = tickets.filter(
-		(ticket) =>
-			(statusFilter === 'Todos' || ticket.status === statusFilter) &&
-			(benefitFilter === 'Todos' || ticket.type === benefitFilter) &&
-			(dateFilter === '' ||
-				new Date(ticket.createdAt) >= new Date(dateFilter)) &&
-			(searchQuery === '' ||
-				ticket.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				ticket.name.toLowerCase().includes(searchQuery.toLowerCase())),
-	);
+	const filteredTickets = useMemo(() => {
+		return tickets.filter(
+			(ticket) =>
+				(statusFilter === 'Todos' || ticket.status === statusFilter) &&
+				(benefitFilter === 'Todos' || ticket.type === benefitFilter) &&
+				(dateFilter === '' ||
+					new Date(ticket.createdAt) >= new Date(dateFilter)) &&
+				(searchQuery === '' ||
+					ticket.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					ticket.name.toLowerCase().includes(searchQuery.toLowerCase())),
+		);
+	}, [
+		tickets,
+		statusFilter,
+		benefitFilter,
+		dateFilter,
+		searchQuery,
+		// sortOrder,
+	]);
 
 	const sortedTickets = [...filteredTickets].sort((a, b) => {
-		if (sortOrder === 'asc') {
+		if (sorting === 'asc') {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		} else {
 			return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -78,12 +81,95 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 	});
 
 	const toggleSortOrder = () => {
-		setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+		setSorting(sorting === 'asc' ? 'desc' : 'asc');
 	};
 
 	const toggleViewMode = () => {
 		setViewMode(viewMode === 'table' ? 'cards' : 'table');
 	};
+
+	const columns: ColumnDef<Ticket>[] = [
+		{
+			accessorKey: 'number',
+			header: 'Número',
+			cell: ({ row }) => {
+				const number = row.getValue('number') as string;
+				return `T-000${number}`;
+			},
+		},
+		{
+			accessorKey: 'name',
+			header: 'Cliente',
+		},
+		{
+			accessorKey: 'type',
+			header: 'Tipo de Benefício',
+			cell: ({ row }) => {
+				const benefitType = row.getValue('type') as string;
+				const BenefitIcon =
+					benefitTypeIcons[benefitType as keyof typeof benefitTypeIcons];
+				return (
+					<div className='flex items-center'>
+						{BenefitIcon && <BenefitIcon className='mr-2 h-4 w-4' />}
+						{benefitType}
+					</div>
+				);
+			},
+		},
+		{
+			accessorKey: 'status',
+			header: 'Status',
+			cell: ({ row }) => {
+				const status = row.getValue('status') as string;
+				return (
+					<Badge
+						variant={
+							status === 'Pendente'
+								? 'warning'
+								: status === 'Em Andamento'
+									? 'secondary'
+									: 'success'
+						}>
+						{status === 'Pendente' && <Clock className='mr-1 h-3 w-3' />}
+						{status === 'Em Andamento' && <Clock className='mr-1 h-3 w-3' />}
+						{status === 'Concluído' && <CheckCircle className='mr-1 h-3 w-3' />}
+						{status}
+					</Badge>
+				);
+			},
+		},
+		{
+			accessorKey: 'createdAt',
+			header: ({}) => {
+				return (
+					<Button
+						variant='ghost'
+						className='w-full justify-center'
+						onClick={() => toggleSortOrder()}>
+						Data de Abertura
+						<ArrowUpDown className='ml-2 h-4 w-4' />
+					</Button>
+				);
+			},
+			cell: ({ row }) => {
+				return new Date(row.getValue('createdAt')).toLocaleDateString('pt-BR');
+			},
+			sortingFn: 'datetime',
+		},
+		{
+			id: 'actions',
+			cell: ({ row }) => {
+				const ticket = row.original;
+				return (
+					<Button
+						variant='link'
+						asChild>
+						<Link href={`/dashboard/admin/${ticket.id}`}>Ver Detalhes</Link>
+					</Button>
+				);
+			},
+		},
+	];
 
 	return (
 		<>
@@ -99,7 +185,7 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 				<Select
 					value={statusFilter}
 					onValueChange={setStatusFilter}>
-					<SelectTrigger className='w-full md:w-[180px]'>
+					<SelectTrigger className='w-full md:w-[220px]'>
 						<SelectValue placeholder='Filtrar por status' />
 					</SelectTrigger>
 					<SelectContent>
@@ -112,7 +198,7 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 				<Select
 					value={benefitFilter}
 					onValueChange={setBenefitFilter}>
-					<SelectTrigger className='w-full md:w-[180px]'>
+					<SelectTrigger className='w-full md:w-[220px] text-left'>
 						<SelectValue placeholder='Filtrar por benefício' />
 					</SelectTrigger>
 					<SelectContent>
@@ -142,88 +228,12 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 			</div>
 
 			{viewMode === 'table' ? (
-				<div className='rounded-md border'>
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Número</TableHead>
-								<TableHead>Cliente</TableHead>
-								<TableHead className='w-full md:w-fit'>
-									Tipo de Benefício
-								</TableHead>
-								<TableHead className='w-full md:w-fit'>Status</TableHead>
-								<TableHead>
-									<Button
-										variant='ghost'
-										onClick={toggleSortOrder}
-										className='w-full md:w-fit flex text-center justify-between items-center'>
-										Data de Abertura
-										<ArrowUpDown className='h-4 w-4' />
-									</Button>
-								</TableHead>
-								<TableHead>Ações</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{sortedTickets.map((ticket) => {
-								const BenefitIcon =
-									benefitTypeIcons[
-										ticket.type as keyof typeof benefitTypeIcons
-									];
-								return (
-									<TableRow key={ticket.id}>
-										<TableCell>{`T-000${ticket.number}`}</TableCell>
-										<TableCell className=' text-nowrap'>
-											{ticket.name}
-										</TableCell>
-										<TableCell className=' text-nowrap'>
-											<div className='flex items-center text-sm '>
-												{BenefitIcon && (
-													<BenefitIcon className='mr-2 h-3 w-3' />
-												)}
-												{ticket.type}
-											</div>
-										</TableCell>
-										<TableCell>
-											<Badge
-												className=' text-nowrap'
-												variant={
-													ticket.status === 'Pendente'
-														? 'warning'
-														: ticket.status === 'Em Andamento'
-															? 'secondary'
-															: 'success'
-												}>
-												{ticket.status === 'Pendente' && (
-													<Clock className='mr-1 h-3 w-3' />
-												)}
-												{ticket.status === 'Em Andamento' && (
-													<Clock className='mr-1 h-3 w-3' />
-												)}
-												{ticket.status === 'Concluído' && (
-													<CheckCircle className='mr-1 h-3 w-3' />
-												)}
-												{ticket.status}
-											</Badge>
-										</TableCell>
-										<TableCell className='text-center'>
-											{new Date(ticket.createdAt).toLocaleDateString('pt-BR')}
-										</TableCell>
-										<TableCell>
-											<Button
-												variant='link'
-												asChild>
-												<Link href={`/dashboard/admin/${ticket.id}`}>
-													Ver Detalhes
-												</Link>
-											</Button>
-										</TableCell>
-									</TableRow>
-								);
-							})}
-						</TableBody>
-					</Table>
-				</div>
+				<>
+					<DataTable
+						columns={columns}
+						data={sortedTickets}
+					/>
+				</>
 			) : (
 				<TicketCards tickets={sortedTickets} />
 			)}

@@ -61,8 +61,13 @@ export async function POST(req: NextRequest) {
 						const customer = customers.data[0];
 
 						//VALIDADO
-						if (myUser.user && tickets.data) {
-							await manageTickets(myUser?.user, tickets?.data, priceType);
+						if (myUser.user) {
+							const resp = await manageTickets(
+								myUser?.user,
+								tickets?.data,
+								priceType,
+							);
+							console.log(resp);
 							await sendInvoiceIfAvailable(session, email, name);
 						}
 
@@ -96,6 +101,7 @@ export async function POST(req: NextRequest) {
 								status: 'active',
 							});
 
+							//cancelar o plano automatico
 							if (subscriptions.data.length > 0) {
 								const activeSubscription = subscriptions.data[0];
 								await stripe.subscriptions.cancel(activeSubscription.id);
@@ -106,6 +112,7 @@ export async function POST(req: NextRequest) {
 								);
 							}
 
+							//alterar ou criar o plano manualmente
 							const result = await handleSubscription({
 								email,
 								priceTypeId,

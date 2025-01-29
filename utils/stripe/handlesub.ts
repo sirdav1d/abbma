@@ -20,6 +20,7 @@ export async function handleSubscription({
 
 		if (!customer) {
 			console.log('Cliente não encontrado, criando uma nova assinatura...');
+
 			return await createNewSubscription({ email, priceTypeId });
 		}
 
@@ -44,18 +45,17 @@ export async function handleSubscription({
 			console.log(
 				'Plano vigente é igual ao solicitado, adicionando mais uma compra...',
 			);
-			const resp = await incrementQuantity(activeSubscription.items.data[0].id);
-			return { message: 'adicionando mais uma compra', resp };
+			return await incrementQuantity(activeSubscription.items.data[0].id);
 		} else {
 			console.log(
 				'Plano vigente é diferente, atualizando para o novo plano...',
 			);
-			const resp = await updatePlan(activeSubscription.id, priceTypeId);
-			return { message: 'atualizando plano', resp };
+
+			return await updatePlan(activeSubscription.id, priceTypeId);
 		}
 	} catch (error) {
 		console.error('Erro ao processar a assinatura:', error);
-		throw error;
+		return { ok: false, resp: null };
 	}
 }
 
@@ -73,12 +73,11 @@ async function createNewSubscription({
 			items: [{ price: priceTypeId }],
 			expand: ['latest_invoice.payment_intent'],
 		});
-
 		console.log('Nova assinatura criada:', subscription.id);
-		return subscription;
+		return { ok: true, subscription: subscription.id };
 	} catch (error) {
 		console.log('Erro ao criar nova assinatura:', error);
-		throw error;
+		return { ok: false, subscription: null };
 	}
 }
 
@@ -101,10 +100,10 @@ async function incrementQuantity(subscriptionItemId: string) {
 			`Quantidade do plano incrementada: de ${subscriptionItem.quantity} para ${newQuantity}`,
 		);
 
-		return updatedSubscriptionItem;
+		return { ok: true, subscriptionItem: updatedSubscriptionItem.id };
 	} catch (error) {
 		console.error('Erro ao incrementar a quantidade do plano:', error);
-		throw error;
+		return { ok: false, subscriptionItem: null };
 	}
 }
 
@@ -124,9 +123,9 @@ async function updatePlan(subscriptionId: string, priceTypeId: string) {
 		);
 
 		console.log('Plano atualizado com sucesso:', updatedSubscription.id);
-		return updatedSubscription;
+		return { ok: true, subscriptionUpdated: updatedSubscription.id };
 	} catch (error) {
 		console.error('Erro ao atualizar o plano:', error);
-		throw error;
+		return { ok: false, subscriptionUpdated: null };
 	}
 }
