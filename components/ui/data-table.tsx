@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
 									{row.getVisibleCells().map((cell) => (
 										<TableCell
 											key={cell.id}
-											className={`${cell.column.id == 'Nome' ? 'text-left' : 'text-center'}`}>
+											className={`${cell.column.id == 'Nome' ? 'text-left' : 'text-center'} text-nowrap`}>
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext(),

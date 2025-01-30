@@ -24,10 +24,12 @@ export default function DataTablePagination<TData>({
 	table,
 }: DataTablePaginationProps<TData>) {
 	return (
-		<div className='flex items-center justify-end px-2 mt-5'>
-			<div className='flex items-center space-x-6 lg:space-x-8 '>
-				<div className='flex items-center space-x-2'>
-					<p className='text-sm font-normal  '>Linhas por página</p>
+		<div className='flex items-center justify-end mt-5'>
+			<div className='flex items-center w-full space-x-2 md:space-x-6 lg:space-x-8 '>
+				<div className='flex flex-col md:flex-row gap-2  md:items-center space-x-2'>
+					<p className='text-xs md:text-sm font-normal text-nowrap '>
+						Linhas por página
+					</p>
 					<Select
 						value={`${table.getState().pagination.pageSize}`}
 						onValueChange={(value) => {
@@ -47,7 +49,7 @@ export default function DataTablePagination<TData>({
 						</SelectContent>
 					</Select>
 				</div>
-				<div className='flex w-[100px] items-center justify-center text-sm font-normal'>
+				<div className='flex w-[100px] items-center justify-center text-xs md:text-sm font-normal'>
 					Página {table.getState().pagination.pageIndex + 1} de{' '}
 					{table.getPageCount()}
 				</div>
