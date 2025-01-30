@@ -2,14 +2,13 @@
 
 'use server';
 
-import { prisma } from '@/lib/prisma';
-import { revalidatePath } from 'next/cache';
-import SendEmailAction from '../email/sendEmail';
 import { generateContentUpdateDependent } from '@/constants/email-contents';
+import { prisma } from '@/lib/prisma';
+import { getTitle } from '@/utils/get-title-ticket';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import SendEmailAction from '../email/sendEmail';
 import GetAllTicketsAction from '../tickets/get-all-tickets';
-import { getTitle } from '@/utils/get-title-ticket';
 
 interface UpdateDependentProps {
 	cpf: string;
@@ -79,7 +78,7 @@ export async function updateDependentAction({
 			},
 		});
 
-		revalidatePath('/dashboard/dependents');
+		
 		return {
 			success: true,
 			message: 'Dependente atualizado com sucesso',

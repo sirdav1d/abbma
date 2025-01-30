@@ -9,7 +9,6 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import SendEmailAction from '../email/sendEmail';
 import GetAllTicketsAction from '../tickets/get-all-tickets';
-import { revalidatePath } from 'next/cache';
 
 interface CreateDependentProps {
 	cpf: string;
@@ -76,7 +75,7 @@ export async function createDependentAction({
 				authorName: session.user.name,
 			},
 		});
-		revalidatePath('/dashboard/dependents');
+
 		return {
 			success: true,
 			message: 'Dependente cadastrado com sucesso',

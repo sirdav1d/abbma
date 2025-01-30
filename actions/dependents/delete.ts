@@ -2,14 +2,13 @@
 
 'use server';
 
+import { generateContentDeleteDependent } from '@/constants/email-contents';
 import { prisma } from '@/lib/prisma';
-import SendEmailAction from '../email/sendEmail';
+import { getTitle } from '@/utils/get-title-ticket';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { generateContentDeleteDependent } from '@/constants/email-contents';
+import SendEmailAction from '../email/sendEmail';
 import GetAllTicketsAction from '../tickets/get-all-tickets';
-import { getTitle } from '@/utils/get-title-ticket';
-import { revalidatePath } from 'next/cache';
 
 export async function deleteDependentAction(id: string) {
 	const session = await getServerSession();
@@ -54,7 +53,7 @@ export async function deleteDependentAction(id: string) {
 					authorName: session.user.name,
 				},
 			});
-			revalidatePath('/dashboard/dependents');
+
 			return {
 				ok: true,
 				message: 'dependente deletado com sucesso',
