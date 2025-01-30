@@ -64,7 +64,7 @@ export default async function DependentsPage() {
 					<CardHeader>
 						<div className='flex justify-between md:items-center md:flex-row flex-col gap-5'>
 							<CardTitle className='text-xl'>
-								Você Pode Adicionar mais {respIsAble?.number ?? 0} dependentes
+								Você Pode Adicionar mais {respIsAble?.number ?? 0} dependente(s)
 							</CardTitle>
 							<div className='flex items-center gap-5'>
 								{respIsAble?.type && (
