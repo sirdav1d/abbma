@@ -45,7 +45,7 @@ export default function MotionCard() {
 						asChild
 						size={'lg'}>
 						<Link
-							href='/'
+							href='/homepage'
 							className='w-full text-lg'>
 							<ArrowLeft className='scale-105' /> Voltar
 						</Link>

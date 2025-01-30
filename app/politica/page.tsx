@@ -15,7 +15,7 @@ export default function Politica() {
 			<div className='relative flex flex-col'>
 				<div className='flex z-50 px-4 py-5 items-center justify-between md:hidden'>
 					<MobileHeader />
-					<Link href='/'>
+					<Link href='/homepage'>
 						<Image
 							src={logo}
 							alt='logo ABBMA'

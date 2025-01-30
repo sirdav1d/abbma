@@ -42,7 +42,7 @@ export default function MobileHeader() {
 			<DrawerContent onCloseAutoFocus={(e) => e.preventDefault()}>
 				<DrawerHeader>
 					<DrawerTitle className='flex items-center justify-center gap-5'>
-						<Link href='/'>
+						<Link href='/homepage'>
 							<Image
 								src={logo}
 								alt='logo ABBMA'

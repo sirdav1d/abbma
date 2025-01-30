@@ -13,7 +13,7 @@ export default function RegisterPage() {
 		<div className='grid min-h-screen lg:grid-cols-2 bg-slate-200 w-full'>
 			<div className='flex flex-col gap-6 p-4  w-full h-full items-center justify-center'>
 				<Link
-					href='/'
+					href='/homepage'
 					className='flex items-center gap-2 font-medium'>
 					<Image
 						src={logo}

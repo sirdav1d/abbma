@@ -14,7 +14,7 @@ export default async function DektopHeader() {
 	return (
 		<div className='hidden md:flex w-full fixed py-4   mx-auto bg-slate-50/80 backdrop-blur-md z-50 px-4'>
 			<div className='flex items-center justify-between w-full max-w-7xl mx-auto'>
-				<Link href='/'>
+				<Link href='/homepage'>
 					<Image
 						src={logo}
 						alt='logo ABBMA'

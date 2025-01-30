@@ -27,7 +27,7 @@ export default function MarketingLayout({
 			</a>
 			<div className='flex z-50 px-4 py-4 items-center justify-between md:hidden'>
 				<MobileHeader />
-				<Link href='/'>
+				<Link href='/homepage'>
 					<Image
 						src={logo}
 						alt='logo ABBMA'

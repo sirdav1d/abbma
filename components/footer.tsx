@@ -30,7 +30,7 @@ export default function Footer() {
 		<div className='w-full h-full px-4 bg-gradient-to-b from-blue-950 to-blue-900'>
 			<div className='mx-auto max-w-7xl py-20 text-center flex flex-col gap-10 relative '>
 				<div className='flex flex-col gap-10 md:gap-0 md:flex-row items-center w-full justify-between'>
-					<Link href='/'>
+					<Link href='/homepage'>
 						<Image
 							src={logo}
 							alt='logo ABBMA'

@@ -18,7 +18,7 @@ export default function SuccessPage() {
 		<div className='bg-slate-100'>
 			<div className='container mx-auto px-4 py-10 max-w-7xl flex flex-col justify-center  w-full min-h-screen h-full '>
 				<Link
-					href='/'
+					href='/homepage'
 					className='mx-auto mb-5'>
 					<Image
 						src={logo}

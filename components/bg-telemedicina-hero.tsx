@@ -13,7 +13,7 @@ export default function BgTelemedicina() {
 				initial={{ scale: 1 }}
 				exit={{ scale: 1 }}
 				transition={{ duration: 1.2, delay: 0.2, type: 'spring' }}
-				className={`h-full w-full ${isMobile ? 'rounded-none' : 'rounded-3xl'}  absolute left-0 top-0 bg-slate-950/20 scale-95 bg-[url('/bg-hero-telemedicine.png')] bg-blend-darken object-top`}
+				className={`h-full w-full ${isMobile ? 'rounded-none' : 'rounded-3xl'}  absolute left-0 top-0 bg-slate-950/20 scale-95 bg-[url('/bg-hero-telemedicine.png')] bg-blend-darken object-top object-scale-down`}
 			/>
 		</>
 	);
