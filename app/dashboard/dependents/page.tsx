@@ -75,12 +75,12 @@ export default async function DependentsPage() {
 										content='Comprar Benefício Extra -  R$24,99 por vida'
 									/>
 								)}
-								{respIsAble?.number && (
+								{respIsAble?.number ? (
 									<ModalCreateDependent
 										isAble={respIsAble.number > 0 && isTelemedicine!}
 										userId={String(user.user?.id)}
 									/>
-								)}
+								) : null}
 							</div>
 						</div>
 					</CardHeader>

@@ -2,9 +2,14 @@
 
 'use server';
 
-import { prisma } from '@/lib/prisma';
-import SendEmailAction from '../email/sendEmail';
 import { generateContentNewDependent } from '@/constants/email-contents';
+import { prisma } from '@/lib/prisma';
+import { getTitle } from '@/utils/get-title-ticket';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import SendEmailAction from '../email/sendEmail';
+import GetAllTicketsAction from '../tickets/get-all-tickets';
+import { revalidatePath } from 'next/cache';
 
 interface CreateDependentProps {
 	cpf: string;
@@ -25,6 +30,23 @@ export async function createDependentAction({
 	phone,
 	userId,
 }: CreateDependentProps) {
+	const session = await getServerSession();
+	if (!session) {
+		redirect('/login');
+	}
+
+	const { data } = await GetAllTicketsAction({ email: session.user.email });
+
+	const ticket = data?.find((item) => item.type !== 'CLUB_VANTAGES');
+
+	if (!ticket) {
+		return {
+			success: false,
+			message: 'Sem Plano associado para cadastrar dependente',
+			dependent: null,
+		};
+	}
+
 	try {
 		const dependent = await prisma.dependent.create({
 			data: {
@@ -47,14 +69,14 @@ export async function createDependentAction({
 			htmlContent: generateContentNewDependent({ name: dependent?.name ?? '' }),
 		});
 
-		// await prisma.updates.create({
-		// 	data: {
-		// 		ticketId: newTicket.id,
-		// 		message: `Usuário ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
-		// 		authorName: user.name,
-		// 	},
-		// });
-
+		await prisma.updates.create({
+			data: {
+				ticketId: ticket.id,
+				message: `Usuário ${session.user.name} solicitou o cadastro de um novo dependente: ${dependent.name} - ${dependent.email} - ${dependent.degree} - ${dependent.phone} - ${dependent.date_birth} no plano ${getTitle(ticket.type)}, atualizar cadastro na plataforma em até 48 horas`,
+				authorName: session.user.name,
+			},
+		});
+		revalidatePath('/dashboard/dependents');
 		return {
 			success: true,
 			message: 'Dependente cadastrado com sucesso',

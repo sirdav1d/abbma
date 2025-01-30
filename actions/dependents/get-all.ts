@@ -6,6 +6,7 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { getUserAction } from '../user/get-user';
+import { revalidatePath } from 'next/cache';
 
 export default async function GetAllDependentsAction() {
 	const session = await getServerSession();
@@ -19,6 +20,7 @@ export default async function GetAllDependentsAction() {
 		const dependents = await prisma.dependent.findMany({
 			where: { userId: user?.id },
 		});
+		revalidatePath('/dashboard/dependents');
 		return { success: true, message: `Deu certo`, data: dependents };
 	} catch (error) {
 		return {
