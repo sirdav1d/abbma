@@ -78,6 +78,28 @@ export function generateContentNewDependent({ name }: { name: string }) {
       </html>`;
 }
 
+export function generateContentNewDependentToDependent({
+	dependentName,
+	userName,
+	href,
+}: {
+	dependentName: string;
+	userName: string;
+	href: string;
+}) {
+	return `<html>
+        <body>
+          <p>Olá -  ${dependentName}, você foi adicionado como dependente de  ${userName} na ABBMA -  Associação Brasileira de Benefícios para Militares e Autônomos.</p>
+          </br>
+          <p>Acesse o link abaixo e tenha acesso à sua carteirinha para desfrutar dos seus benefícios:</p>
+          
+            <br/>
+            <a href=${href} target="_blank">Minha Carteirinha</a>
+               
+        </body>
+      </html>`;
+}
+
 export function generateContentDeleteDependent({ name }: { name: string }) {
 	return `<html>
         <body>

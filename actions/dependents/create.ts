@@ -2,7 +2,10 @@
 
 'use server';
 
-import { generateContentNewDependent } from '@/constants/email-contents';
+import {
+	generateContentNewDependent,
+	generateContentNewDependentToDependent,
+} from '@/constants/email-contents';
 import { prisma } from '@/lib/prisma';
 import { getTitle } from '@/utils/get-title-ticket';
 import { getServerSession } from 'next-auth';
@@ -38,6 +41,8 @@ export async function createDependentAction({
 
 	const ticket = data?.find((item) => item.type !== 'CLUB_VANTAGES');
 
+	const href = `www.abbma.org.br/${userId}`;
+
 	if (!ticket) {
 		return {
 			success: false,
@@ -66,6 +71,16 @@ export async function createDependentAction({
 			email: 'contato@abbma.org.br',
 			subject: 'Cliente Cadastrou Novo Dependente',
 			htmlContent: generateContentNewDependent({ name: dependent?.name ?? '' }),
+		});
+
+		await SendEmailAction({
+			email: 'ddavid.diniz@gmail.com',
+			subject: 'Bem vindo a ABBMA',
+			htmlContent: generateContentNewDependentToDependent({
+				dependentName: dependent.name,
+				userName: session.user.name,
+				href: href,
+			}),
 		});
 
 		await prisma.updates.create({

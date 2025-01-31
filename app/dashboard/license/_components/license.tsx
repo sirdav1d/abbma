@@ -26,7 +26,7 @@ export default function License({
 		<div>
 			<Link
 				href={`/licenseShare/${user.id}`}
-				className={`${isPageShare ? 'max-w-2xl md:scale-125' : 'max-w-lg'}`}>
+				className={`${isPageShare ? 'max-w-2xl md:scale-125 cursor-default' : 'max-w-lg'}`}>
 				<Card
 					className={`${isPageShare ? 'max-w-2xl md:scale-125' : 'max-w-lg'}  shadow-lg `}>
 					<CardHeader>

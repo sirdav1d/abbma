@@ -18,9 +18,9 @@ export default async function LicenseUser({
 	const { user } = await getUserByIdAction({ id: id });
 	const { dependent } = await getDependentByIdAction({ id: id });
 
-	if (!dependent?.isActive || !user?.isActive) {
+	if (dependent && !dependent?.isActive || user && !user?.isActive) {
 		return (
-			<div className='flex items-center justify-center flex-col gap-5'>
+			<div className='flex items-center h-screen justify-center flex-col gap-5'>
 				<Image
 					src={logo}
 					alt='logo ABBMA'
