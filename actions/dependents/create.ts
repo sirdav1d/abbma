@@ -41,8 +41,6 @@ export async function createDependentAction({
 
 	const ticket = data?.find((item) => item.type !== 'CLUB_VANTAGES');
 
-	const href = `www.abbma.org.br/licenseShare/${userId}`;
-
 	if (!ticket) {
 		return {
 			success: false,
@@ -66,6 +64,7 @@ export async function createDependentAction({
 		});
 		console.log('depedente cadastrado');
 		//enviar e-mail de confirmação de cadastro
+		const href = `www.abbma.org.br/licenseShare/${dependent.id}`;
 
 		await SendEmailAction({
 			email: 'contato@abbma.org.br',
