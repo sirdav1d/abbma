@@ -18,7 +18,7 @@ interface TableDependentProps {
 }
 
 export default function TableDependent(props: TableDependentProps) {
-	return props.dependents && props?.dependents?.length > 0 ? (
+	return (
 		<div className='border rounded-xl'>
 			<Table>
 				<TableHeader className='bg-blue-600 rounded-lg text-slate-50 hover:bg-blue-700'>
@@ -61,11 +61,5 @@ export default function TableDependent(props: TableDependentProps) {
 				</TableBody>
 			</Table>
 		</div>
-	) : (
-		<>
-			<p className='text-muted-foreground text-sm'>
-				Nenhum Dependente Cadastrado
-			</p>
-		</>
 	);
 }

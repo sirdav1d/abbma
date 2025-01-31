@@ -35,7 +35,6 @@ export default async function DependentsPage() {
 	}
 
 	const respIsAble = await howMuchIsAble();
-	console.log(respIsAble);
 
 	return (
 		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
@@ -85,14 +84,12 @@ export default async function DependentsPage() {
 						</div>
 					</CardHeader>
 					<CardContent>
-						{data ? (
+						{data && data?.length > 0 ? (
 							<TableDependent
 								dependents={data}
 								userId={String(user.user?.id)}
 							/>
-						) : (
-							<></>
-						)}
+						) : null}
 					</CardContent>
 				</Card>
 			)}
