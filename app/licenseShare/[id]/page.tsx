@@ -18,7 +18,7 @@ export default async function LicenseUser({
 	const { user } = await getUserByIdAction({ id: id });
 	const { dependent } = await getDependentByIdAction({ id: id });
 
-	if (dependent && !dependent?.isActive || user && !user?.isActive) {
+	if ((dependent && !dependent?.isActive) || (user && !user?.isActive)) {
 		return (
 			<div className='flex items-center bg-slate-100 h-screen justify-center flex-col gap-5'>
 				<Image
