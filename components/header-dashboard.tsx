@@ -20,6 +20,7 @@ export default function HeaderDash() {
 		'/dashboard/profile': 'Meu Perfil',
 		'/dashboard/admin': 'Painel Admin',
 		'/dashboard/admin/users': 'Gestão de Usuários',
+		'/dashboard/license': 'Carteirinha(s)',
 	};
 
 	const pathname = usePathname();

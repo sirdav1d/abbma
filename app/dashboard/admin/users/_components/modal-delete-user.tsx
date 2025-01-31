@@ -57,10 +57,10 @@ export default function ModalDeleteUser({ user }: { user: Partial<User> }) {
 					<Trash2 className='h-4 w-4' />
 				</Button>
 			</DialogTrigger>
-			<DialogContent>
+			<DialogContent className='w-full flex flex-col justify-center rounded-xl py-5 max-w-sm xl:max-w-xl'>
 				<DialogHeader>
 					<DialogTitle>Deletar usuário</DialogTitle>
-					<DialogDescription>
+					<DialogDescription className='text-balance'>
 						Essa ação não poderá ser desfeita
 					</DialogDescription>
 				</DialogHeader>{' '}

@@ -31,10 +31,10 @@ export default function ModalCreateDependent({
 					Adicionar Dependente <Plus />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-4xl '>
+			<DialogContent className='w-full h-fit flex flex-col justify-center rounded-xl py-5 max-w-sm xl:max-w-xl '>
 				<DialogHeader>
 					<DialogTitle>Adicionar Novo Dependente</DialogTitle>
-					<DialogDescription>
+					<DialogDescription className='text-balance'>
 						Preencha os dados do novo dependente abaixo.
 					</DialogDescription>
 				</DialogHeader>

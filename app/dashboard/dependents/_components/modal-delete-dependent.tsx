@@ -54,7 +54,7 @@ export default function ModalDeleteDependent({
 					<Trash2 className='h-4 w-4' />
 				</Button>
 			</DialogTrigger>
-			<DialogContent>
+			<DialogContent className='w-full flex flex-col justify-center rounded-xl py-5 max-w-sm xl:max-w-xl '>
 				<DialogHeader>
 					<DialogTitle>Deletar dependente</DialogTitle>
 					<DialogDescription>

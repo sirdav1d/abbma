@@ -17,7 +17,7 @@ export default async function ProfilePage() {
 			<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 				Gerencie seus dados
 			</h2>
-			<div className='mt-10'>
+			<div className='mt-5'>
 				{session?.user && user && <ProfileForm user={user.user!} />}
 			</div>
 			<Separator className='my-5' />

@@ -72,7 +72,7 @@ export default async function DependentsPage() {
 										size='sm'
 										priceType={respIsAble.type}
 										isAddOn={true}
-										content='Comprar Benefício Extra -  R$24,99 por vida'
+										content='Benefício Extra -  R$24,99 por vida'
 									/>
 								)}
 								{respIsAble?.number ? (

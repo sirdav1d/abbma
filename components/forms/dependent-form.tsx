@@ -133,7 +133,7 @@ export default function DependentForm({
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='space-y-3 w-full '>
+				className='space-y-2 w-full '>
 				<div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-2 gap-4'>
 					<FormField
 						control={form.control}

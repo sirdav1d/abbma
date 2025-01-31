@@ -25,10 +25,10 @@ export default function ModalManageUser({ user }: { user: Partial<User> }) {
 					<Pencil />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-xl '>
+			<DialogContent className='w-full flex flex-col justify-center rounded-xl py-5 max-w-sm xl:max-w-xl '>
 				<DialogHeader>
 					<DialogTitle>Editar Usuário</DialogTitle>
-					<DialogDescription>
+					<DialogDescription className='text-balance'>
 						Gerencie seus usuários e altere permissões
 					</DialogDescription>
 				</DialogHeader>

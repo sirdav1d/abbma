@@ -9,6 +9,7 @@ import {
 	Home,
 	Inbox,
 	UsersRound,
+	Wallet,
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import PortalBtn from './portal-btn';
@@ -26,10 +27,16 @@ const items = [
 		icon: CircleUserRound,
 	},
 	{
+		title: 'Carteirinha',
+		url: '/dashboard/license',
+		icon: Wallet,
+	},
+	{
 		title: 'Meus Benefícios',
 		url: '/dashboard/benefits',
 		icon: Inbox,
 	},
+
 	{
 		title: 'Dependentes',
 		url: '/dashboard/dependents',

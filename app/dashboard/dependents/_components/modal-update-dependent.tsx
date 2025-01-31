@@ -31,10 +31,10 @@ export default function ModalUpdateDependent({
 					<Pencil />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-4xl '>
+			<DialogContent className='w-full flex flex-col justify-center rounded-xl py-5 max-w-sm xl:max-w-xl '>
 				<DialogHeader>
-					<DialogTitle>Adicionar Novo Dependente</DialogTitle>
-					<DialogDescription>
+					<DialogTitle>Atualizar Novo Dependente</DialogTitle>
+					<DialogDescription className='text-balance'>
 						Preencha os dados do novo dependente abaixo.
 					</DialogDescription>
 				</DialogHeader>

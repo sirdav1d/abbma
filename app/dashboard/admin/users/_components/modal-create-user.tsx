@@ -23,10 +23,10 @@ export default function ModalManageUser() {
 					Adicionar Usuário
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='w-full h-full md:h-fit py-5 max-w-sm xl:max-w-xl '>
+			<DialogContent className='w-full flex flex-col justify-center rounded-xl py-5 max-w-sm xl:max-w-xl '>
 				<DialogHeader>
 					<DialogTitle>Adicionar Novo Usuário</DialogTitle>
-					<DialogDescription>
+					<DialogDescription className='text-balance'>
 						Preencha os dados e cargo do novo usuário abaixo.
 					</DialogDescription>
 				</DialogHeader>
