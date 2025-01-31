@@ -26,11 +26,13 @@ export default async function LicensePage() {
 				</h2>
 				<div className='flex flex-col  gap-2 mt-5'>
 					<h3 className='font-bold'>Minha Carteirinha</h3>
-					<License
-						user={user}
-						isTitular={true}
-						isPageShare={false}
-					/>
+					<div className=' w-full max-w-lg'>
+						<License
+							user={user}
+							isTitular={true}
+							isPageShare={false}
+						/>
+					</div>
 				</div>
 
 				<Separator className='my-5' />
@@ -42,7 +44,7 @@ export default async function LicensePage() {
 							return (
 								<li
 									key={item.id}
-									className=' '>
+									className='w-full max-w-lg'>
 									<License
 										user={item}
 										isTitular={false}

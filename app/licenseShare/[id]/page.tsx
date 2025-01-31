@@ -20,7 +20,7 @@ export default async function LicenseUser({
 
 	if (dependent && !dependent?.isActive || user && !user?.isActive) {
 		return (
-			<div className='flex items-center h-screen justify-center flex-col gap-5'>
+			<div className='flex items-center bg-slate-100 h-screen justify-center flex-col gap-5'>
 				<Image
 					src={logo}
 					alt='logo ABBMA'
@@ -62,7 +62,7 @@ export default async function LicenseUser({
 					</Button>
 				</div>
 			) : dependent ? (
-				<div className='flex flex-col mx-auto justify-center gap-14 w-full max-w-2xl'>
+				<div className='flex bg-slate-100 flex-col mx-auto justify-center gap-14 w-full max-w-2xl'>
 					<License
 						user={dependent}
 						isTitular={false}
@@ -79,7 +79,7 @@ export default async function LicenseUser({
 					</Button>
 				</div>
 			) : (
-				<div className='flex items-center justify-center flex-col gap-5'>
+				<div className='flex bg-slate-100 items-center justify-center flex-col gap-5'>
 					<Image
 						src={logo}
 						alt='logo ABBMA'
