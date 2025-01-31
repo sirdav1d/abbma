@@ -41,7 +41,7 @@ export async function createDependentAction({
 
 	const ticket = data?.find((item) => item.type !== 'CLUB_VANTAGES');
 
-	const href = `www.abbma.org.br/${userId}`;
+	const href = `www.abbma.org.br/licenseShare/${userId}`;
 
 	if (!ticket) {
 		return {
@@ -82,6 +82,8 @@ export async function createDependentAction({
 				href: href,
 			}),
 		});
+
+		console.log(href);
 
 		await prisma.updates.create({
 			data: {
