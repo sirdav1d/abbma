@@ -12,6 +12,7 @@ import {
 import { Dependent, User } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
+import QrCode from './qr-code';
 
 export default function License({
 	user,
@@ -31,9 +32,15 @@ export default function License({
 					className={`${isPageShare ? 'max-w-2xl md:scale-125' : 'max-w-lg'}  shadow-lg `}>
 					<CardHeader>
 						<CardTitle className='flex gap-5 items-center'>
+							<Image
+								src={logo}
+								alt='logo ABBMA'
+								width={180}
+								height={180}
+								className='xl:w-20 w-12 object-contain'></Image>
 							{user?.name}
 						</CardTitle>
-						<CardDescription className='font-semibold mt-2'>
+						<CardDescription className='font-semibold mt-5'>
 							{user?.email}
 						</CardDescription>
 					</CardHeader>
@@ -45,12 +52,8 @@ export default function License({
 								Tipo de usuário: {isTitular ? 'Titular' : 'Dependente'}
 							</p>
 						</div>
-						<Image
-							src={logo}
-							alt='logo ABBMA'
-							width={180}
-							height={180}
-							className='xl:w-24 w-12 object-contain'></Image>
+
+						<QrCode value={`www.abbma.org.br/licenseShare/${user.id}`} />
 					</CardContent>
 					<CardFooter className='w-full flex justify-center items-center mx-auto text-xs text-center'>
 						Cadastro em: {new Date(user?.createdAt).toLocaleString('pt-BR')}
