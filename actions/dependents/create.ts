@@ -73,7 +73,7 @@ export async function createDependentAction({
 		});
 
 		await SendEmailAction({
-			email: 'ddavid.diniz@gmail.com',
+			email: email,
 			subject: 'Bem vindo a ABBMA',
 			htmlContent: generateContentNewDependentToDependent({
 				dependentName: dependent.name,
