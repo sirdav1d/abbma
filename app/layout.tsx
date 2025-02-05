@@ -1,16 +1,15 @@
 /** @format */
 
+import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import { getUserAction } from '@/actions/user/get-user';
 import { Toaster } from '@/components/ui/sonner';
 import AuthProvider from '@/providers/auth-provider';
-import { ThemeProvider } from '@/providers/theme-provider';
-import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
-import './globals.css';
-import { getServerSession } from 'next-auth';
-import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
-import ModalSub from './dashboard/_components/modal-sub';
-import { getUserAction } from '@/actions/user/get-user';
 import { Analytics } from '@vercel/analytics/next';
+import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
+import { Poppins } from 'next/font/google';
+import ModalSub from './dashboard/_components/modal-sub';
+import './globals.css';
 
 const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -48,19 +47,14 @@ export default async function RootLayout({
 			lang='pt-BR'
 			suppressHydrationWarning>
 			<body className={`${poppins.className}  antialiased`}>
-				<ThemeProvider
-					attribute='class'
-					defaultTheme='light'
-					disableTransitionOnChange>
-					<AuthProvider>
-						<>
-							{data?.length === 0 && isClient && <ModalSub />}
-							{children}
-							<Toaster />
-							<Analytics />
-						</>
-					</AuthProvider>
-				</ThemeProvider>
+				<AuthProvider>
+					<>
+						{data?.length === 0 && isClient && <ModalSub />}
+						{children}
+						<Toaster />
+						<Analytics />
+					</>
+				</AuthProvider>
 			</body>
 		</html>
 	);
