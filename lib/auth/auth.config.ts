@@ -1,13 +1,13 @@
 /** @format */
 
-import { prisma } from '@/lib/prisma';
+import Credentials from 'next-auth/providers/credentials';
+import type { NextAuthConfig } from 'next-auth';
 import bcrypt from 'bcrypt';
-import { AuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import { prisma } from '../prisma';
 
-export const options: AuthOptions = {
+export default {
 	providers: [
-		CredentialsProvider({
+		Credentials({
 			name: 'Credentials',
 			credentials: {
 				email: {
@@ -28,22 +28,20 @@ export const options: AuthOptions = {
 				}
 
 				const user = await prisma.user.findUnique({
-					where: { email: credentials.email },
+					where: { email: credentials.email as string },
 				});
 
-				if (
-					!user ||
-					!(await bcrypt.compare(credentials.password, user.password))
-				) {
-					return null;
+				if (user && credentials?.password) {
+					const isValid = await bcrypt.compare(
+						credentials.password as string,
+						user.password,
+					);
+
+					if (isValid) {
+						return user;
+					}
 				}
-
-				return user;
-				// Any object returned will be saved in `user` property of the JWT
-
-				// If you return null then an error will be displayed advising the user to check their details.
-
-				// You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+				return null; // Retorna null se credenciais estiverem incorretas
 			},
 		}),
 	],
@@ -63,7 +61,7 @@ export const options: AuthOptions = {
 			return {
 				...session,
 				user: {
-					id: token.id,
+					id: token.id as string,
 					email: token.email,
 					name: token.name,
 				},
@@ -75,4 +73,4 @@ export const options: AuthOptions = {
 		signIn: '/login',
 		signOut: '/homepage',
 	},
-};
+} satisfies NextAuthConfig;

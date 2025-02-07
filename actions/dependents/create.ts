@@ -8,11 +8,12 @@ import {
 } from '@/constants/email-contents';
 import { prisma } from '@/lib/prisma';
 import { getTitle } from '@/utils/get-title-ticket';
-import { getServerSession } from 'next-auth';
+
 import { redirect } from 'next/navigation';
 import SendEmailAction from '../email/sendEmail';
 import GetAllTicketsAction from '../tickets/get-all-tickets';
 import { revalidateTag } from 'next/cache';
+import { auth } from '@/lib/auth/auth';
 
 interface CreateDependentProps {
 	cpf: string;
@@ -33,7 +34,7 @@ export async function createDependentAction({
 	phone,
 	userId,
 }: CreateDependentProps) {
-	const session = await getServerSession();
+	const session = await auth();
 	if (!session) {
 		redirect('/login');
 	}

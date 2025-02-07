@@ -3,8 +3,9 @@
 
 import GetAllDependentsAction from '@/actions/dependents/get-all';
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import { auth } from '@/lib/auth/auth';
 import { $Enums } from '@prisma/client';
-import { getServerSession } from 'next-auth';
+
 import { redirect } from 'next/navigation';
 
 interface HowMuchIsAbleProps {
@@ -13,7 +14,7 @@ interface HowMuchIsAbleProps {
 }
 
 export async function howMuchIsAble(): Promise<HowMuchIsAbleProps | undefined> {
-	const session = await getServerSession();
+	const session = await auth();
 	if (!session) {
 		redirect('/login');
 	}

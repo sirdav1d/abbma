@@ -3,12 +3,13 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
+
 import { redirect } from 'next/navigation';
 import { getUserAction } from '../user/get-user';
+import { auth } from '@/lib/auth/auth';
 
 export default async function GetAllDependentsAction() {
-	const session = await getServerSession();
+	const session = await auth();
 
 	if (!session) {
 		redirect('/login');

@@ -6,31 +6,33 @@ import { Dependent } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import License from './_components/license';
+import { auth } from '@/lib/auth/auth';
 
 export default async function LicensePage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
-
+	const session = await auth();
+	console.log(session);
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
-		method: 'GET',
+		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		next: { tags: ['user'], revalidate: 3600 },
+		body: JSON.stringify(session?.user.email),
+		next: { revalidate: 3600 },
 	});
 
 	const data = await res.json();
 
-	const activeDependents = data.user.Dependent?.filter(
-		(item: Dependent) => item.isActive,
-	);
-
-	if (!data.success) {
+	if (!data) {
 		return (
 			<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5 text-muted-foreground'>
-				Nenhum chamado foi encontrado
+				Dados não encontrados
 			</div>
 		);
 	}
+	const activeDependents = data.user.Dependent?.filter(
+		(item: Dependent) => item.isActive,
+	);
 
 	return (
 		data.user && (

@@ -1,14 +1,15 @@
 /** @format */
 
 import { ArrowRight } from 'lucide-react';
-import { getServerSession } from 'next-auth';
+
 import Link from 'next/link';
 import { Button } from '../../ui/button';
 import { FadeText } from '../../ui/fade-text';
 import RetroGrid from '../../ui/retro-grid';
+import { auth } from '@/lib/auth/auth';
 
 export default async function CTA() {
-	const session = await getServerSession();
+	const session = await auth();
 	return (
 		<div
 			className='md:p-10 px-4 py-8 w-full rounded-lg bg-gradient-to-b max-w-7xl mx-auto relative

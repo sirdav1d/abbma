@@ -4,7 +4,7 @@ import { getUserAction } from '@/actions/user/get-user';
 import { AppSidebar } from '@/components/app-sidebar';
 import HeaderDash from '@/components/header-dashboard';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { getServerSession } from 'next-auth';
+import { auth } from '@/lib/auth/auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
@@ -13,7 +13,7 @@ export default async function DashLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const session = await getServerSession();
+	const session = await auth();
 	if (!session) {
 		redirect('/login');
 	}

@@ -5,13 +5,13 @@
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import SendEmailAction from '../email/sendEmail';
-import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { generateContentDeleteTicket } from '@/constants/email-contents';
 import { getTitle } from '@/utils/get-title-ticket';
+import { auth } from '@/lib/auth/auth';
 
 export default async function deleteTicketsAction({ id }: { id: string }) {
-	const session = await getServerSession();
+	const session = await auth();
 
 	if (!session?.user) {
 		redirect('/login');

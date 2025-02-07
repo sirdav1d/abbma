@@ -2,11 +2,11 @@
 
 'use server';
 
+import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
 
 export async function getUserAction({ email }: { email: string | null }) {
-	const session = await getServerSession();
+	const session = await auth();
 	try {
 		const existUser = await prisma.user.findUnique({
 			where: { email: email ?? session?.user.email },

@@ -2,8 +2,9 @@
 
 import { getUserAction } from '@/actions/user/get-user';
 import { updateUserAction } from '@/actions/user/update-user';
+import { auth } from '@/lib/auth/auth';
 import stripe from '@/lib/stripe';
-import { getServerSession } from 'next-auth';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
 
 	const priceTypeId = getPrice(priceType);
 
-	const userSession = await getServerSession();
+	const userSession = await auth();
 
 	if (!userSession) {
 		return NextResponse.json({

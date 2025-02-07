@@ -2,15 +2,16 @@
 
 import logo from '@/assets/logo-principal.png';
 import { AppWindow } from 'lucide-react';
-import { getServerSession } from 'next-auth';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import DesktopHeaderLinks from './desktop-header-links';
 import SignOutBtn from './sign-out';
 import { Button } from './ui/button';
+import { auth } from '@/lib/auth/auth';
 
 export default async function DektopHeader() {
-	const session = await getServerSession();
+	const session = await auth();
 	return (
 		<div className='hidden md:flex w-full fixed py-4   mx-auto bg-slate-50/80 backdrop-blur-md z-50 px-4'>
 			<div className='flex items-center justify-between w-full max-w-7xl mx-auto'>

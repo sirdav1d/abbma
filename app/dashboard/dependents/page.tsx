@@ -11,20 +11,31 @@ import Link from 'next/link';
 import ModalCreateDependent from './_components/modal-create-dependent';
 import TableDependent from './_components/table-dependent';
 import { UpgradePlanBanner } from './_components/upgrade-banner';
+import { auth } from '@/lib/auth/auth';
 
 export default async function DependentsPage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
+	const session = await auth();
+	console.log(session);
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
-		method: 'GET',
+		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		next: { tags: ['user'], revalidate: 3600 },
+		body: JSON.stringify(session?.user.email),
+		next: { revalidate: 3600 },
 	});
 
 	const data = await res.json();
 
+	if (!data) {
+		return (
+			<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5 text-muted-foreground'>
+				Nenhum dependente foi encontrado
+			</div>
+		);
+	}
 	const activeTickets = data.user.tickets?.filter(
 		(item: Ticket) => item.isActive,
 	);

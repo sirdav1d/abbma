@@ -9,13 +9,14 @@ import {
 	SidebarGroupLabel,
 	SidebarMenu,
 } from '@/components/ui/sidebar';
-import { getServerSession } from 'next-auth';
+
 import { AdminSidebarMenu } from './admin-sidebar-menu';
 import { MySidebarMenu } from './my-sidebar-menu';
 import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth/auth';
 
 export async function AppSidebar() {
-	const session = await getServerSession();
+	const session = await auth();
 	const user = session && (await getUserAction({ email: session.user.email }));
 
 	if (!user?.user) {

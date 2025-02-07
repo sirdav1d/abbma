@@ -6,10 +6,10 @@ import { Toaster } from '@/components/ui/sonner';
 import AuthProvider from '@/providers/auth-provider';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
 import { Poppins } from 'next/font/google';
 import ModalSub from './dashboard/_components/modal-sub';
 import './globals.css';
+import { auth } from '@/lib/auth/auth';
 
 const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -28,7 +28,7 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const session = await getServerSession();
+	const session = await auth();
 
 	if (!session) {
 		console.log('Não Logado');

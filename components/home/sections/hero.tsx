@@ -3,16 +3,17 @@
 import RetCross from '@/assets/ret-cross';
 import RetCuboid from '@/assets/ret-cuboid';
 import { ArrowRight } from 'lucide-react';
-import { getServerSession } from 'next-auth';
+
 import Link from 'next/link';
 
 import BlurIn from '../../ui/blur-in';
 import { Button } from '../../ui/button';
 import { FadeText } from '../../ui/fade-text';
 import HeroVideoDialog from '@/components/ui/hero-video-dialog';
+import { auth } from '@/lib/auth/auth';
 
 export default async function Hero({ urlThumb }: { urlThumb: string }) {
-	const session = await getServerSession();
+	const session = await auth();
 	return (
 		<div className='w-full h-full md:h-screen min-h-screen bg-gradient-to-r from-blue-700 to-blue-950 px-4'>
 			<div className='flex items-center gap-10 flex-col md:flex-row justify-center h-full max-w-7xl mx-auto'>

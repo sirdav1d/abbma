@@ -1,11 +1,11 @@
 /** @format */
 
+import { auth } from '@/lib/auth/auth';
 import stripe from '@/lib/stripe';
-import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-	const session = await getServerSession();
+	const session = await auth();
 	const email = session?.user.email;
 
 	if (!email) {

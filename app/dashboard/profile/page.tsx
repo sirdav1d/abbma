@@ -3,16 +3,20 @@
 import DeleteAccountModal from '@/components/delete-account-modal';
 import ProfileForm from '@/components/forms/profile-form';
 import { Separator } from '@/components/ui/separator';
+import { auth } from '@/lib/auth/auth';
 
 export default async function ProfilePage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
+	const session = await auth();
+	console.log(session);
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
-		method: 'GET',
+		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		next: { tags: ['user'], revalidate: 3600 },
+		body: JSON.stringify(session?.user.email),
+		next: { revalidate: 3600 },
 	});
 
 	const data = await res.json();

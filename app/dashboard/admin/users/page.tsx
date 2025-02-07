@@ -8,13 +8,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import { getServerSession } from 'next-auth';
+
 import { redirect } from 'next/navigation';
 import { DataTableDemo } from './_components/users-table';
 import { User } from '@prisma/client';
+import { auth } from '@/lib/auth/auth';
 
 export default async function UsersAdminPage() {
-	const session = await getServerSession();
+	const session = await auth();
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	if (!session) {
 		redirect('/login');
@@ -29,7 +30,7 @@ export default async function UsersAdminPage() {
 	const res = await fetch(`${baseUrl}/api/get-all-users`, {
 		method: 'GET',
 		cache: 'force-cache',
-		next: { tags: ['users'] },
+		next: { tags: ['users'], revalidate: 3600 },
 	});
 
 	const data = await res.json();
