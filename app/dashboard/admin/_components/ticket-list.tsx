@@ -113,13 +113,13 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 				);
 			},
 		},
-		{
-			accessorKey: 'dependents',
-			header: 'Dependente',
-			cell: ({ row }) => (
-				<div className='text-left'>{row.getValue('dependents')}</div>
-			),
-		},
+		// {
+		// 	accessorKey: 'dependents',
+		// 	header: 'Dependente',
+		// 	cell: ({ row }) => (
+		// 		<div className='text-left'>{row.getValue('dependents')}</div>
+		// 	),
+		// },
 		{
 			accessorKey: 'status',
 			header: 'Status',
