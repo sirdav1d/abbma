@@ -20,9 +20,9 @@ export async function howMuchIsAble(): Promise<HowMuchIsAbleProps | undefined> {
 	const { data: Tickets } = await GetAllTicketsAction({
 		email: session.user.email,
 	});
-	const { data } = await GetAllDependentsAction();
+	const { dependents } = await GetAllDependentsAction();
 
-	const activeDeps = data?.filter((item) => item.isActive === true);
+	const activeDeps = dependents?.filter((item) => item.isActive === true);
 
 	// descobrir quantos tickets abertos eu tenho do tipo casal e do tipo familia (reperesenta a quantidade de dependentes que posso add)
 
