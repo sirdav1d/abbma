@@ -23,24 +23,23 @@ export const options: AuthOptions = {
 			},
 			type: 'credentials',
 			async authorize(credentials) {
-				const user = await prisma.user.findUnique({
-					where: { email: credentials?.email },
-				});
-				if (user && credentials) {
-					const isValid = await bcrypt.compare(
-						credentials?.password,
-						user?.password,
-					);
-
-					if (isValid) {
-						return user;
-					} else {
-						return null;
-					}
-					// Any object returned will be saved in `user` property of the JWT
-				} else {
+				if (!credentials?.email || !credentials?.password) {
 					return null;
 				}
+
+				const user = await prisma.user.findUnique({
+					where: { email: credentials.email },
+				});
+
+				if (
+					!user ||
+					!(await bcrypt.compare(credentials.password, user.password))
+				) {
+					return null;
+				}
+
+				return user;
+				// Any object returned will be saved in `user` property of the JWT
 
 				// If you return null then an error will be displayed advising the user to check their details.
 
@@ -49,24 +48,25 @@ export const options: AuthOptions = {
 		}),
 	],
 	callbacks: {
-		jwt: async ({ token, user, session, account, profile }) => {
+		jwt: async ({ token, user }) => {
 			if (user) {
 				return {
 					...token,
-					...user,
-					...session,
-					...account,
-					...profile,
+					id: user.id,
+					email: user.email,
+					name: user.name,
 				};
 			}
 			return token;
 		},
-		session: async ({ session, token, newSession, user }) => {
+		session: async ({ session, token }) => {
 			return {
-				...token,
-				...user,
 				...session,
-				...newSession,
+				user: {
+					id: token.id,
+					email: token.email,
+					name: token.name,
+				},
 			};
 		},
 	},
