@@ -1,16 +1,21 @@
 /** @format */
 
-import { getUserAction } from '@/actions/user/get-user';
 import DeleteAccountModal from '@/components/delete-account-modal';
 import ProfileForm from '@/components/forms/profile-form';
 import { Separator } from '@/components/ui/separator';
 
-import { getServerSession } from 'next-auth';
-
 export default async function ProfilePage() {
-	const session = await getServerSession();
-	const email = session?.user?.email;
-	const user = email && (await getUserAction({ email }));
+	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
+	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		next: { tags: ['user'], revalidate: 3600 },
+	});
+
+	const data = await res.json();
 
 	return (
 		<div className='max-w-7xl mx-auto px-4 py-5 w-full 2xl:px-0'>
@@ -18,7 +23,7 @@ export default async function ProfilePage() {
 				Gerencie seus dados
 			</h2>
 			<div className='mt-5'>
-				{session?.user && user && <ProfileForm user={user.user!} />}
+				{data.user && <ProfileForm user={data.user} />}
 			</div>
 			<Separator className='my-5' />
 			<div className='w-full flex'>

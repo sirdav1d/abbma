@@ -13,7 +13,7 @@ export function UpgradePlanBanner() {
 					<div>
 						<h3 className='text-lg font-semibold'>Faça Upgrade do Seu Plano</h3>
 						<p className='text-sm opacity-90'>
-							Adicione mais dependentes e aproveite benefícios exclusivos!
+							Adicione mais dependentes e aproveite benefícios do plano Família!
 						</p>
 					</div>
 				</div>

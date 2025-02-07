@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
 		}
 
 		const data = await response.json();
-		console.log(data);
+	
 		return NextResponse.json({ success: true, data });
 	} catch (error) {
 		return NextResponse.json(

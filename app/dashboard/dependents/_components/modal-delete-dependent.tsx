@@ -14,9 +14,9 @@ import {
 } from '@/components/ui/dialog';
 import { Dependent } from '@prisma/client';
 import { ArrowRight, Loader2, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function ModalDeleteDependent({
 	dependent,
@@ -24,6 +24,7 @@ export default function ModalDeleteDependent({
 	dependent: Dependent;
 }) {
 	const [loading, setLoading] = useState(false);
+
 	const router = useRouter();
 
 	async function onSubmitDel(id: string) {
@@ -42,13 +43,13 @@ export default function ModalDeleteDependent({
 			toast.error('Algo deu errado');
 		} finally {
 			setLoading(false);
+			router.refresh();
 		}
 	}
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
-					type='submit'
 					variant='destructive'
 					size='sm'>
 					<Trash2 className='h-4 w-4' />

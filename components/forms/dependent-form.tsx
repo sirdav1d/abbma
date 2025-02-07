@@ -118,7 +118,7 @@ export default function DependentForm({
 				});
 
 				if (response.success) {
-					toast.success('Dependente Cadastrado com sucesso');
+					toast.success('Dependente Atualizado com sucesso');
 					router.refresh();
 				} else {
 					toast.error('Algo deu errado', { description: response.message });
@@ -127,6 +127,8 @@ export default function DependentForm({
 		} catch (error) {
 			toast.error('Algo deu errado');
 			console.log(error);
+		} finally {
+			router.push('/dashboard/dependents');
 		}
 	}
 	return (

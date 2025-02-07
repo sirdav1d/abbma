@@ -9,6 +9,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import SendEmailAction from '../email/sendEmail';
 import GetAllTicketsAction from '../tickets/get-all-tickets';
+import { revalidateTag } from 'next/cache';
 
 interface UpdateDependentProps {
 	cpf: string;
@@ -77,8 +78,8 @@ export async function updateDependentAction({
 				authorName: session.user.name,
 			},
 		});
+		revalidateTag('user');
 
-		
 		return {
 			success: true,
 			message: 'Dependente atualizado com sucesso',

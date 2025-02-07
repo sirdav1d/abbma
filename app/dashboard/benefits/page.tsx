@@ -1,21 +1,37 @@
 /** @format */
 
-import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import CancelSubModal from '@/components/cancel-sub-modal';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Ticket } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import CardBenefit from './_components/card-benefit';
-import CancelSubModal from '@/components/cancel-sub-modal';
 
 export default async function BenefitsPage() {
-	const { data, success } = await GetAllTicketsAction({ email: null });
+	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	if (!success || !data) {
-		return <div>Nenhum chamado foi encontrado</div>;
+	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		next: { tags: ['user'], revalidate: 3600 },
+	});
+
+	const data = await res.json();
+
+	if (!data.success) {
+		return (
+			<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5 text-muted-foreground'>
+				Nenhum chamado foi encontrado
+			</div>
+		);
 	}
 
-	const activeTickets = data.filter((ticket) => ticket.isActive);
+	const activeTickets = data.user.tickets.filter(
+		(ticket: Ticket) => ticket.isActive,
+	);
 
 	return (
 		<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5'>
@@ -39,7 +55,7 @@ export default async function BenefitsPage() {
 					</div>
 				)}
 				<div className='w-full grid grid-cols-1 mx-auto md:grid-cols-2 gap-5'>
-					{activeTickets?.map((item, index) => {
+					{activeTickets?.map((item: Ticket, index: number) => {
 						return (
 							<CardBenefit
 								ticket={item}
@@ -48,7 +64,9 @@ export default async function BenefitsPage() {
 						);
 					})}
 				</div>
-				{activeTickets?.length !== 0 && <CancelSubModal />}
+				{activeTickets?.length > 0 && (
+					<CancelSubModal tickets={activeTickets} />
+				)}
 			</div>
 		</div>
 	);

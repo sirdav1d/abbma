@@ -1,38 +1,49 @@
 /** @format */
 
-import { getUserAction } from '@/actions/user/get-user';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
-import License from './_components/license';
-import GetAllDependentsAction from '@/actions/dependents/get-all';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Separator } from '@/components/ui/separator';
+import { Dependent } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import License from './_components/license';
 
 export default async function LicensePage() {
-	const session = await getServerSession();
-	if (!session) {
-		redirect('/login');
+	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
+	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		next: { tags: ['user'], revalidate: 3600 },
+	});
+
+	const data = await res.json();
+
+	const activeDependents = data.user.Dependent?.filter(
+		(item: Dependent) => item.isActive,
+	);
+
+	if (!data.success) {
+		return (
+			<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5 text-muted-foreground'>
+				Nenhum chamado foi encontrado
+			</div>
+		);
 	}
 
-	const { user } = await getUserAction({ email: session.user.email });
-	const { dependents } = await GetAllDependentsAction();
-
-	const activeDependents = dependents?.filter((item) => item.isActive);
-
 	return (
-		user && (
+		data.user && (
 			<div className='max-w-7xl mx-auto px-4 py-5 w-full 2xl:px-0'>
 				<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 					Tenha acesso à sua carteirinha e de seus dependentes
 				</h2>
-				{user.isSubscribed ? (
+				{data.user.isSubscribed ? (
 					<div className='flex flex-col  gap-2 mt-5'>
 						<h3 className='font-bold'>Minha Carteirinha</h3>
 						<div className=' w-full max-w-lg'>
 							<License
-								user={user}
+								user={data.user}
 								isTitular={true}
 								isPageShare={false}
 							/>
@@ -58,7 +69,7 @@ export default async function LicensePage() {
 					<div className='flex flex-col gap-2'>
 						<h3 className='font-bold'>Carteirinha dos meus dependentes</h3>
 						<ul className='grid grid-cols-1 gap-2 md:grid-cols-2 w-full mx-auto '>
-							{activeDependents?.map((item) => {
+							{activeDependents?.map((item: Dependent) => {
 								return (
 									<li
 										key={item.id}

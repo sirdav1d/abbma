@@ -1,6 +1,5 @@
 /** @format */
 
-import React from 'react';
 import {
 	Dialog,
 	DialogContent,
@@ -10,22 +9,15 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from './ui/button';
+import { Ticket } from '@prisma/client';
 import CancelSubBtn from './cancel-sub-btn';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
-import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import { Button } from './ui/button';
 
-export default async function CancelSubModal() {
-	const session = await getServerSession();
-
-	if (!session) {
-		redirect('/login');
-	}
-
-	const { data } = await GetAllTicketsAction({ email: session.user.email });
-	console.log(data?.filter((item) => item.isActive));
-
+export default async function CancelSubModal({
+	tickets,
+}: {
+	tickets: Ticket[];
+}) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -45,7 +37,7 @@ export default async function CancelSubModal() {
 					benefícicios?
 				</p>
 				<DialogFooter className='w-full '>
-					{data && <CancelSubBtn tickets={data} />}
+					{tickets && <CancelSubBtn tickets={tickets} />}
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

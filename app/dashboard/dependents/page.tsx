@@ -20,7 +20,7 @@ export default async function DependentsPage() {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		next: { tags: ['user'] },
+		next: { tags: ['user'], revalidate: 3600 },
 	});
 
 	const data = await res.json();
@@ -96,7 +96,8 @@ export default async function DependentsPage() {
 					</CardContent>
 				</Card>
 			)}
-			<div className='absolute bottom-5 w-full max-w-7xl '>
+			<div
+				className={`${data.user.tickets.find((tic: Ticket) => tic.type === 'TELEMEDICINE_FAMILY' && 'hidden')} absolute bottom-5 w-full max-w-7xl `}>
 				<UpgradePlanBanner />
 			</div>
 		</div>

@@ -57,7 +57,7 @@ export default function ForgotForm() {
 
 		try {
 			const resp = await RecoveryPassAction({ email });
-			console.log(resp);
+			
 
 			if (resp.ok) {
 				toast.success('E-mail de recuperação de senha enviado');
@@ -72,7 +72,7 @@ export default function ForgotForm() {
 		}
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
-		console.log(values);
+		
 	}
 
 	return (

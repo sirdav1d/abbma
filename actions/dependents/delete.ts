@@ -9,6 +9,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import SendEmailAction from '../email/sendEmail';
 import GetAllTicketsAction from '../tickets/get-all-tickets';
+import { revalidateTag } from 'next/cache';
 
 export async function deleteDependentAction(id: string) {
 	const session = await getServerSession();
@@ -53,7 +54,7 @@ export async function deleteDependentAction(id: string) {
 					authorName: session.user.name,
 				},
 			});
-
+			revalidateTag('user');
 			return {
 				ok: true,
 				message: 'dependente deletado com sucesso',

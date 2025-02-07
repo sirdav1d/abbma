@@ -1,12 +1,25 @@
 /** @format */
 
 import { prisma } from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+	const session = await getServerSession();
+
+	if (!session) {
+		console.log({ session: session });
+		return NextResponse.json({
+			success: false,
+			message: 'Não autorizado',
+			user: null,
+			error: null,
+			status: 401,
+		});
+	}
 	try {
 		const user = await prisma.user.findUnique({
-			where: { email: 'ddavid.diniz@gmail.com' },
+			where: { email: session.user.email },
 			include: { Dependent: true, tickets: true },
 		});
 

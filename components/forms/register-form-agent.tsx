@@ -66,8 +66,8 @@ export default function RegisterAgentForm() {
 					cpf,
 				},
 			});
-			const resp = await WelcomeEmailAction({ email, name });
-			console.log(resp);
+			await WelcomeEmailAction({ email, name });
+
 			if (!response.success) {
 				toast.error(response.message);
 			} else {
