@@ -15,14 +15,14 @@ export default function Hero() {
 			<div className='md:max-w-xl xl:max-w-7xl w-fit items-start justify-start flex xl:mx-auto gap-20  z-10 h-full flex-col max-w-[364px] mx-4 md:mx-20'>
 				<div className='flex flex-col items-start gap-5 w-fit xl:w-2/3 justify-center z-10 '>
 					<FadeText
-						className='font-semibold text-3xl xl:text-5xl text-slate-50 md:text-balance capitalize'
+						className='font-semibold text-3xl xl:text-5xl text-slate-50 md:text-balance'
 						direction='up'
 						framerProps={{
 							show: { transition: { delay: 0.2 } },
 						}}>
-						<h1 className=''>
-							Conecte-se com médicos a qualquer hora, em qualquer lugar, sem
-							esforço.
+						<h1 className='text-pretty pr-10 max-w-2xl  '>
+							Seja Um Associado e Conecte-se Com Médicos a Qualquer Hora, em
+							Qualquer Lugar
 						</h1>
 					</FadeText>
 					<FadeText

@@ -34,8 +34,8 @@ export default async function Hero({ urlThumb }: { urlThumb: string }) {
 							}}>
 							<h1 className='md:leading-normal'>
 								Tem Clube de Vantagens! <br />
-								Tem Telemedicina!
-								<br /> Tem Seguros! <br /> Tem Plano de Saúde!
+								Tem Telemedicina 24hrs!
+								<br /> Tem Cursos Gratuitos! <br /> Tem Descontos Exclusivos!
 								<br /> Tem muito mais pra você e para quem você ama!
 							</h1>
 						</FadeText>

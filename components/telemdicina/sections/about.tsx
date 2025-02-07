@@ -2,9 +2,7 @@
 
 import RetCrossDark from '@/assets/ret-cross-dark';
 import BlurIn from '@/components/ui/blur-in';
-import { FadeText } from '@/components/ui/fade-text';
 import HeroVideoDialog from '@/components/ui/hero-video-dialog';
-import React from 'react';
 
 export default function About() {
 	return (
@@ -32,18 +30,13 @@ export default function About() {
 					</p>
 				</div>
 				<div className='w-full '>
-					<FadeText
-						framerProps={{ show: { transition: { delay: 0.2 } } }}
-						className='w-full'>
-						<HeroVideoDialog
-							className='z-50'
-							isTelemedicine
-							animationStyle='top-in-bottom-out'
-							videoSrc={'https://www.youtube.com/embed/GH0xvi_SiHo'}
-							thumbnailSrc={'/abbma-medicar-thumb.png'}
-							thumbnailAlt='Hero Video'
-						/>
-					</FadeText>
+					<HeroVideoDialog
+						isTelemedicine
+						animationStyle='top-in-bottom-out'
+						videoSrc={'https://www.youtube.com/embed/GH0xvi_SiHo'}
+						thumbnailSrc={'/abbma-medicar-thumb.png'}
+						thumbnailAlt='Hero Video'
+					/>
 				</div>
 			</div>
 		</div>

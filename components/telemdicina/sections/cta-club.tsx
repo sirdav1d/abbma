@@ -22,9 +22,8 @@ export default function CTAClub() {
 					Cuide da Saúde e Aproveite os Melhores Descontos
 				</h2>
 				<p className='text-balance text-center max-w-3xl'>
-					O plano de Telemedicina que oferece muito mais! Além do cuidado com
-					sua saúde, aproveite os descontos exclusivos e os cursos
-					profissionalizante gratuito.
+					Contratando o plano de telemedicina, você terá acesso ao clube de
+					vantagens, desfrutando de descontos de até 60% em grandes redes
 				</p>
 			</div>
 			<div className='flex items-center justify-center gap-10 2xl:gap-20 w-full flex-col-reverse md:flex-row'>

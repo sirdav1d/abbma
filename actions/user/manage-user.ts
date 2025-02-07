@@ -2,11 +2,11 @@
 
 'use server';
 
+import { generateContentUpdateUser } from '@/constants/email-contents';
 import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import SendEmailAction from '../email/sendEmail';
-import { generateContentUpdateUser } from '@/constants/email-contents';
 
 export async function manageUserAction({ user }: { user: Partial<User> }) {
 	try {
@@ -26,8 +26,7 @@ export async function manageUserAction({ user }: { user: Partial<User> }) {
 			subject: 'Usuário Atualizado',
 			htmlContent: generateContentUpdateUser({ name: user?.name ?? '' }),
 		});
-		revalidatePath('/dashboard/admin/users', 'layout');
-
+		revalidateTag('users');
 		console.log('atualizado');
 		//enviar e-mail de confirmação de cadastro
 		return { success: true, message: 'Usuário atualizado com sucesso' };

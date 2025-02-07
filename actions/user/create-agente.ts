@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import { prisma } from '@/lib/prisma';
 import SendEmailAction from '../email/sendEmail';
 import { generateContenNewUser } from '@/constants/email-contents';
+import { revalidateTag } from 'next/cache';
 
 interface CreateAgentProps {
 	email: string;
@@ -51,6 +52,7 @@ export default async function createAgenteAction({
 			htmlContent: generateContenNewUser({ name: agent.name }),
 		});
 
+		revalidateTag('users');
 		return {
 			success: true,
 			message: 'Usuário cadastrado com sucesso',

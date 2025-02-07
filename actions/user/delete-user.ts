@@ -5,6 +5,7 @@
 import { prisma } from '@/lib/prisma';
 import SendEmailAction from '../email/sendEmail';
 import { generateContentDeleteUser } from '@/constants/email-contents';
+import { revalidateTag } from 'next/cache';
 
 export async function deleteUserAction(email: string) {
 	try {
@@ -26,6 +27,8 @@ export async function deleteUserAction(email: string) {
 				subject: 'Cliente Deletado',
 				htmlContent: generateContentDeleteUser({ name: user.name }),
 			});
+
+			revalidateTag('users');
 
 			return {
 				ok: true,

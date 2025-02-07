@@ -10,6 +10,7 @@ import {
 	generateContenNewUser,
 	generateContentWelcome,
 } from '@/constants/email-contents';
+import { revalidateTag } from 'next/cache';
 
 interface CreateUserProps {
 	email: string;
@@ -76,6 +77,7 @@ export async function createUserAction({
 			htmlContent: generateContenNewUser({ name: name }),
 		});
 
+		revalidateTag('users');
 		//enviar e-mail de confirmação de cadastro
 		return {
 			success: true,

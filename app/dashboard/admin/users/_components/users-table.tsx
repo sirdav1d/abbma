@@ -39,8 +39,6 @@ import DataTablePagination from '@/components/ui/data-table-pagination';
 // import { ModalCreateUser } from './ModalCreateUser';
 
 export function DataTableDemo({ data }: { data: User[] }) {
-	// const data = await getAllUsersAction();
-
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
 		[],

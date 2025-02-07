@@ -1,38 +1,39 @@
 /** @format */
 
-import GetAllDependentsAction from '@/actions/dependents/get-all';
-import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
-import { getUserAction } from '@/actions/user/get-user';
+import BuyButton from '@/components/buy-button';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { howMuchIsAble } from '@/utils/is-able-to-add-dependents';
+import { Ticket } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import ModalCreateDependent from './_components/modal-create-dependent';
 import TableDependent from './_components/table-dependent';
-import BuyButton from '@/components/buy-button';
-import { howMuchIsAble } from '@/utils/is-able-to-add-dependents';
+import { UpgradePlanBanner } from './_components/upgrade-banner';
 
 export default async function DependentsPage() {
-	const tickets = await GetAllTicketsAction({ email: null });
-	const { dependents } = await GetAllDependentsAction();
+	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	const activeTickets = tickets.data?.filter((item) => item.isActive);
+	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		next: { tags: ['user'] },
+	});
+
+	const data = await res.json();
+
+	const activeTickets = data.user.tickets?.filter(
+		(item: Ticket) => item.isActive,
+	);
 
 	const valoresProcurados = ['TELEMEDICINE_COUPLE', 'TELEMEDICINE_FAMILY'];
 
-	const isTelemedicine = activeTickets?.some((elemento) =>
+	const isTelemedicine = activeTickets?.some((elemento: Ticket) =>
 		valoresProcurados.includes(elemento.type),
 	);
-
-	const session = await getServerSession();
-	const user = session && (await getUserAction({ email: session.user.email }));
-
-	if (!user) {
-		redirect('/login');
-	}
 
 	const respIsAble = await howMuchIsAble();
 
@@ -44,7 +45,7 @@ export default async function DependentsPage() {
 			{!isTelemedicine && !respIsAble ? (
 				<>
 					{' '}
-					<div className='flex flex-col items-center justify-center mt-10 gap-5 w-full'>
+					<div className='flex flex-col items-center justify-center my-10  gap-5 w-full'>
 						<h3 className='text-muted-foreground'>
 							Você não possui planos que permitam ter dependentes
 						</h3>
@@ -59,7 +60,7 @@ export default async function DependentsPage() {
 					</div>
 				</>
 			) : (
-				<Card className='mt-5'>
+				<Card className='my-5'>
 					<CardHeader>
 						<div className='flex justify-between md:items-center md:flex-row flex-col gap-5'>
 							<CardTitle className='text-xl'>
@@ -74,25 +75,30 @@ export default async function DependentsPage() {
 										content='Benefício Extra -  R$24,99 por vida'
 									/>
 								)}
-								{respIsAble?.number ? (
+								{data.user.id && respIsAble?.number ? (
 									<ModalCreateDependent
 										isAble={respIsAble.number > 0 && isTelemedicine!}
-										userId={String(user.user?.id)}
+										userId={data.user.id}
 									/>
 								) : null}
 							</div>
 						</div>
 					</CardHeader>
 					<CardContent>
-						{dependents && dependents?.length > 0 ? (
+						{data.user?.id &&
+						data.user.Dependent &&
+						data.user.Dependent?.length > 0 ? (
 							<TableDependent
-								dependents={dependents}
-								userId={String(user.user?.id)}
+								dependents={data.user.Dependent}
+								userId={data.user.id}
 							/>
 						) : null}
 					</CardContent>
 				</Card>
 			)}
+			<div className='absolute bottom-5 w-full max-w-7xl '>
+				<UpgradePlanBanner />
+			</div>
 		</div>
 	);
 }

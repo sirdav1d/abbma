@@ -83,7 +83,11 @@ export default function HeroVideoDialog({
 	const selectedAnimation = animationVariants[animationStyle];
 
 	return (
-		<div className={cn(`relative ${isVideoOpen ? 'z-50' : 'z-10'}`, className)}>
+		<div
+			className={cn(
+				`relative ${isVideoOpen ? 'z-[999999999999999999999]' : 'z-10'}`,
+				className,
+			)}>
 			<div
 				className='group relative cursor-pointer w-full'
 				onClick={() => setIsVideoOpen(true)}>
