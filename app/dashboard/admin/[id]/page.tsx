@@ -21,7 +21,6 @@ export default async function OperatorTicketDetailPage({
 	});
 
 	const { ticket } = await res.json();
-	console.log(ticket);
 
 	if (!ticket) {
 		return (

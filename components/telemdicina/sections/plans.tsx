@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/card';
 import { FadeText } from '@/components/ui/fade-text';
 import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
+import { auth } from '@/lib/auth/auth';
 import { ArrowRight, CircleCheckBig, CircleOff } from 'lucide-react';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 
 export default async function Plans() {
-	const session = await getServerSession();
+	const session = await auth();
 	return (
 		<div
 			id='plans'
