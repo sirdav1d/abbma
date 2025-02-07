@@ -39,7 +39,7 @@ export default async function Plans() {
 					</p>{' '}
 				</FadeText>
 			</div>
-			<div className='grid md:grid-cols-3 gap-5'>
+			<div className='grid md:grid-cols-3 gap-5 px-4'>
 				<Card className='max-w-2xl mx-auto bg-white border-blue-400'>
 					<CardHeader>
 						<CardTitle className='font-bold text-slate-950 '>

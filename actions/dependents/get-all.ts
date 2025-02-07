@@ -20,12 +20,12 @@ export default async function GetAllDependentsAction() {
 			where: { userId: user?.id },
 		});
 
-		return { success: true, message: `Deu certo`, data: dependents };
+		return { success: true, message: `Deu certo`, dependents: dependents };
 	} catch (error) {
 		return {
 			success: false,
 			message: `Algo deu errado - ${error}`,
-			data: null,
+			dependents: null,
 		};
 	}
 }

@@ -3,7 +3,6 @@
 import RetCrossDark from '@/assets/ret-cross-dark';
 import RetCuboidDark from '@/assets/ret-cuboid-dark';
 import RetStairs from '@/assets/ret-stairs';
-import segurosImage from '@/assets/segurosImage.png';
 import telemedicinaImage from '@/assets/telemedicinaImage.png';
 import vantagensImage from '@/assets/vantagensImage.png';
 import { ArrowRight } from 'lucide-react';
@@ -17,14 +16,6 @@ export default function Features() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 	const features = [
 		{
-			title: 'Clube de Vantagens',
-			id: 'club',
-			description:
-				'O clube de vantagens oferece descontos exclusivos em diversos segmentos, incluindo cursos gratuitos em todo o Brasil',
-			src: vantagensImage,
-			link: `https://abbma.clubeparcerias.com.br/`,
-		},
-		{
 			title: 'Telemedicina',
 			id: 'tele',
 			description:
@@ -33,12 +24,12 @@ export default function Features() {
 			link: `${baseUrl}/telemedicina`,
 		},
 		{
-			title: 'Seguros e Planos de Saúde',
-			id: 'seg',
+			title: 'Clube de Vantagens',
+			id: 'club',
 			description:
-				'Proteja o que é mais importante! Conte com vantagens exclusivas em diversos Seguros e Planos de Saúdes, garantindo mais tranquilidade para você e sua família',
-			src: segurosImage,
-			link: 'https://turath.com.br/produtos/',
+				'O clube de vantagens oferece descontos exclusivos em diversos segmentos, incluindo cursos gratuitos em todo o Brasil',
+			src: vantagensImage,
+			link: `https://abbma.clubeparcerias.com.br/`,
 		},
 	];
 	return (
@@ -102,12 +93,7 @@ export default function Features() {
 				<BlurIn className='absolute -right-40 -top-40 z-10'>
 					<RetStairs />
 				</BlurIn>
-				<BlurIn className='absolute -left-72 top-40 z-10 rotate-180'>
-					<RetStairs />
-				</BlurIn>
-				<BlurIn className='absolute left-[400px] top-80 z-10 scale-75'>
-					<RetCrossDark />
-				</BlurIn>
+
 				<BlurIn className='absolute invisible md:visible lg:-left-[200px] bottom-64 z-10 scale-75'>
 					<RetCrossDark />
 				</BlurIn>

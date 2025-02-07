@@ -112,6 +112,13 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 			},
 		},
 		{
+			accessorKey: 'dependentName',
+			header: 'Dependente',
+			cell: ({ row }) => (
+				<div className='text-left'>{row.getValue('dependentName')}</div>
+			),
+		},
+		{
 			accessorKey: 'status',
 			header: 'Status',
 			cell: ({ row }) => {
@@ -172,10 +179,7 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 		<>
 			<div className='flex flex-col md:flex-row gap-4 mb-6'>
 				<div className='flex-1 gap-2 flex items-center'>
-					<Search
-						className=''
-						size={24}
-					/>
+					<Search size={24} />
 					<Input
 						placeholder='Pesquisar pelo número ou nome do cliente'
 						value={searchQuery}

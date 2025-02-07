@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/card';
 
 // import { mockTickets } from '../_constants/mockTickets';
+import GetAllTicketsCustomAction from '@/actions/tickets/get-all-custom';
 import { TicketList } from './_components/ticket-list';
 import { TicketStats } from './_components/ticket-status';
-import GetAllTicketsCustomAction from '@/actions/tickets/get-all-custom';
 
 // This would typically come from a database or API
 

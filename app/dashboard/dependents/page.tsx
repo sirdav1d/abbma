@@ -17,7 +17,7 @@ import { howMuchIsAble } from '@/utils/is-able-to-add-dependents';
 
 export default async function DependentsPage() {
 	const tickets = await GetAllTicketsAction({ email: null });
-	const { data } = await GetAllDependentsAction();
+	const { dependents } = await GetAllDependentsAction();
 
 	const activeTickets = tickets.data?.filter((item) => item.isActive);
 
@@ -84,9 +84,9 @@ export default async function DependentsPage() {
 						</div>
 					</CardHeader>
 					<CardContent>
-						{data && data?.length > 0 ? (
+						{dependents && dependents?.length > 0 ? (
 							<TableDependent
-								dependents={data}
+								dependents={dependents}
 								userId={String(user.user?.id)}
 							/>
 						) : null}

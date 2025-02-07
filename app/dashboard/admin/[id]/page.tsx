@@ -30,7 +30,10 @@ export default async function OperatorTicketDetailPage({
 		description: data?.description,
 		status: data?.status,
 		createdAt: data?.createdAt,
-		updates: data?.Updates,
+		updates: data?.Updates.sort(
+			(a, b) =>
+				new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+		),
 	};
 
 	return (

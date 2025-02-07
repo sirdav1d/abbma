@@ -3,9 +3,9 @@
 import RetCrossDark from '@/assets/ret-cross-dark';
 import BlurIn from '../../ui/blur-in';
 import { FadeText } from '../../ui/fade-text';
-import HeroVideoDialog from '../../ui/hero-video-dialog';
+import Image from 'next/image';
 
-export default function About({ urlThumb }: { urlThumb: string }) {
+export default function About() {
 	return (
 		<div className='w-full h-full px-4 '>
 			<div className='mx-auto max-w-7xl py-20 justify-center md:justify-start items-center flex flex-col md:flex-row gap-5 relative  '>
@@ -36,16 +36,11 @@ export default function About({ urlThumb }: { urlThumb: string }) {
 				<FadeText
 					framerProps={{ show: { transition: { delay: 0.5 } } }}
 					className='w-full'>
-					<HeroVideoDialog
-						isTelemedicine={false}
-						animationStyle='top-in-bottom-out'
-						videoSrc={'https://www.youtube.com/embed/Rww58Jj3eYs'}
-						thumbnailSrc={
-							urlThumb ??
-							'https://startup-template-sage.vercel.app/hero-light.png'
-						}
-						thumbnailAlt='Hero Video'
-					/>
+					<Image
+						src={'/logo-principal.png'}
+						alt='Logo ABBMA'
+						width={280}
+						height={280}></Image>
 				</FadeText>
 			</div>
 		</div>

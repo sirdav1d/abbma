@@ -83,7 +83,7 @@ export default function HeroVideoDialog({
 	const selectedAnimation = animationVariants[animationStyle];
 
 	return (
-		<div className={cn('relative ', className)}>
+		<div className={cn(`relative ${isVideoOpen ? 'z-50' : 'z-10'}`, className)}>
 			<div
 				className='group relative cursor-pointer w-full'
 				onClick={() => setIsVideoOpen(true)}>
@@ -120,7 +120,7 @@ export default function HeroVideoDialog({
 						<motion.div
 							{...selectedAnimation}
 							transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-							className={`relative mx-4 w-full aspect-video hover:aspect-square h-full max-h-full md:mx-0 ${!isTelemedicine ? 'max-w-7xl' : 'max-w-7xl'}  py-16`}>
+							className={`relative mx-4 w-full z-[9999999999] aspect-video hover:aspect-square h-full max-h-full md:mx-0 ${!isTelemedicine ? 'max-w-7xl' : 'max-w-7xl'}  py-16`}>
 							<motion.button className='absolute -top-16 right-0 rounded-full bg-neutral-900/50 p-2 text-xl text-white ring-1 backdrop-blur-md dark:bg-neutral-100/50 dark:text-black'>
 								<XIcon className='size-5' />
 							</motion.button>

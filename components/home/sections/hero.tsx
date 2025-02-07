@@ -5,12 +5,13 @@ import RetCuboid from '@/assets/ret-cuboid';
 import { ArrowRight } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import HeroImage from '../../heroImage';
+
 import BlurIn from '../../ui/blur-in';
 import { Button } from '../../ui/button';
 import { FadeText } from '../../ui/fade-text';
+import HeroVideoDialog from '@/components/ui/hero-video-dialog';
 
-export default async function Hero() {
+export default async function Hero({ urlThumb }: { urlThumb: string }) {
 	const session = await getServerSession();
 	return (
 		<div className='w-full h-full md:h-screen min-h-screen bg-gradient-to-r from-blue-700 to-blue-950 px-4'>
@@ -70,8 +71,10 @@ export default async function Hero() {
 									show: { transition: { delay: 0.8 } },
 								}}>
 								<p className='text-zinc-50 max-w-xs'>
-									Descubra um mundo de possibilidades por{' '}
-									<span className='font-bold'>apenas R$ 6,99</span>{' '}
+									seja um associado por{' '}
+									<span className='font-semibold'>apenas R$ 6,99</span> e já
+									garanta o{' '}
+									<span className='font-semibold'>clube de vantagens</span>
 								</p>
 							</FadeText>
 						</div>
@@ -85,10 +88,21 @@ export default async function Hero() {
 					<BlurIn className='absolute lg:-right-24 lg:top-40 -top-40 left-0 invisible md:visible'>
 						<RetCuboid />
 					</BlurIn>
-					<BlurIn className='absolute -left-56 md:bottom-5 z-50 '>
+					<BlurIn className='absolute -left-56 md:bottom-5 z-10 '>
 						<RetCross />
 					</BlurIn>
-					<HeroImage />
+					<div className='md:absolute md:bottom-0'>
+						<HeroVideoDialog
+							isTelemedicine={false}
+							animationStyle='top-in-bottom-out'
+							videoSrc={'https://www.youtube.com/embed/Rww58Jj3eYs'}
+							thumbnailSrc={
+								urlThumb ??
+								'https://startup-template-sage.vercel.app/hero-light.png'
+							}
+							thumbnailAlt='Hero Video'
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
