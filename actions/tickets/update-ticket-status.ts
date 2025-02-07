@@ -2,10 +2,10 @@
 
 'use server';
 
+import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
 import { getTicketStatus } from '@/utils/get-ticket-status';
 import { $Enums } from '@prisma/client';
-import { getServerSession } from 'next-auth';
 
 interface UpdateTicketProps {
 	ticketId: string;
@@ -17,7 +17,7 @@ export async function updateTicketStatusAction({
 
 	status,
 }: UpdateTicketProps) {
-	const session = await getServerSession();
+	const session = await auth();
 
 	if (!session || !session?.user) {
 		return { success: false, message: 'Chamado Não Atualizado', data: null };

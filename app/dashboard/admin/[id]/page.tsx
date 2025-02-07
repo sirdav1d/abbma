@@ -1,10 +1,8 @@
 /** @format */
 
-import GetTicketByIdAction from '@/actions/tickets/get-ticket-by-id';
 import { Card, CardContent } from '@/components/ui/card';
 import { TicketDetailContent } from '../_components/ticket-details-content';
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
+import { Ticket } from '@prisma/client';
 
 export default async function OperatorTicketDetailPage({
 	params,
@@ -12,26 +10,37 @@ export default async function OperatorTicketDetailPage({
 	params: Promise<{ id: string }>;
 }) {
 	const { id } = await params;
-	const { data } = await GetTicketByIdAction(id);
-	const session = await getServerSession();
+	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	if (!session) {
-		redirect('/login');
+	const res = await fetch(`${baseUrl}/api/get-ticket-by-id`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(id),
+	});
+
+	const { ticket } = await res.json();
+	console.log(ticket);
+
+	if (!ticket) {
+		return (
+			<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5 text-muted-foreground'>
+				Nenhum chamado foi encontrado
+			</div>
+		);
 	}
 
-	if (!data) {
-		return <div>Chamado não encontrado</div>;
-	}
 	const ticketItem = {
-		id: data?.id,
-		number: data?.number,
-		name: data?.user.name,
-		type: data?.type,
-		description: data?.description,
-		status: data?.status,
-		createdAt: data?.createdAt,
-		updates: data?.Updates.sort(
-			(a, b) =>
+		id: ticket.id,
+		number: ticket.number,
+		name: ticket.user.name,
+		type: ticket.type,
+		description: ticket.description,
+		status: ticket.status,
+		createdAt: ticket.createdAt,
+		updates: ticket.Updates.sort(
+			(a: Ticket, b: Ticket) =>
 				new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
 		),
 	};

@@ -39,9 +39,11 @@ type Ticket = {
 	id: string;
 	number: number;
 	name: string;
+	userId: string;
 	type: string;
 	status: string;
 	createdAt: Date;
+	dependents: string[];
 };
 
 export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
@@ -112,10 +114,10 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 			},
 		},
 		{
-			accessorKey: 'dependentName',
+			accessorKey: 'dependents',
 			header: 'Dependente',
 			cell: ({ row }) => (
-				<div className='text-left'>{row.getValue('dependentName')}</div>
+				<div className='text-left'>{row.getValue('dependents')}</div>
 			),
 		},
 		{
