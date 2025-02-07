@@ -1,15 +1,16 @@
 /** @format */
 
+import { auth } from '@/lib/auth/auth';
 import stripe from '@/lib/stripe'; // Configuração da biblioteca Stripe
-import { getServerSession } from 'next-auth'; // Função para obter sessão/autenticação do cliente
+// Função para obter sessão/autenticação do cliente
 import { NextResponse } from 'next/server';
-import { options } from '../auth/[...nextauth]/options';
+
 // import { updateSubscriptionStatus } from '@/lib/db'; // Função para atualizar o status no banco
 
 export async function POST() {
 	try {
 		// Autenticar o usuário
-		const session = await getServerSession(options);
+		const session = await auth();
 		if (!session || !session.user) {
 			return NextResponse.json({
 				message: 'Usuário não autenticado.',
