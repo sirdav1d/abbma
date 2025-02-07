@@ -34,7 +34,7 @@ export function AdminSidebarMenu({ user }: { user?: User }) {
 						className={
 							pathname === '/dashboard/admin/users'
 								? 'bg-primary text-slate-50'
-								: ''
+								: 'active:bg-primary active:text-slate-50'
 						}>
 						<Link
 							prefetch

@@ -59,7 +59,11 @@ export function MySidebarMenu({ isSub }: { isSub: boolean }) {
 				<SidebarMenuButton
 					key={item.title}
 					asChild
-					className={pathname === item.url ? 'bg-primary text-slate-50' : ''}>
+					className={
+						pathname === item.url
+							? 'bg-primary active:bg-primary active:text-slate-50  text-slate-50'
+							: 'active:bg-primary active:text-slate-50'
+					}>
 					<Link
 						prefetch
 						href={item.url}>
