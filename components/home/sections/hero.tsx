@@ -25,7 +25,7 @@ export default async function Hero({ urlThumb }: { urlThumb: string }) {
 							framerProps={{
 								show: { transition: { delay: 0.2 } },
 							}}>
-							<h2 className='md:leading-normal'>Mais Benefícios Com A ABBMA</h2>
+							<h2 className='md:leading-normal'>Mais Benefícios com a ABBMA</h2>
 						</FadeText>
 						<FadeText
 							className='font-bold text-2xl lg:text-4xl text-slate-50 md:text-balance leading-normal '
