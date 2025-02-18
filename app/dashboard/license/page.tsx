@@ -4,20 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Dependent } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import License from './_components/license';
-import { auth } from '@/lib/auth/auth';
 
 export default async function LicensePage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
-	const session = await auth();
-	console.log(session);
+
+	const headersList = await headers();
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(session?.user.email),
+		method: 'GET',
+		headers: headersList,
 		next: { revalidate: 3600 },
 	});
 

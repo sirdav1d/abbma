@@ -49,12 +49,12 @@ export default function LoginForm() {
 		const { email, password } = values;
 		try {
 			const response = await signIn('credentials', {
-				email,
-				password,
+				email: email,
+				password: password,
 				redirect: false,
 			});
 
-			if (response?.ok) {
+			if (!response?.error) {
 				router.refresh();
 				router.push('/dashboard');
 				toast.success('Usuário Logado com sucesso');
@@ -64,9 +64,7 @@ export default function LoginForm() {
 		} catch (error) {
 			console.log(error);
 			toast.error('E-mail ou senha inválidos');
-		} finally {
-			form.reset();
-		}
+		} 
 	}
 
 	return (

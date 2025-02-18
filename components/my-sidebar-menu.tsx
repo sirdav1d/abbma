@@ -11,9 +11,8 @@ import {
 	UsersRound,
 	Wallet,
 } from 'lucide-react';
-import { usePathname } from 'next/navigation';
-import PortalBtn from './portal-btn';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const items = [
 	{
@@ -52,7 +51,7 @@ const items = [
 
 export function MySidebarMenu({ isSub }: { isSub: boolean }) {
 	const pathname = usePathname();
-
+	console.log(isSub);
 	return (
 		<SidebarMenuItem className='space-y-2'>
 			{items.map((item) => (
@@ -72,7 +71,7 @@ export function MySidebarMenu({ isSub }: { isSub: boolean }) {
 					</Link>
 				</SidebarMenuButton>
 			))}
-			{isSub && <PortalBtn />}
+			{/* {isSub && <PortalBtn />} */}
 		</SidebarMenuItem>
 	);
 }

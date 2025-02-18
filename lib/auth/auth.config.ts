@@ -31,7 +31,7 @@ export default {
 					where: { email: credentials.email as string },
 				});
 
-				if (user && credentials?.password) {
+				if (user && user.password) {
 					const isValid = await bcrypt.compare(
 						credentials.password as string,
 						user.password,
@@ -48,29 +48,23 @@ export default {
 	callbacks: {
 		jwt: async ({ token, user }) => {
 			if (user) {
-				return {
-					...token,
-					id: user.id,
-					email: user.email,
-					name: user.name,
-				};
+				token.id = user.id;
+				token.email = user.email;
+				token.name = user.name;
 			}
-			return token;
+			return token; // NÃO retornar `null`
 		},
 		session: async ({ session, token }) => {
-			return {
-				...session,
-				user: {
-					id: token.id as string,
-					email: token.email,
-					name: token.name,
-				},
-			};
+			session.user.id = token.id as string;
+			session.user.email = token.email as string;
+			session.user.name = token.name as string;;
+			return session;
 		},
 	},
 	pages: {
-		error: '/homepage',
+		error: '/login',
 		signIn: '/login',
-		signOut: '/homepage',
+		signOut: '/login',
 	},
+
 } satisfies NextAuthConfig;

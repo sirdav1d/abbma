@@ -1,13 +1,20 @@
 /** @format */
 
+import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
+import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
-	const body = await req.json();
+export async function GET() {
+	const session = await auth();
+	console.log(session);
+
+	if (!session) {
+		redirect('/login');
+	}
 	try {
 		const user = await prisma.user.findUnique({
-			where: { email: body },
+			where: { email: session.user.email },
 			include: { Dependent: true, tickets: true },
 		});
 
