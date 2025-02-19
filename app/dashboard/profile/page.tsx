@@ -12,7 +12,6 @@ export default async function ProfilePage() {
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
 		headers: headersList,
-		next: { revalidate: 3600 },
 	});
 
 	const data = await res.json();

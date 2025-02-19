@@ -6,12 +6,12 @@ import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-	const session = await auth();
-
-	if (!session) {
-		redirect('/login');
-	}
 	try {
+		const session = await auth();
+
+		if (!session) {
+			redirect('/login');
+		}
 		const user = await prisma.user.findUnique({
 			where: { email: session.user.email },
 			include: { Dependent: true, tickets: true },
