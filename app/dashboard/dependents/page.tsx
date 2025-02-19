@@ -11,14 +11,12 @@ import Link from 'next/link';
 import ModalCreateDependent from './_components/modal-create-dependent';
 import TableDependent from './_components/table-dependent';
 import { UpgradePlanBanner } from './_components/upgrade-banner';
-import { headers } from 'next/headers';
 
 export default async function DependentsPage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
-		headers: await headers(),
 	});
 
 	const data = await res.json();
