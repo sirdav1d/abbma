@@ -2,15 +2,14 @@
 
 import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
-import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(req: Request) {
 	try {
 		const session = await auth();
 
 		if (!session) {
-			redirect('/login');
+			return NextResponse.redirect(new URL('/login', req.url));
 		}
 		const user = await prisma.user.findUnique({
 			where: { email: session.user.email },
