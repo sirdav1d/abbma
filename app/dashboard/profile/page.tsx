@@ -3,15 +3,23 @@
 import DeleteAccountModal from '@/components/delete-account-modal';
 import ProfileForm from '@/components/forms/profile-form';
 import { Separator } from '@/components/ui/separator';
-import { headers } from 'next/headers';
+import { auth } from '@/lib/auth/auth';
+import { redirect } from 'next/navigation';
 
 export default async function ProfilePage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	const headersList = await headers();
+	const session = await auth();
+
+	if (!session?.user) {
+		redirect('login');
+	}
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
-		headers: headersList,
+		headers: {
+			'X-My-Custom-Header': String(session.user.email),
+		},
+		next: { tags: ['user-by-email-profile'], revalidate: 3600 },
 	});
 
 	const data = await res.json();

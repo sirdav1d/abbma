@@ -26,6 +26,7 @@ export default async function DependentsPage() {
 		headers: {
 			'X-My-Custom-Header': String(session.user.email),
 		},
+		next: { tags: ['user-by-email-dependent'], revalidate: 3600 },
 	});
 
 	const data = await res.json();

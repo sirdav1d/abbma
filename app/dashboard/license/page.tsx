@@ -4,18 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Dependent } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
-import { headers } from 'next/headers';
 import Link from 'next/link';
 import License from './_components/license';
+import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth/auth';
 
 export default async function LicensePage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	const headersList = await headers();
+	const session = await auth();
+
+	if (!session?.user) {
+		redirect('login');
+	}
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
-		headers: headersList,
-		next: { revalidate: 3600 },
+		headers: {
+			'X-My-Custom-Header': String(session.user.email),
+		},
+		next: { tags: ['user-by-email-license'], revalidate: 3600 },
 	});
 
 	const data = await res.json();

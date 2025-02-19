@@ -3,20 +3,27 @@
 import CancelSubModal from '@/components/cancel-sub-modal';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { auth } from '@/lib/auth/auth';
 import { Ticket } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import CardBenefit from './_components/card-benefit';
-import { headers } from 'next/headers';
 
 export default async function BenefitsPage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
-	const headersList = await headers();
+	const session = await auth();
+
+	if (!session?.user) {
+		redirect('login');
+	}
 
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
-		headers: headersList,
-		next: { revalidate: 3600 },
+		headers: {
+			'X-My-Custom-Header': String(session.user.email),
+		},
+		next: { tags: ['user-by-email-benefits'], revalidate: 3600 },
 	});
 
 	const data = await res.json();
