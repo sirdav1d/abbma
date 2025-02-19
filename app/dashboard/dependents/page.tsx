@@ -16,11 +16,10 @@ import { UpgradePlanBanner } from './_components/upgrade-banner';
 export default async function DependentsPage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	const headersList = await headers();
+	const headersInit = await headers();
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
-		headers: headersList,
-		next: { revalidate: 3600 },
+		headers: headersInit!,
 	});
 
 	const data = await res.json();
