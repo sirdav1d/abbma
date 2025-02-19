@@ -11,12 +11,21 @@ import Link from 'next/link';
 import ModalCreateDependent from './_components/modal-create-dependent';
 import TableDependent from './_components/table-dependent';
 import { UpgradePlanBanner } from './_components/upgrade-banner';
+import { auth } from '@/lib/auth/auth';
+import { redirect } from 'next/navigation';
 
 export default async function DependentsPage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
+	const session = await auth();
 
+	if (!session?.user) {
+		redirect('login');
+	}
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
+		headers: {
+			'X-My-Custom-Header': String(session.user.email),
+		},
 	});
 
 	const data = await res.json();

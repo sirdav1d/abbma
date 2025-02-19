@@ -1,18 +1,13 @@
 /** @format */
 
-import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
 	try {
-		const session = await auth();
-
-		if (!session) {
-			return NextResponse.redirect(new URL('/login', req.url));
-		}
+		const customHeader = req.headers.get('x-my-custom-header');
 		const user = await prisma.user.findUnique({
-			where: { email: session.user.email },
+			where: { email: customHeader! },
 			include: { Dependent: true, tickets: true },
 		});
 
