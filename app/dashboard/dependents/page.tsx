@@ -7,7 +7,6 @@ import { Separator } from '@/components/ui/separator';
 import { howMuchIsAble } from '@/utils/is-able-to-add-dependents';
 import { Ticket } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
-import { headers } from 'next/headers';
 import Link from 'next/link';
 import ModalCreateDependent from './_components/modal-create-dependent';
 import TableDependent from './_components/table-dependent';
@@ -16,10 +15,8 @@ import { UpgradePlanBanner } from './_components/upgrade-banner';
 export default async function DependentsPage() {
 	const baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-	const headersInit = await headers();
 	const res = await fetch(`${baseUrl}/api/get-user-by-email`, {
 		method: 'GET',
-		headers: headersInit!,
 	});
 
 	const data = await res.json();
