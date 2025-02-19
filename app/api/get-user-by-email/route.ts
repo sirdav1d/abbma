@@ -7,7 +7,6 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
 	const session = await auth();
-	console.log(session);
 
 	if (!session) {
 		redirect('/login');
