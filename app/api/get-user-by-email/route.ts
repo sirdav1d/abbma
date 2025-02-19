@@ -42,7 +42,7 @@ export async function GET(req: Request) {
 			success: false,
 			message: 'Erro ao buscar usuários',
 			user: null,
-			error: error instanceof Error ? error.message : error,
+			error: error,
 			status: 500,
 		});
 	}
