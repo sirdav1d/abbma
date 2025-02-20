@@ -1,16 +1,10 @@
 /** @format */
 
-import React from 'react';
-import Image from 'next/image';
 import logo from '@/assets/logo-principal.png';
+import Image from 'next/image';
 import Link from 'next/link';
+import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { Separator } from './ui/separator';
-import {
-	FaFacebook,
-	FaInstagram,
-	FaLinkedin,
-	FaWhatsapp,
-} from 'react-icons/fa';
 
 export default function Footer() {
 	const links = [
@@ -21,10 +15,18 @@ export default function Footer() {
 	];
 
 	const socialLinks = [
-		{ icon: <FaInstagram size={28} />, href: '#insta' },
-		{ icon: <FaWhatsapp size={28} />, href: '#insta' },
-		{ icon: <FaFacebook size={28} />, href: '#insta' },
-		{ icon: <FaLinkedin size={28} />, href: '#insta' },
+		{
+			icon: <FaInstagram size={28} />,
+			href: 'https://www.instagram.com/abbmaassociacao',
+		},
+		{
+			icon: <FaWhatsapp size={28} />,
+			href: 'https://wa.me/5521986508882?text=Ol%C3%A1%2C%20estava%20navegando%20no%20seu%20site%20e%20preciso%20de%20ajuda',
+		},
+		{
+			icon: <FaFacebook size={28} />,
+			href: 'https://www.facebook.com/people/ABBMA-Associa%C3%A7%C3%A3o/61572398223506/',
+		},
 	];
 	return (
 		<div className='w-full h-full px-4 bg-gradient-to-b from-blue-950 to-blue-900'>
