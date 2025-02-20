@@ -56,9 +56,7 @@ export async function POST(req: NextRequest) {
 
 	if (user?.customer_id) {
 		customerId = user?.customer_id;
-	}
-
-	if (!user?.customer_id) {
+	} else {
 		const newCustomer = await stripe.customers.create({
 			email: userEmail,
 			name: userName,
@@ -73,7 +71,6 @@ export async function POST(req: NextRequest) {
 
 		customerId = newCustomer.id;
 	}
-
 	try {
 		const session = await stripe.checkout.sessions.create({
 			customer: customerId,
@@ -81,9 +78,10 @@ export async function POST(req: NextRequest) {
 				{
 					price: priceTypeId,
 					quantity: 1,
+					adjustable_quantity: { enabled: true },
 				},
 			],
-
+			adaptive_pricing: { enabled: true },
 			mode: 'subscription',
 			payment_method_types: ['card'],
 			success_url: `${req.headers.get('origin')}/success`,

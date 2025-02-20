@@ -30,7 +30,6 @@ export default async function DependentsPage() {
 	});
 
 	const data = await res.json();
-	console.log(data);
 
 	if (!data) {
 		return (
@@ -58,7 +57,6 @@ export default async function DependentsPage() {
 			</h2>
 			{!isTelemedicine && !respIsAble ? (
 				<>
-					{' '}
 					<div className='flex flex-col items-center justify-center my-10  gap-5 w-full'>
 						<h3 className='text-muted-foreground'>
 							Você não possui planos que permitam ter dependentes
@@ -74,7 +72,7 @@ export default async function DependentsPage() {
 					</div>
 				</>
 			) : (
-				<Card className='my-5'>
+				<Card className='mt-5 mb-20 '>
 					<CardHeader>
 						<div className='flex justify-between md:items-center md:flex-row flex-col gap-5'>
 							<CardTitle className='text-xl'>
@@ -86,7 +84,7 @@ export default async function DependentsPage() {
 										size='sm'
 										priceType={respIsAble.type}
 										isAddOn={true}
-										content='Benefício Extra -  R$24,99 por vida'
+										content={`Benefício Extra - ${respIsAble.type == 'TELEMEDICINE_FAMILY' ? 'R$19,49' : 'R$22,49'}`}
 									/>
 								)}
 								{data.user.id && respIsAble?.number ? (
@@ -111,7 +109,7 @@ export default async function DependentsPage() {
 				</Card>
 			)}
 			<div
-				className={`${data.user.tickets.find((tic: Ticket) => tic.type === 'TELEMEDICINE_FAMILY' && 'hidden')} absolute bottom-5 w-full max-w-7xl `}>
+				className={`${respIsAble?.type == 'TELEMEDICINE_FAMILY' && 'hidden'} mt-auto  w-full max-w-7xl `}>
 				<UpgradePlanBanner />
 			</div>
 		</div>
