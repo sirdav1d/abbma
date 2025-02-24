@@ -18,21 +18,19 @@ import {
 	ArrowUpDown,
 	CheckCircle,
 	Clock,
-	Heart,
 	LayoutGrid,
 	LayoutList,
 	Phone,
 	Search,
-	Shield,
+	Gift,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { TicketCards } from './ticket-card';
 
 const benefitTypeIcons = {
-	'Clube de Vantagens': Shield,
+	'Clube de Vantagens': Gift,
 	Telemedicina: Phone,
-	'Plano de Saúde': Heart,
 };
 
 type Ticket = {
@@ -214,7 +212,6 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 							Clube de Vantagens
 						</SelectItem>
 						<SelectItem value='Telemedicina'>Telemedicina</SelectItem>
-						<SelectItem value='Plano de Saúde'>Plano de Saúde</SelectItem>
 					</SelectContent>
 				</Select>
 				<Input

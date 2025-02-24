@@ -19,7 +19,7 @@ export default async function ProfilePage() {
 		headers: {
 			'X-My-Custom-Header': String(session.user.email),
 		},
-		next: { tags: ['user-by-email-profile'], revalidate: 3600 },
+		next: { tags: ['user-by-email'], revalidate: 3600 },
 	});
 
 	const data = await res.json();

@@ -23,7 +23,7 @@ export default async function BenefitsPage() {
 		headers: {
 			'X-My-Custom-Header': String(session.user.email),
 		},
-		next: { tags: ['user-by-email-benefits'], revalidate: 3600 },
+		next: { tags: ['user-by-email'] },
 	});
 
 	const data = await res.json();
@@ -47,8 +47,8 @@ export default async function BenefitsPage() {
 					Meus Benefícios Ativos
 				</h2>
 				{activeTickets?.length === 0 && (
-					<div className='flex flex-col items-center justify-center gap-5 w-full'>
-						<h3 className='text-muted-foreground'>
+					<div className='flex flex-col  justify-center gap-5 w-full'>
+						<h3 className='text-muted-foreground text-left'>
 							Você não possui benefícios ativos
 						</h3>
 						<Button
@@ -71,9 +71,7 @@ export default async function BenefitsPage() {
 						);
 					})}
 				</div>
-				{activeTickets?.length > 0 && (
-					<CancelSubModal tickets={activeTickets} />
-				)}
+				{activeTickets?.length > 0 && <CancelSubModal />}
 			</div>
 		</div>
 	);

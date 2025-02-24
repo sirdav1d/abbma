@@ -22,7 +22,7 @@ export default async function LicensePage() {
 		headers: {
 			'X-My-Custom-Header': String(session.user.email),
 		},
-		next: { tags: ['user-by-email-license'], revalidate: 3600 },
+		next: { tags: ['user-by-email'] },
 	});
 
 	const data = await res.json();
@@ -38,13 +38,15 @@ export default async function LicensePage() {
 		(item: Dependent) => item.isActive,
 	);
 
+	console.log(data.user);
+
 	return (
 		data.user && (
 			<div className='max-w-7xl mx-auto px-4 py-5 w-full 2xl:px-0'>
 				<h2 className='font-semibold text-lg md:text-2xl text-pretty'>
 					Tenha acesso à sua carteirinha e de seus dependentes
 				</h2>
-				{data.user.isSubscribed ? (
+				{data.user.isSubscribed && data.user.tickets.length > 0 ? (
 					<div className='flex flex-col  gap-2 mt-5'>
 						<h3 className='font-bold'>Minha Carteirinha</h3>
 						<div className=' w-full max-w-lg'>

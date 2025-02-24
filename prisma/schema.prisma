@@ -48,33 +48,31 @@ model Dependent {
   cpf          String?  @unique
   date_birth   String?
   degree       String
-  cep          String?
-  neighborhood String?
-  address      String?
-  city         String?
-  state        String?
   phone        String?
+  ticket       Ticket?  @relation(fields: [ticketId], references: [id])
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   isActive     Boolean? @default(true)
+  ticketId     String?
 }
 
 model Ticket {
-  id               String     @id @default(cuid())
-  number           Int        @default(autoincrement())
+  id               String      @id @default(cuid())
+  number           Int         @default(autoincrement())
   title            String
   description      String?
-  type             TicketType @default(CLUB_VANTAGES)
-  status           Status     @default(PENDING)
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  type             TicketType  @default(CLUB_VANTAGES)
+  status           Status      @default(PENDING)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
   credential_email String?
   stripeId         String?
   credential_pass  String?
   userId           String
-  user             User       @relation(fields: [userId], references: [id])
-  isActive         Boolean?   @default(true)
+  user             User        @relation(fields: [userId], references: [id])
+  isActive         Boolean?    @default(true)
   Updates          Updates[]
+  Dependent        Dependent[]
 }
 
 model Updates {

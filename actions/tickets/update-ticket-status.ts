@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
 import { getTicketStatus } from '@/utils/get-ticket-status';
 import { $Enums } from '@prisma/client';
+import { revalidateTag } from 'next/cache';
 
 interface UpdateTicketProps {
 	ticketId: string;
@@ -42,7 +43,7 @@ export async function updateTicketStatusAction({
 		if (!newTicket) {
 			return { success: false, message: 'Plano Não Atualizado', data: null };
 		}
-
+		revalidateTag('user-by-email');
 		//enviar e-mail de confirmação de cadastro
 		return {
 			success: true,

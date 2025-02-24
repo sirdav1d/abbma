@@ -28,8 +28,10 @@ export async function howMuchIsAble(): Promise<HowMuchIsAbleProps | undefined> {
 	// descobrir quantos tickets abertos eu tenho do tipo casal e do tipo familia (reperesenta a quantidade de dependentes que posso add)
 
 	const isCouple = Tickets?.filter(
-		(item) => item.type == 'TELEMEDICINE_COUPLE' && item.isActive,
+		(item) => item.type === 'TELEMEDICINE_COUPLE',
 	);
+
+	console.log('isCouple' + isCouple);
 
 	const isFamily = Tickets?.filter(
 		(item) => item.type == 'TELEMEDICINE_FAMILY',

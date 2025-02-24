@@ -7,6 +7,7 @@ import { prisma } from '@/lib/prisma';
 import { getTitle } from '@/utils/get-title-ticket';
 import { $Enums } from '@prisma/client';
 import SendEmailAction from '../email/sendEmail';
+import { revalidateTag } from 'next/cache';
 
 interface CreateTicketProps {
 	userId: string;
@@ -65,7 +66,7 @@ export async function createTicketAction({
 		if (!newTicket) {
 			return { success: false, message: 'Plano Não Solicitado' };
 		}
-
+		revalidateTag('user-by-email');
 		console.log(`Plano ${getTitle(type)} solicitado`);
 		//enviar e-mail de confirmação de cadastro
 		return {

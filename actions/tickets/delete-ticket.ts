@@ -2,13 +2,13 @@
 
 'use server';
 
-import { prisma } from '@/lib/prisma';
-import { revalidatePath } from 'next/cache';
-import SendEmailAction from '../email/sendEmail';
-import { redirect } from 'next/navigation';
 import { generateContentDeleteTicket } from '@/constants/email-contents';
-import { getTitle } from '@/utils/get-title-ticket';
 import { auth } from '@/lib/auth/auth';
+import { prisma } from '@/lib/prisma';
+import { getTitle } from '@/utils/get-title-ticket';
+import { revalidateTag } from 'next/cache';
+import { redirect } from 'next/navigation';
+import SendEmailAction from '../email/sendEmail';
 
 export default async function deleteTicketsAction({ id }: { id: string }) {
 	const session = await auth();
@@ -43,7 +43,7 @@ export default async function deleteTicketsAction({ id }: { id: string }) {
 			},
 		});
 
-		revalidatePath('/dashboard/benefits', 'layout');
+		revalidateTag('user-by-email');
 		return { ok: true, message: `Plano ${ticket.title} deletado com sucesso` };
 	} catch (error) {
 		return {

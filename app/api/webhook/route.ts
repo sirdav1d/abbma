@@ -1,6 +1,7 @@
 /** @format */
 
 import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
+import { updateTicketAction } from '@/actions/tickets/update-ticket';
 import { getUserAction } from '@/actions/user/get-user';
 import { updateUserAction } from '@/actions/user/update-user';
 import stripe from '@/lib/stripe';
@@ -88,6 +89,47 @@ export async function POST(req: NextRequest) {
 				}
 			case 'customer.subscription.updated':
 				// Atualiza o plano no banco de dados
+				const sessionUp = event.data.object as Stripe.Checkout.Session;
+				const customerId = sessionUp.customer;
+				const customerResponse = await stripe.customers.retrieve(
+					String(customerId),
+				);
+
+				if (customerResponse.deleted) {
+					return NextResponse.json(
+						{ error: 'Cliente foi deletado' },
+						{ status: 400 },
+					);
+				}
+
+				const customer = customerResponse as Stripe.Customer;
+				const email = customer.email;
+				const name = customer.name;
+
+				if (email && name) {
+					await updateUserAction({
+						user: {
+							isSubscribed: true,
+						},
+					});
+
+					const myUser = await getUserAction({ email: email });
+					const tickets = await GetAllTicketsAction({ email: email });
+
+					const ticket = tickets.data?.findLast(
+						(item) => item.type !== 'CLUB_VANTAGES',
+					);
+					if (myUser.user && ticket) {
+						const resp = await updateTicketAction({
+							userId: myUser.user.id,
+							ticketId: ticket.id,
+							type: ticket.type,
+							status: 'PENDING',
+						});
+						console.log(resp, tickets);
+						await sendInvoiceIfAvailable(sessionUp, email, name);
+					}
+				}
 
 				break;
 
@@ -101,6 +143,7 @@ export async function POST(req: NextRequest) {
 
 			case 'customer.subscription.deleted':
 				// O cliente cancelou o plano :(
+
 				break;
 		}
 

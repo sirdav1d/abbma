@@ -10,13 +10,12 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Shield, Phone, Heart, Clock, CheckCircle } from 'lucide-react';
+import { Gift, Phone, Clock, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
 const benefitTypeIcons = {
-	'Clube de Vantagens': Shield,
+	'Clube de Vantagens': Gift,
 	Telemedicina: Phone,
-	'Plano de Saúde': Heart,
 };
 
 type Ticket = {

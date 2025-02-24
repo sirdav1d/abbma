@@ -5,6 +5,7 @@
 import { prisma } from '@/lib/prisma';
 import { getTitle } from '@/utils/get-title-ticket';
 import { $Enums } from '@prisma/client';
+import { revalidateTag } from 'next/cache';
 
 interface UpdateTicketProps {
 	userId: string;
@@ -14,8 +15,6 @@ interface UpdateTicketProps {
 	status?: $Enums.Status;
 }
 
-
-
 export async function updateTicketAction({
 	userId,
 	type,
@@ -23,7 +22,6 @@ export async function updateTicketAction({
 	title,
 	status,
 }: UpdateTicketProps) {
-	
 	const newTitle = getTitle(type);
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
@@ -46,7 +44,7 @@ export async function updateTicketAction({
 		await prisma.updates.create({
 			data: {
 				ticketId: newTicket.id,
-				message: `Cliente ${user.name} atualizou/alterou o plano ${getTitle(type)}, cadastrar na plataforma parceira em até 48 horas`,
+				message: `Cliente ${user.name} atualizou/alterou o plano ${getTitle(type)}, atualizar na plataforma parceira, caso necessário em até 48 horas`,
 				authorName: user.name,
 			},
 		});
@@ -54,6 +52,8 @@ export async function updateTicketAction({
 		if (!newTicket) {
 			return { success: false, message: 'Plano Não Atualizado' };
 		}
+
+		revalidateTag('user-by-email');
 
 		console.log(`Plano ${type} Atualizado`);
 		//enviar e-mail de confirmação de cadastro

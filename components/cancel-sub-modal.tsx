@@ -9,15 +9,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog';
-import { Ticket } from '@prisma/client';
 import CancelSubBtn from './cancel-sub-btn';
 import { Button } from './ui/button';
 
-export default async function CancelSubModal({
-	tickets,
-}: {
-	tickets: Ticket[];
-}) {
+export default async function CancelSubModal() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -37,7 +32,7 @@ export default async function CancelSubModal({
 					benefícicios?
 				</p>
 				<DialogFooter className='w-full '>
-					{tickets && <CancelSubBtn tickets={tickets} />}
+					<CancelSubBtn />
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
