@@ -20,10 +20,10 @@ import { associate } from '@/constants/associate';
 import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 import { CircleCheckBig, CircleOff } from 'lucide-react';
 
-export default function ModalSub() {
+export default function ModalSub({isOpen}:{isOpen:boolean}) {
 	return (
 		<div className='w-full h-full'>
-			<Dialog open={true}>
+			<Dialog open={isOpen}>
 				<DialogContent className='max-w-7xl w-full h-full 2xl:h-fit overflow-scroll will-change-scroll 2xl:overflow-hidden'>
 					<DialogHeader>
 						<DialogTitle>Escolha Seu Plano</DialogTitle>

@@ -49,7 +49,11 @@ export default async function RootLayout({
 			<body className={`${poppins.className}  antialiased`}>
 				<AuthProvider>
 					<>
-						{data?.length === 0 && isClient && <ModalSub />}
+						{data?.length === 0 && isClient && (
+							<ModalSub
+								isOpen={data?.length === 0 && isClient ? false : true}
+							/>
+						)}
 						{children}
 						<Toaster />
 						<Analytics />
