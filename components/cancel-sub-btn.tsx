@@ -15,42 +15,6 @@ export default function CancelSubBtn() {
 	const handleCancelSubscription = async () => {
 		setLoading(true);
 		handleCreateStripePortal();
-
-		// try {
-		// 	const response = await fetch('/api/cancel-sub', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 		},
-		// 	});
-
-		// 	const data = await response.json();
-
-		// 	tickets.map(async (item) => {
-		// 		await deleteTicketsAction({ id: item.id });
-		// 	});
-
-		// 	if (!data.ok) {
-		// 		toast.error('Erro ao cancelar assinatura', {
-		// 			description: data.message,
-		// 		});
-		// 		console.log(data.message);
-		// 	} else {
-		// 		console.log('Assinatura cancelada:', data);
-		// 		toast.success('Assinatura cancelada', { description: data.message });
-		// 		router.refresh();
-		// 	}
-
-		// 	// Caso o cancelamento seja bem-sucedido
-		// } catch (err) {
-		// 	// Caso haja um erro
-		// 	console.log(err);
-		// 	toast.error(
-		// 		'Erro ao cancelar assinatura. Entre em contato com o suporte',
-		// 	);
-		// } finally {
-		// 	setLoading(false);
-		// }
 	};
 	return (
 		<Button

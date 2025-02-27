@@ -23,7 +23,7 @@ import { CircleCheckBig, CircleOff } from 'lucide-react';
 export default function ModalSub() {
 	return (
 		<div className='w-full h-full'>
-			<Dialog defaultOpen={true}>
+			<Dialog open={true}>
 				<DialogContent className='max-w-7xl w-full h-full 2xl:h-fit overflow-scroll will-change-scroll 2xl:overflow-hidden'>
 					<DialogHeader>
 						<DialogTitle>Escolha Seu Plano</DialogTitle>

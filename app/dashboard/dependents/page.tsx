@@ -42,8 +42,6 @@ export default async function DependentsPage() {
 		(item: Ticket) => item.isActive && item.type !== 'CLUB_VANTAGES',
 	);
 
-	console.log(activeTicket);
-
 	return (
 		<div className='max-w-7xl mx-auto px-4 2xl:px-0 py-5'>
 			{!activeTicket ? (

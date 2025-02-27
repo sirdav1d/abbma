@@ -144,6 +144,7 @@ export default function FormManage({ user }: FormManageProps) {
 								</FormControl>
 								<SelectContent>
 									<SelectItem value={'AGENT'}>Atendente</SelectItem>
+									<SelectItem value={'CLIENT'}>Cliente</SelectItem>
 									<SelectItem value={'ADMIN'}>Administrador</SelectItem>
 								</SelectContent>
 							</Select>

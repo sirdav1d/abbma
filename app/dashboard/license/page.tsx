@@ -38,8 +38,6 @@ export default async function LicensePage() {
 		(item: Dependent) => item.isActive,
 	);
 
-	console.log(data.user);
-
 	return (
 		data.user && (
 			<div className='max-w-7xl mx-auto px-4 py-5 w-full 2xl:px-0'>
@@ -78,6 +76,15 @@ export default async function LicensePage() {
 						<h3 className='font-bold'>Carteirinha dos meus dependentes</h3>
 						<ul className='grid grid-cols-1 gap-2 md:grid-cols-2 w-full mx-auto '>
 							{activeDependents?.map((item: Dependent) => {
+								if (!item.ticketId) {
+									return (
+										<p
+											className='text-muted-foreground'
+											key={item.id}>
+											Dependente sem plano associado
+										</p>
+									);
+								}
 								return (
 									<li
 										key={item.id}

@@ -49,6 +49,7 @@ const formSchema = z.object({
 	phone: z.string().regex(/^(\+?\d{1,3})?\s?\(?\d{2,3}\)?\s?\d{4,5}-?\d{4}$/, {
 		message: 'O número de telefone celular não é válido',
 	}),
+	
 });
 
 export default function DependentForm({

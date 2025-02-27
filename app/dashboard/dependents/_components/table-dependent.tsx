@@ -11,13 +11,14 @@ import {
 import { Dependent } from '@prisma/client';
 import ModalDeleteDependent from './modal-delete-dependent';
 import ModalUpdateDependent from './modal-update-dependent';
+import GetTicketByIdAction from '@/actions/tickets/get-ticket-by-id';
 
 interface TableDependentProps {
 	dependents?: Dependent[];
 	userId: string;
 }
 
-export default function TableDependent(props: TableDependentProps) {
+export default async function TableDependent(props: TableDependentProps) {
 	return (
 		<div className='border rounded-xl'>
 			<Table>
@@ -28,11 +29,15 @@ export default function TableDependent(props: TableDependentProps) {
 						<TableHead className='text-nowrap text-center'>
 							Data de Nascimento
 						</TableHead>
+						<TableHead className='text-nowrap text-center'>
+							Plano Ativo
+						</TableHead>
 						<TableHead className='text-center'>Ações</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{props.dependents?.map((dependent) => {
+					{props.dependents?.map(async (dependent) => {
+						const data = await GetTicketByIdAction(dependent.ticketId ?? '');
 						if (dependent.isActive) {
 							return (
 								<TableRow key={dependent.id}>
@@ -44,6 +49,9 @@ export default function TableDependent(props: TableDependentProps) {
 									</TableCell>
 									<TableCell className='text-center'>
 										{dependent.date_birth}
+									</TableCell>
+									<TableCell className='text-center'>
+										{data.data?.title ?? 'Nenhum Plano Associado'}
 									</TableCell>
 									<TableCell>
 										<div className='flex space-x-2  items-center justify-center'>

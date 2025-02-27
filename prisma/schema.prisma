@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -21,58 +15,59 @@ model User {
   password     String      @default(cuid())
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  tickets      Ticket[]
   role         Role
   is_militar   Boolean?
   occupation   String?
   cpf          String?
   date_birth   String?
   cep          String?
-  neighborhood String?
   address      String?
   city         String?
   state        String?
   phone        String?
-  Dependent    Dependent[]
+  neighborhood String?
   isActive     Boolean?    @default(true)
   isSubscribed Boolean?    @default(false)
   customer_id  String?
+  Dependent    Dependent[]
+  tickets      Ticket[]
 }
 
 model Dependent {
-  id           String   @id @default(cuid())
-  name         String
-  email        String? // Opcional, caso o dependente não tenha e-mail
-  userId       String
-  user         User     @relation(fields: [userId], references: [id]) // Relacionamento com o usuário principal
-  cpf          String?  @unique
-  date_birth   String?
-  degree       String
-  phone        String?
-  ticket       Ticket?  @relation(fields: [ticketId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  isActive     Boolean? @default(true)
-  ticketId     String?
+  id         String   @id @default(cuid())
+  name       String
+  email      String?
+  userId     String
+  cpf        String?  @unique
+  date_birth String?
+  degree     String
+  phone      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  isActive   Boolean? @default(true)
+  ticketId   String?
+  user       User     @relation(fields: [userId], references: [id])
+  Ticket     Ticket[]
 }
 
 model Ticket {
-  id               String      @id @default(cuid())
-  number           Int         @default(autoincrement())
+  id               String     @id @default(cuid())
   title            String
   description      String?
-  type             TicketType  @default(CLUB_VANTAGES)
-  status           Status      @default(PENDING)
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
-  credential_email String?
-  stripeId         String?
-  credential_pass  String?
+  type             TicketType @default(CLUB_VANTAGES)
+  status           Status     @default(PENDING)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
   userId           String
-  user             User        @relation(fields: [userId], references: [id])
-  isActive         Boolean?    @default(true)
+  credential_email String?
+  credential_pass  String?
+  stripeId         String?
+  isActive         Boolean?   @default(true)
+  number           Int        @default(autoincrement())
+  dependentId      String?
+  Dependent        Dependent? @relation(fields: [dependentId], references: [id])
+  user             User       @relation(fields: [userId], references: [id])
   Updates          Updates[]
-  Dependent        Dependent[]
 }
 
 model Updates {
@@ -80,9 +75,9 @@ model Updates {
   message    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  ticket     Ticket   @relation(fields: [ticketId], references: [id])
-  authorName String
   ticketId   String
+  authorName String
+  ticket     Ticket   @relation(fields: [ticketId], references: [id])
 }
 
 enum Status {
@@ -99,9 +94,9 @@ enum Role {
 }
 
 enum TicketType {
-  CLUB_VANTAGES // Clube de Vantagens
+  CLUB_VANTAGES
   TELEMEDICINE_INDIVIDUAL
   TELEMEDICINE_COUPLE
-  TELEMEDICINE_FAMILY // Telemedicina
-  HEALTH_PLAN // Planos de Saúde
+  TELEMEDICINE_FAMILY
+  HEALTH_PLAN
 }

@@ -29,7 +29,6 @@ export async function updateDependentAction({
 	email,
 	name,
 	phone,
-
 	id,
 }: UpdateDependentProps) {
 	const session = await auth();

@@ -57,7 +57,7 @@ export default function License({
 
 						<QrCode value={`www.abbma.org.br/licenseShare/${user.id}`} />
 					</CardContent>
-					<CardFooter className='w-full flex justify-center items-center mx-auto text-xs text-center'>
+					<CardFooter className='w-full flex justify-center items-center mx-auto text-xs text-center text-muted-foreground'>
 						Cadastro em: {new Date(user?.createdAt).toLocaleString('pt-BR')}
 					</CardFooter>
 				</Card>
