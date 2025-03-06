@@ -13,6 +13,8 @@ interface UpdateTicketProps {
 	title?: string;
 	ticketId: string;
 	status?: $Enums.Status;
+	isDependent?: boolean;
+	quantity?: number;
 }
 
 export async function updateTicketAction({
@@ -21,43 +23,77 @@ export async function updateTicketAction({
 	ticketId,
 	title,
 	status,
+	isDependent,
+	quantity,
 }: UpdateTicketProps) {
-	const newTitle = getTitle(type);
-	const user = await prisma.user.findUnique({
-		where: { id: userId },
-	});
+	const newTitle = getTitle(type!);
 
-	if (!user) {
-		return { success: false, message: 'Usuário não encontrado' };
-	}
 	try {
-		const newTicket = await prisma.ticket.update({
-			where: { id: ticketId },
-			data: {
-				userId: userId,
-				type: type,
-				title: title ?? newTitle,
-				status: status ?? 'PENDING',
-			},
-		});
+		if (!isDependent) {
+			const user = await prisma.user.findUnique({
+				where: { id: userId },
+			});
 
-		await prisma.updates.create({
-			data: {
-				ticketId: newTicket.id,
-				message: `Cliente ${user.name} atualizou/alterou o plano ${getTitle(type)}, atualizar na plataforma parceira, caso necessário em até 48 horas`,
-				authorName: user.name,
-			},
-		});
+			if (!user) {
+				return { success: false, message: 'Usuário não encontrado' };
+			}
+			const newTicket = await prisma.ticket.update({
+				where: { id: ticketId },
+				data: {
+					userId: userId,
+					type: type,
+					title: title ?? newTitle,
+					status: status ?? 'PENDING',
+					quantity: quantity,
+				},
+			});
+			await prisma.updates.create({
+				data: {
+					ticketId: newTicket.id,
+					message: `Cliente ${user.name} atualizou/alterou o plano ${getTitle(type!)}, atualizar na plataforma parceira, caso necessário em até 48 horas`,
+					authorName: user.name,
+				},
+			});
+			if (!newTicket) {
+				return { success: false, message: 'Plano Não Atualizado' };
+			}
+			revalidateTag('user-by-email');
+			//enviar e-mail de confirmação de cadastro
+			return { success: true, message: `Plano ${type} atualizado com sucesso` };
+		} else {
+			const dependent = await prisma.dependent.findUnique({
+				where: { id: userId },
+			});
+			if (!dependent) {
+				return { success: false, message: 'Dependente não encontrado' };
+			}
+			const newTicket = await prisma.ticket.update({
+				where: { id: ticketId },
+				data: {
+					dependentId: userId,
+					type: type,
+					title: title ?? newTitle,
+					status: status ?? 'PENDING',
+				},
+			});
 
-		if (!newTicket) {
-			return { success: false, message: 'Plano Não Atualizado' };
+			await prisma.updates.create({
+				data: {
+					ticketId: newTicket.id,
+					message: `Dependente ${dependent.name} atualizou/alterou o plano ${getTitle(type!)}, atualizar na plataforma parceira, caso necessário em até 48 horas`,
+					authorName: dependent.name,
+				},
+			});
+			if (!newTicket) {
+				return { success: false, message: 'Plano Não Atualizado' };
+			}
+			revalidateTag('user-by-email');
+			//enviar e-mail de confirmação de cadastro
+			return {
+				success: true,
+				message: `Plano ${type} atualizado com sucesso`,
+			};
 		}
-
-		revalidateTag('user-by-email');
-
-		console.log(`Plano ${type} Atualizado`);
-		//enviar e-mail de confirmação de cadastro
-		return { success: true, message: `Plano ${type} atualizado com sucesso` };
 	} catch (error) {
 		console.log('não atualizado');
 		return { success: false, message: `Algo deu errado - ${error}` };

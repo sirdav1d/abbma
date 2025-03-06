@@ -23,6 +23,7 @@ export default async function AdminPage() {
 		headers: {
 			'Content-Type': 'application/json',
 		},
+		// next: { revalidate: 120 },
 	});
 
 	const { tickets } = await res.json();
@@ -48,7 +49,7 @@ export default async function AdminPage() {
 		return {
 			id: ticket.id,
 			number: ticket.number,
-			name: ticket.user.name,
+			name: ticket.user ? ticket.user.name : ticket.Dependent.name,
 			userId: ticket.userId,
 			type:
 				ticket.type == 'CLUB_VANTAGES'

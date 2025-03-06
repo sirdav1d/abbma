@@ -15,6 +15,7 @@ interface CreateTicketProps {
 	title: string;
 	stripeId?: string;
 	messageUpdates?: string;
+	isDependent?: boolean;
 }
 
 export async function createTicketAction({
@@ -23,58 +24,121 @@ export async function createTicketAction({
 	title,
 	stripeId,
 	messageUpdates,
+	isDependent,
 }: CreateTicketProps) {
-	const user = await prisma.user.findUnique({
-		where: { id: userId },
-	});
-
 	try {
-		if (!user) {
-			return { success: false, message: 'Usuário não encontrado' };
+		let newTicket;
+		const dependent = await prisma.dependent.findUnique({
+			where: { id: userId },
+		});
+
+		if (!dependent) {
+			return { success: false, message: 'Dependente não encontrado' };
 		}
+		if (isDependent) {
+			newTicket = await prisma.ticket.create({
+				data: {
+					dependentId: userId,
+					type: type,
+					title: title,
+					isActive: true,
+					stripeId: stripeId ?? '',
+					status: 'PENDING',
+				},
+			});
 
-		const newTicket = await prisma.ticket.create({
-			data: {
-				userId: userId,
-				type: type,
-				title: title,
-				isActive: true,
-				stripeId: stripeId ?? '',
-				status: 'PENDING',
-			},
-		});
+			if (!newTicket) {
+				return {
+					success: false,
+					message: 'Plano Não Solicitado',
+					data: null,
+				};
+			}
 
-		await SendEmailAction({
-			email: 'contato@abbma.org.br',
-			subject: 'Novo Plano Contratado',
-			htmlContent: generateContentNewTicket({
-				name: user.name,
-				message: `Cliente ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
-			}),
-		});
+			await SendEmailAction({
+				email: 'contato@abbma.org.br',
+				subject: 'Novo Plano Ativado',
+				htmlContent: generateContentNewTicket({
+					name: dependent.name,
+					message: `Dependente ${dependent.name} ativou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
+				}),
+			});
 
-		await prisma.updates.create({
-			data: {
-				ticketId: newTicket.id,
-				message:
-					messageUpdates ??
-					`Cliente ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
-				authorName: user.name,
-			},
-		});
+			await prisma.updates.create({
+				data: {
+					ticketId: newTicket.id,
+					message:
+						messageUpdates ??
+						`Dependente ${dependent.name} ativou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
+					authorName: dependent.name,
+				},
+			});
 
-		if (!newTicket) {
-			return { success: false, message: 'Plano Não Solicitado' };
+			revalidateTag('user-by-email');
+			console.log(`Plano ${getTitle(type)} solicitado`);
+			//enviar e-mail de confirmação de cadastro
+			return {
+				success: true,
+				message: `Plano ${getTitle(type)} solicitado com sucesso`,
+				data: newTicket,
+			};
+		} else {
+			const user = await prisma.user.findUnique({
+				where: { id: userId },
+			});
+
+			if (!user) {
+				return { success: false, message: 'Usuário não encontrado' };
+			}
+			newTicket = await prisma.ticket.create({
+				data: {
+					userId: userId,
+					type: type,
+					title: title,
+					isActive: true,
+					stripeId: stripeId ?? '',
+					status: 'PENDING',
+				},
+			});
+
+			if (!newTicket) {
+				return {
+					success: false,
+					message: 'Plano Não Solicitado',
+					data: null,
+				};
+			}
+
+			await SendEmailAction({
+				email: 'contato@abbma.org.br',
+				subject: 'Novo Plano Contratado',
+				htmlContent: generateContentNewTicket({
+					name: user.name,
+					message: `Cliente ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
+				}),
+			});
+
+			await prisma.updates.create({
+				data: {
+					ticketId: newTicket.id,
+					message:
+						messageUpdates ??
+						`Cliente ${user.name} solicitou o plano ${getTitle(type)}, fazer cadastro na plataforma em até 48 horas`,
+					authorName: user.name,
+				},
+			});
+
+			revalidateTag('user-by-email');
+			console.log(`Plano ${getTitle(type)} solicitado`);
+			//enviar e-mail de confirmação de cadastro
+			return {
+				success: true,
+				message: `Plano ${getTitle(type)} solicitado com sucesso`,
+				data: newTicket,
+			};
 		}
-		revalidateTag('user-by-email');
-		console.log(`Plano ${getTitle(type)} solicitado`);
-		//enviar e-mail de confirmação de cadastro
-		return {
-			success: true,
-			message: `Plano ${getTitle(type)} solicitado com sucesso`,
-		};
 	} catch (error) {
-		console.log('não solicitado');
-		return { success: false, message: `Algo deu errado - ${error}` };
+		console.log('não solicitado', error);
+		return { success: false, message: `Algo deu errado`, data: null };
 	}
 }

@@ -33,7 +33,7 @@ export default async function OperatorTicketDetailPage({
 	const ticketItem = {
 		id: ticket.id,
 		number: ticket.number,
-		name: ticket.user.name,
+		name: ticket.user ? ticket.user.name : ticket.Dependent.name,
 		type: ticket.type,
 		description: ticket.description,
 		status: ticket.status,

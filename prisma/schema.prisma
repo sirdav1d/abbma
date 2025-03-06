@@ -58,15 +58,16 @@ model Ticket {
   status           Status     @default(PENDING)
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
-  userId           String
+  userId           String?
   credential_email String?
   credential_pass  String?
   stripeId         String?
   isActive         Boolean?   @default(true)
   number           Int        @default(autoincrement())
   dependentId      String?
+  quantity         Int?
   Dependent        Dependent? @relation(fields: [dependentId], references: [id])
-  user             User       @relation(fields: [userId], references: [id])
+  user             User?      @relation(fields: [userId], references: [id])
   Updates          Updates[]
 }
 

@@ -37,6 +37,13 @@ export async function deleteDependentAction(id: string) {
 			},
 		});
 
+		await prisma.ticket.updateMany({
+			where: { dependentId: dependent.id },
+			data: {
+				isActive: false,
+			},
+		});
+
 		if (dependent) {
 			console.log('dependente encontrado', dependent);
 

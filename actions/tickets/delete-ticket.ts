@@ -21,7 +21,7 @@ export default async function deleteTicketsAction({ id }: { id: string }) {
 			where: { id: id },
 			data: {
 				isActive: false,
-				status: 'PENDING',
+				status: 'CANCELED',
 			},
 		});
 

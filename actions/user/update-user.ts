@@ -7,8 +7,11 @@ import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
 import { revalidateTag } from 'next/cache';
 import SendEmailAction from '../email/sendEmail';
-
+import bcrypt from 'bcrypt';
 export async function updateUserAction({ user }: { user: Partial<User> }) {
+	let hashPass;
+	if (user.password) hashPass = await bcrypt.hash(user.password!, 10);
+
 	try {
 		await prisma.user.update({
 			where: { email: user.email },
@@ -27,7 +30,7 @@ export async function updateUserAction({ user }: { user: Partial<User> }) {
 				customer_id: user.customer_id,
 				isSubscribed: user.isSubscribed,
 				isActive: user.isActive,
-				password: user.password,
+				password: hashPass,
 				role: user.role,
 			},
 		});

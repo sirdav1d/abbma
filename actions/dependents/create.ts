@@ -8,7 +8,6 @@ import {
 } from '@/constants/email-contents';
 import { prisma } from '@/lib/prisma';
 import { getTitle } from '@/utils/get-title-ticket';
-
 import { redirect } from 'next/navigation';
 import SendEmailAction from '../email/sendEmail';
 import GetAllTicketsAction from '../tickets/get-all-tickets';
@@ -84,7 +83,7 @@ export async function createDependentAction({
 			}),
 		});
 
-		revalidateTag('user')
+		revalidateTag('user');
 
 		console.log(href);
 
@@ -102,10 +101,10 @@ export async function createDependentAction({
 			dependent: dependent,
 		};
 	} catch (error) {
-		console.log('não cadastrado');
+		console.log('não cadastrado', error);
 		return {
 			success: false,
-			message: `Algo deu errado - ${error}`,
+			message: `Algo deu errado`,
 			dependent: null,
 		};
 	}

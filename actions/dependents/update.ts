@@ -13,13 +13,13 @@ import { revalidateTag } from 'next/cache';
 import { auth } from '@/lib/auth/auth';
 
 interface UpdateDependentProps {
-	cpf: string;
-	date_birth: string;
-	degree: string;
-	email: string;
-	name: string;
-	phone: string;
-	id: string;
+	cpf?: string;
+	date_birth?: string;
+	degree?: string;
+	email?: string;
+	name?: string;
+	phone?: string;
+	id?: string;
 }
 
 export async function updateDependentAction({
@@ -68,7 +68,7 @@ export async function updateDependentAction({
 		await SendEmailAction({
 			email: 'contato@abbma.org.br',
 			subject: 'Cliente Atualizou Dados de Dependene',
-			htmlContent: generateContentUpdateDependent({ name: name }),
+			htmlContent: generateContentUpdateDependent({ name: name! }),
 		});
 
 		await prisma.updates.create({

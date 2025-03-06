@@ -17,6 +17,13 @@ export async function deleteUserAction(email: string) {
 			},
 		});
 
+		await prisma.ticket.updateMany({
+			where: { userId: user.id },
+			data: {
+				isActive: false,
+			},
+		});
+
 		if (user && user.name) {
 			console.log('usuario encontrado', user);
 

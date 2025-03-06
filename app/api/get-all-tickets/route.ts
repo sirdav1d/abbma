@@ -5,11 +5,14 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
 	try {
-		const tickets = await prisma.ticket.findMany({
-			include: { user: true, Updates: true },
+		const Alltickets = await prisma.ticket.findMany({
+			include: { user: true, Updates: true, Dependent: true },
 		});
 
+		const tickets = Alltickets.filter((ticket) => ticket.isActive === true);
 		// Verifica se o array de usuários está vazio
+
+		
 		if (tickets.length === 0) {
 			return NextResponse.json({
 				success: false,

@@ -14,15 +14,18 @@ import { Plus } from 'lucide-react';
 
 interface ModalCreateDependentProps {
 	userId: string;
+	disabled: boolean;
 }
 
 export default function ModalCreateDependent({
 	userId,
+	disabled,
 }: ModalCreateDependentProps) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button
+					disabled={disabled}
 					size={'sm'}
 					className='disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-fit'>
 					Adicionar Dependente <Plus />

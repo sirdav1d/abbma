@@ -1,18 +1,20 @@
-import { $Enums } from "@prisma/client";
+/** @format */
 
-export function getTitle(type?: $Enums.TicketType) {
-  if (type == 'CLUB_VANTAGES') {
-    return 'Clube de Vantagens';
-  }
+import { $Enums } from '@prisma/client';
 
-  if (type == 'TELEMEDICINE_INDIVIDUAL') {
-    return 'Telemedicina Individual';
-  }
+export function getTitle(type: $Enums.TicketType) {
+	if (type == 'CLUB_VANTAGES') {
+		return 'Clube de Vantagens';
+	}
 
-  if (type == 'TELEMEDICINE_COUPLE') {
-    return 'Telemedicina Casal';
-  }
-  if (type == 'TELEMEDICINE_FAMILY') {
-    return 'Telemedicina Família';
-  }
+	if (type == 'TELEMEDICINE_INDIVIDUAL') {
+		return 'Telemedicina Individual';
+	}
+
+	if (type == 'TELEMEDICINE_COUPLE') {
+		return 'Telemedicina Casal';
+	}
+	if (type == 'TELEMEDICINE_FAMILY') {
+		return 'Telemedicina Família';
+	}
 }

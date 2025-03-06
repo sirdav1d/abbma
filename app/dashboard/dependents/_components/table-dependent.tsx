@@ -1,5 +1,6 @@
 /** @format */
 
+import GetTicketByIdAction from '@/actions/tickets/get-ticket-by-id';
 import {
 	Table,
 	TableBody,
@@ -8,14 +9,15 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { Dependent } from '@prisma/client';
+import { Dependent, Ticket } from '@prisma/client';
+import ModalActivePlan from './modal-active-plan';
 import ModalDeleteDependent from './modal-delete-dependent';
 import ModalUpdateDependent from './modal-update-dependent';
-import GetTicketByIdAction from '@/actions/tickets/get-ticket-by-id';
 
 interface TableDependentProps {
-	dependents?: Dependent[];
+	dependents: Dependent[];
 	userId: string;
+	activePlan: Ticket;
 }
 
 export default async function TableDependent(props: TableDependentProps) {
@@ -32,12 +34,14 @@ export default async function TableDependent(props: TableDependentProps) {
 						<TableHead className='text-nowrap text-center'>
 							Plano Ativo
 						</TableHead>
+						<TableHead className='text-nowrap text-center'></TableHead>
 						<TableHead className='text-center'>Ações</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{props.dependents?.map(async (dependent) => {
 						const data = await GetTicketByIdAction(dependent.ticketId ?? '');
+
 						if (dependent.isActive) {
 							return (
 								<TableRow key={dependent.id}>
@@ -50,13 +54,20 @@ export default async function TableDependent(props: TableDependentProps) {
 									<TableCell className='text-center'>
 										{dependent.date_birth}
 									</TableCell>
-									<TableCell className='text-center'>
+									<TableCell className='text-center text-xs text-nowrap'>
 										{data.data?.title ?? 'Nenhum Plano Associado'}
+									</TableCell>
+									<TableCell className='flex  items-center justify-center'>
+										<ModalActivePlan
+											activePlan={props.activePlan}
+											dependentId={dependent.id}
+											quantityDependents={props.dependents?.length}
+										/>
 									</TableCell>
 									<TableCell>
 										<div className='flex space-x-2  items-center justify-center'>
 											<ModalUpdateDependent
-												userId={dependent.id}
+												dependentId={dependent.id}
 												dependent={dependent}
 											/>
 											<ModalDeleteDependent dependent={dependent} />

@@ -77,13 +77,7 @@ export default async function LicensePage() {
 						<ul className='grid grid-cols-1 gap-2 md:grid-cols-2 w-full mx-auto '>
 							{activeDependents?.map((item: Dependent) => {
 								if (!item.ticketId) {
-									return (
-										<p
-											className='text-muted-foreground'
-											key={item.id}>
-											Dependente sem plano associado
-										</p>
-									);
+									return null;
 								}
 								return (
 									<li

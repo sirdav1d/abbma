@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
 	try {
 		const ticket = await prisma.ticket.findUnique({
 			where: { id: body },
-			include: { user: true, Updates: true },
+			include: { user: true, Updates: true, Dependent: true },
 		});
 
 		// Verifica se o array de usuários está vazio

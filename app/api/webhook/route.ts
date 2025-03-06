@@ -67,21 +67,6 @@ export async function POST(req: NextRequest) {
 							await sendInvoiceIfAvailable(session, email, name);
 						}
 
-						// if (customer && priceTypeId) {
-						// 	//alterar ou criar o plano manualmente
-						// 	const result = await handleSubscription({
-						// 		email,
-						// 		priceTypeId,
-						// 	});
-
-						// 	console.log('Assinatura processada com sucesso:', result);
-
-						// 	return NextResponse.json({
-						// 		message: 'Evento processado.',
-						// 		ok: true,
-						// 	});
-						// }
-
 						break;
 					}
 				} else {
@@ -89,20 +74,18 @@ export async function POST(req: NextRequest) {
 				}
 			case 'customer.subscription.updated':
 				// Atualiza o plano no banco de dados
-				const sessionUp = event.data.object as Stripe.Checkout.Session;
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const sessionUp = event.data.object as any;
+				const quantity = sessionUp.quantity!;
+
 				const customerId = sessionUp.customer;
 				const customerResponse = await stripe.customers.retrieve(
 					String(customerId),
 				);
 
-				if (customerResponse.deleted) {
-					return NextResponse.json(
-						{ error: 'Cliente foi deletado' },
-						{ status: 400 },
-					);
-				}
-
 				const customer = customerResponse as Stripe.Customer;
+
 				const email = customer.email;
 				const name = customer.name;
 
@@ -120,13 +103,14 @@ export async function POST(req: NextRequest) {
 						(item) => item.type !== 'CLUB_VANTAGES',
 					);
 					if (myUser.user && ticket) {
-						const resp = await updateTicketAction({
+						await updateTicketAction({
 							userId: myUser.user.id,
 							ticketId: ticket.id,
 							type: ticket.type,
 							status: 'PENDING',
+							quantity: quantity,
 						});
-						console.log(resp, tickets);
+
 						await sendInvoiceIfAvailable(sessionUp, email, name);
 					}
 				}
@@ -143,6 +127,39 @@ export async function POST(req: NextRequest) {
 
 			case 'customer.subscription.deleted':
 				// O cliente cancelou o plano :(
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const sessionDel = event.data.object as any;
+
+				const customerIdDel = sessionDel.customer;
+				const customerResponseDel = await stripe.customers.retrieve(
+					String(customerIdDel),
+				);
+
+				console.log('SESSION DELETE', customerResponseDel);
+				// const emailDel = customerResponseDel.email;
+				// const nameDel = customerResponseDel.name;
+
+				// if (emailDel && nameDel) {
+				// 	await updateUserAction({
+				// 		user: {
+				// 			isSubscribed: false,
+				// 		},
+				// 	});
+
+				// 	const myUser = await getUserAction({ email: emailDel });
+				// 	const tickets = await GetAllTicketsAction({ email: emailDel });
+
+				// 	const ticket = tickets.data?.findLast(
+				// 		(item) => item.type !== 'CLUB_VANTAGES',
+				// 	);
+
+				// 	if (myUser.user && ticket) {
+				// 		const resp = await deleteTicketsAction({ id: ticket.id });
+				// 		console.log(resp, tickets);
+				// 		await sendInvoiceIfAvailable(sessionUp, emailDel, nameDel);
+				// 	}
+				// }
 
 				break;
 		}

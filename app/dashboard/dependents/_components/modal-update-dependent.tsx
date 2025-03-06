@@ -14,13 +14,13 @@ import { Dependent } from '@prisma/client';
 import { Pencil } from 'lucide-react';
 
 interface ModalUpdateDependentProps {
-	userId: string;
+	dependentId: string;
 	dependent: Partial<Dependent>;
 }
 
 export default function ModalUpdateDependent({
 	dependent,
-	userId,
+	dependentId,
 }: ModalUpdateDependentProps) {
 	return (
 		<Dialog>
@@ -39,7 +39,7 @@ export default function ModalUpdateDependent({
 					</DialogDescription>
 				</DialogHeader>
 				<DependentForm
-					userId={userId}
+					userId={dependentId}
 					user={dependent ?? null}
 					isUpdating={true}
 				/>

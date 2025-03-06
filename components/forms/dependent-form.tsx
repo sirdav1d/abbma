@@ -4,7 +4,7 @@
 
 import { createDependentAction } from '@/actions/dependents/create';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, CalendarIcon } from 'lucide-react';
+import { ArrowRight, CalendarIcon, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -49,7 +49,6 @@ const formSchema = z.object({
 	phone: z.string().regex(/^(\+?\d{1,3})?\s?\(?\d{2,3}\)?\s?\d{4,5}-?\d{4}$/, {
 		message: 'O número de telefone celular não é válido',
 	}),
-	
 });
 
 export default function DependentForm({
@@ -94,9 +93,7 @@ export default function DependentForm({
 					degree: degree,
 					email: email,
 					name: name,
-
 					phone: phone,
-
 					userId: userId,
 				});
 
@@ -137,7 +134,7 @@ export default function DependentForm({
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='space-y-2 w-full '>
-				<div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-2 gap-4'>
+				<div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-2 gap-4 mb-5'>
 					<FormField
 						control={form.control}
 						name='name'
@@ -254,11 +251,22 @@ export default function DependentForm({
 					/>
 				</div>
 				<Button
+					disabled={form.formState.isLoading || form.formState.isSubmitting}
 					type='submit'
-					className='w-full'>
+					className='w-full mt-5'>
 					{isUpdating ? (
+						form.formState.isLoading || form.formState.isSubmitting ? (
+							<>
+								Atualizar Dependente <Loader2 className='animate-spin' />
+							</>
+						) : (
+							<>
+								Atualizar Dependente <ArrowRight />
+							</>
+						)
+					) : form.formState.isLoading || form.formState.isSubmitting ? (
 						<>
-							Atualizar Dependente <ArrowRight />
+							Adicionar Dependente <Loader2 className='animate-spin' />
 						</>
 					) : (
 						<>
