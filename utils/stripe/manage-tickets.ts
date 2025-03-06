@@ -26,7 +26,7 @@ export async function manageTickets(
 			console.log('Tickets Dependente-createTicketAction');
 		}
 
-		if (existingTicket && existingTicket?.type !== priceType) {
+		if (existingTicket && priceType && existingTicket?.type !== priceType) {
 			await updateTicketAction({
 				ticketId: existingTicket.id,
 				userId: user.id,
