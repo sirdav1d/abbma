@@ -110,7 +110,11 @@ export default async function DashboardPage() {
 											<div className='flex'>
 												{benefit.id === 'CLUB_VANTAGES' && (
 													<BuyButton
-														isAddOn={activeTickets ? true : false}
+														isAddOn={
+															activeTickets?.length && activeTickets?.length > 0
+																? true
+																: false
+														}
 														priceType='CLUB_VANTAGES'
 														size='default'
 													/>
@@ -188,7 +192,11 @@ export default async function DashboardPage() {
 													</Button>
 												) : (
 													<BuyButton
-														isAddOn={activeTickets ? true : false}
+														isAddOn={
+															activeTickets?.length && activeTickets?.length > 0
+																? true
+																: false
+														}
 														size='default'
 														priceType={'TELEMEDICINE_INDIVIDUAL'}
 													/>
@@ -243,7 +251,11 @@ export default async function DashboardPage() {
 													</Button>
 												) : (
 													<BuyButton
-														isAddOn={activeTickets ? true : false}
+														isAddOn={
+															activeTickets?.length && activeTickets?.length > 0
+																? true
+																: false
+														}
 														size='default'
 														priceType={'TELEMEDICINE_COUPLE'}
 													/>
@@ -296,7 +308,11 @@ export default async function DashboardPage() {
 													</Button>
 												) : (
 													<BuyButton
-														isAddOn={activeTickets ? true : false}
+														isAddOn={
+															activeTickets?.length && activeTickets?.length > 0
+																? true
+																: false
+														}
 														size='default'
 														priceType={'TELEMEDICINE_FAMILY'}
 													/>

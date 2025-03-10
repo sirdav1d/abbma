@@ -38,6 +38,8 @@ export default async function RootLayout({
 		email: session?.user?.email ?? null,
 	});
 
+	console.log(data);
+
 	const { user } = await getUserAction({ email: null });
 
 	const isClient = user?.role === 'CLIENT';
@@ -51,7 +53,7 @@ export default async function RootLayout({
 					<>
 						{data?.length === 0 && isClient && (
 							<ModalSub
-								isOpen={data?.length === 0 && isClient ? false : true}
+								isOpen={ true}
 							/>
 						)}
 						{children}

@@ -20,7 +20,7 @@ import { associate } from '@/constants/associate';
 import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 import { CircleCheckBig, CircleOff } from 'lucide-react';
 
-export default function ModalSub({isOpen}:{isOpen:boolean}) {
+export default function ModalSub({ isOpen }: { isOpen: boolean }) {
 	return (
 		<div className='w-full h-full'>
 			<Dialog open={isOpen}>
