@@ -22,14 +22,13 @@ export default function BuyButton({
 	const { handleCreateStripeCheckout, handleCreateStripePortal } = useStripe();
 	const session = useSession();
 
-	function handleClick(isAddOn: boolean) {
+	function handleClick() {
 		if (isAddOn) {
 			handleCreateStripePortal();
 		} else {
 			handleCreateStripeCheckout({
 				priceType: priceType,
 				metadata: session.data?.user,
-				isAddOn: isAddOn,
 			});
 		}
 	}
@@ -37,7 +36,7 @@ export default function BuyButton({
 		<Button
 			size={size ?? 'lg'}
 			className={`px-4 py-2 disabled:opacity-50 z-20 bg-red-700  w-full hover:bg-red-600 font-semibold text-base text-slate-50`}
-			onClick={() => handleClick(isAddOn)}>
+			onClick={() => handleClick()}>
 			{content ?? (
 				<>
 					Assinar{' '}

@@ -67,6 +67,7 @@ export default function ModalSub({ isOpen }: { isOpen: boolean }) {
 								<CardFooter className='w-full flex-col gap-2.5 flex items-center justify-center'>
 									<BuyButton
 										size='default'
+										
 										priceType={'TELEMEDICINE_INDIVIDUAL'}
 									/>
 									<p className='text-xs italic text-muted-foreground text-center'>
