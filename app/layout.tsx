@@ -38,8 +38,6 @@ export default async function RootLayout({
 		email: session?.user?.email ?? null,
 	});
 
-	console.log(data);
-
 	const { user } = await getUserAction({ email: null });
 
 	const isClient = user?.role === 'CLIENT';

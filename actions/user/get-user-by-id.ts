@@ -20,10 +20,10 @@ export async function getUserByIdAction({ id }: { id: string }) {
 		}
 		return { success: false, message: 'Usuário não encontrado', user: null };
 	} catch (error) {
-		console.log('não encontrado');
+		console.log('não encontrado', error);
 		return {
 			success: false,
-			message: `Algo deu errado - ${error}`,
+			message: `Algo deu errado `,
 			user: null,
 		};
 	}

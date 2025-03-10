@@ -20,10 +20,10 @@ export async function getAllUserAction() {
 		revalidatePath('/dashboard/admin/users', 'layout');
 		return { success: false, message: 'Usuários não encontrados', users: null };
 	} catch (error) {
-		console.log('não encontrado');
+		console.log('não encontrado',error);
 		return {
 			success: false,
-			message: `Algo deu errado - ${error}`,
+			message: `Algo deu errado`,
 			users: null,
 		};
 	}
