@@ -14,7 +14,9 @@ export const columns: ColumnDef<User | undefined | unknown>[] = [
 		accessorKey: 'role',
 		header: 'Cargo',
 		cell: ({ row }) => (
-			<div className='capitalize font-medium'>{row.getValue('Cargo')}</div>
+			<div className='capitalize font-medium text-xs'>
+				{row.getValue('Cargo')}
+			</div>
 		),
 	},
 	{
@@ -30,20 +32,39 @@ export const columns: ColumnDef<User | undefined | unknown>[] = [
 				</Button>
 			);
 		},
-		cell: ({ row }) => <div>{row.getValue('Nome')}</div>,
+		cell: ({ row }) => <div className='text-xs'>{row.getValue('Nome')}</div>,
+	},
+	{
+		id: 'Data de Nascimento',
+		accessorKey: 'date_birth',
+		header: () => {
+			return <p className='text-nowrap '>Data de Nascimento</p>;
+		},
+		cell: ({ row }) => {
+			const user = row.original as User;
+			return (
+				<p className='text-nowrap text-xs'>
+					{user.date_birth
+						? new Date(user.date_birth).toLocaleDateString('pt-BR')
+						: 'N/A'}
+				</p>
+			);
+		},
 	},
 	{
 		id: 'CPF',
 		accessorKey: 'cpf',
 		header: 'CPF',
-		cell: ({ row }) => <div className='capitalize'>{row.getValue('CPF')}</div>,
+		cell: ({ row }) => (
+			<div className='capitalize text-xs'>{row.getValue('CPF')}</div>
+		),
 	},
 	{
 		id: 'Telefone',
 		accessorKey: 'phone',
 		header: 'Telefone',
 		cell: ({ row }) => (
-			<div className='capitalize'>{row.getValue('Telefone')}</div>
+			<div className='capitalize text-xs'>{row.getValue('Telefone')}</div>
 		),
 	},
 	{
@@ -59,7 +80,9 @@ export const columns: ColumnDef<User | undefined | unknown>[] = [
 				</Button>
 			);
 		},
-		cell: ({ row }) => <div className='lowercase'>{row.getValue('Email')}</div>,
+		cell: ({ row }) => (
+			<div className='lowercase text-xs'>{row.getValue('Email')}</div>
+		),
 	},
 
 	{
