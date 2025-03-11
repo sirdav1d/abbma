@@ -1,7 +1,6 @@
 /** @format */
 
 import { createTicketAction } from '@/actions/tickets/create-ticket';
-import { updateTicketAction } from '@/actions/tickets/update-ticket';
 import { $Enums, Ticket, User } from '@prisma/client';
 import { getTitle } from '../get-title-ticket';
 
@@ -11,34 +10,6 @@ export async function manageTickets(
 	priceType?: $Enums.TicketType,
 ) {
 	try {
-		const existingTicket = tickets?.find(
-			(ticket) => ticket.type !== 'CLUB_VANTAGES',
-		);
-
-		if (existingTicket?.type === priceType && priceType) {
-			await createTicketAction({
-				userId: user.id,
-				type: priceType,
-				title: String(`Dependente -${getTitle(priceType)}`),
-				messageUpdates: `Cliente ${user.name} solicitou a adição de um novo dependente no seu plano ${getTitle(priceType)}`,
-			});
-
-			console.log('Tickets Dependente-createTicketAction');
-		}
-
-		if (existingTicket && priceType && existingTicket?.type !== priceType) {
-			await updateTicketAction({
-				ticketId: existingTicket.id,
-				userId: user.id,
-				type: priceType,
-			});
-			console.log('Tickets updateTicketAction');
-			return {
-				ok: true,
-				message: `${user.name} atualizou seu plano ${getTitle(priceType)}`,
-			};
-		}
-
 		if (tickets?.length == 0 && priceType == 'CLUB_VANTAGES') {
 			await createTicketAction({
 				userId: user.id,
