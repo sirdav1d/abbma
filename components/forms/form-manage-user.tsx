@@ -26,6 +26,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { cpf } from 'zod-br-tax-id';
+import { Checkbox } from '../ui/checkbox';
 
 interface FormManageProps {
 	user: Partial<User>;
@@ -38,6 +40,8 @@ export default function FormManage({ user }: FormManageProps) {
 			message: 'O nome completo deve ter pelo menos 2 caracteres.',
 		}),
 		role: z.enum(['CLIENT', 'ADMIN', 'AGENT']),
+		isSubscribed: z.boolean(),
+		cpf: cpf(),
 	});
 
 	const [isPending, setIsPending] = useState(false);
@@ -47,6 +51,8 @@ export default function FormManage({ user }: FormManageProps) {
 			email: user?.email,
 			name: user?.name,
 			role: user?.role,
+			isSubscribed: user?.isSubscribed ?? false,
+			cpf: user?.cpf ?? undefined,
 		},
 	});
 
@@ -148,6 +154,45 @@ export default function FormManage({ user }: FormManageProps) {
 									<SelectItem value={'ADMIN'}>Administrador</SelectItem>
 								</SelectContent>
 							</Select>
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name='cpf'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel
+								htmlFor='cpf'
+								className='text-slate-900'>
+								CPF
+							</FormLabel>
+							<FormControl>
+								<Input
+									id='cpf'
+									{...field}
+									placeholder='CPF do usuário'
+								/>
+							</FormControl>
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name='isSubscribed'
+					render={({ field }) => (
+						<FormItem className='flex items-end gap-5'>
+							<FormControl>
+								<Checkbox
+									checked={field.value}
+									onCheckedChange={field.onChange}
+								/>
+							</FormControl>
+							<FormLabel
+								htmlFor='email'
+								className='text-slate-900'>
+								Ativar Benefícios?
+							</FormLabel>
 						</FormItem>
 					)}
 				/>

@@ -45,7 +45,7 @@ export default function ModalDeleteUser({ user }: { user: Partial<User> }) {
 			toast.error('Algo deu errado');
 		} finally {
 			setLoading(false);
-			router.refresh();
+			window.location.reload();
 		}
 	}
 	return (
