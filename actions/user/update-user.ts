@@ -46,7 +46,7 @@ export async function updateUserAction({ user }: { user: Partial<User> }) {
 		//enviar e-mail de confirmação de cadastro
 		return { success: true, message: 'Usuário atualizado com sucesso' };
 	} catch (error) {
-		console.log('não cadastrado');
-		return { success: false, message: `Algo deu errado - ${error}` };
+		console.log(JSON.stringify(error));
+		return { success: false, message: `Algo deu errado` };
 	}
 }

@@ -16,12 +16,15 @@ export async function sendInvoiceIfAvailable(
 		const invoice = await stripe.invoices.retrieve(invoiceId);
 
 		if (invoice.hosted_invoice_url) {
-			await SendInvoiceLinkAction({
+			const resp = await SendInvoiceLinkAction({
 				email,
 				link: invoice.hosted_invoice_url,
 				name,
 			});
 			console.log('Invoice sent');
+			return resp;
+		} else {
+			return false;
 		}
 	}
 }

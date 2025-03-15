@@ -2,18 +2,16 @@
 
 'use server';
 
-import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
 
 export default async function GetAllTicketsAction({
 	email,
 }: {
-	email: string | null;
+	email: string;
 }) {
-	const session = await auth();
 	try {
 		const tickets = await prisma.user.findUnique({
-			where: { email: email ?? session?.user.email },
+			where: { email: email },
 			include: {
 				tickets: true,
 			},

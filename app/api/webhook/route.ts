@@ -50,20 +50,16 @@ export async function POST(req: NextRequest) {
 							user: {
 								isSubscribed: true,
 								customer_id: customerId,
+								email: email,
 							},
 						});
 
 						const myUser = await getUserAction({ email: email });
 						const tickets = await GetAllTicketsAction({ email: email });
 
-						//VALIDADO
 						if (myUser.user) {
-							const resp = await manageTickets(
-								myUser?.user,
-								tickets?.data,
-								priceType,
-							);
-							console.log(resp);
+							await manageTickets(myUser?.user, tickets?.data, priceType);
+
 							await sendInvoiceIfAvailable(session, email, name);
 						}
 

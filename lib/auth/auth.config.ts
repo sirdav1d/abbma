@@ -51,13 +51,14 @@ export default {
 				token.id = user.id;
 				token.email = user.email;
 				token.name = user.name;
+				return token;
 			}
 			return token; // NÃO retornar `null`
 		},
 		session: async ({ session, token }) => {
 			session.user.id = token.id as string;
 			session.user.email = token.email as string;
-			session.user.name = token.name as string;;
+			session.user.name = token.name as string;
 			return session;
 		},
 	},
@@ -66,5 +67,4 @@ export default {
 		signIn: '/login',
 		signOut: '/login',
 	},
-
 } satisfies NextAuthConfig;

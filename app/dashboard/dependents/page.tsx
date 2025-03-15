@@ -36,8 +36,9 @@ export default async function DependentsPage() {
 	});
 
 	const data = await res.json();
+	console.log(data);
 
-	if (!data) {
+	if (!data.success || !data.user.tickets) {
 		return (
 			<div className='mx-auto max-w-7xl w-full mt-5 px-4 2xl:px-0 pb-5 text-muted-foreground'>
 				Nenhum dependente foi encontrado
@@ -46,8 +47,9 @@ export default async function DependentsPage() {
 	}
 
 	const tickets: Ticket[] = data.user.tickets;
+
 	const activeTicket = tickets?.find(
-		(item: Ticket) => item.isActive && item.type !== 'CLUB_VANTAGES',
+		(item: Ticket) => item.isActive,
 	);
 
 	const activeDependents: Dependent[] = data.user.Dependent.filter(

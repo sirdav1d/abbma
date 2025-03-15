@@ -1,15 +1,14 @@
 /** @format */
 
-import GetAllTicketsAction from '@/actions/tickets/get-all-tickets';
 import { getUserAction } from '@/actions/user/get-user';
 import { Toaster } from '@/components/ui/sonner';
+import { auth } from '@/lib/auth/auth';
 import AuthProvider from '@/providers/auth-provider';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import ModalSub from './dashboard/_components/modal-sub';
 import './globals.css';
-import { auth } from '@/lib/auth/auth';
 
 const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -34,14 +33,10 @@ export default async function RootLayout({
 		console.log('Não Logado');
 	}
 
-	const { data } = await GetAllTicketsAction({
-		email: session?.user?.email ?? null,
-	});
+	const resp = session && (await getUserAction({ email: session?.user.email }));
 
-	const { user } = await getUserAction({ email: null });
-
-	const isClient = user?.role === 'CLIENT';
-
+	const isClient = resp?.user?.role === 'CLIENT';
+	const isSub = resp?.user?.isSubscribed;
 	return (
 		<html
 			lang='pt-BR'
@@ -49,7 +44,7 @@ export default async function RootLayout({
 			<body className={`${poppins.className}  antialiased`}>
 				<AuthProvider>
 					<>
-						{data?.length === 0 && isClient && <ModalSub isOpen={true} />}
+						{session && !isSub && isClient && <ModalSub isOpen={true} />}
 						{children}
 						<Toaster />
 						<Analytics />

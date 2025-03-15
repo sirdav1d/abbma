@@ -11,37 +11,32 @@ export async function manageTickets(
 ) {
 	try {
 		if (tickets?.length == 0 && priceType == 'CLUB_VANTAGES') {
-			await createTicketAction({
+			const resp = await createTicketAction({
 				userId: user.id,
 				type: priceType,
 				title: `${getTitle(priceType)}`,
 				messageUpdates: `Cliente ${user.name} solicitou o plano ${getTitle(priceType)}, cadastrar suas credenciais na plataforma parceira em até 48 horas`,
+				
 			});
-			return {
-				ok: true,
-				message: `${user.name} solicitou seu plano ${getTitle(priceType)}`,
-			};
+			return resp;
 		}
 
 		if (tickets?.length == 0 && priceType !== 'CLUB_VANTAGES' && priceType) {
-			await createTicketAction({
+			const resp = await createTicketAction({
 				userId: user.id,
 				type: priceType,
 				title: `${getTitle(priceType)}`,
 				messageUpdates: `Cliente ${user.name} solicitou o plano ${getTitle(priceType)}, cadastrar suas credenciais na plataforma parceira em até 48 horas`,
 			});
 
-			await createTicketAction({
+			const resp2 = await createTicketAction({
 				userId: user.id,
 				type: 'CLUB_VANTAGES',
 				title: `Clube de Vantagens`,
 				messageUpdates: `Cliente ${user.name} solicitou o plano Clube de Vantagens, cadastrar suas credenciais na plataforma parceira em até 48 horas`,
 			});
 
-			return {
-				ok: true,
-				message: `${user.name} solicitou seu plano ${getTitle(priceType)} e ganhou o Clube de Vantagens`,
-			};
+			return [resp, resp2];
 		}
 
 		return {

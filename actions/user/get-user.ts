@@ -2,14 +2,12 @@
 
 'use server';
 
-import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/prisma';
 
-export async function getUserAction({ email }: { email: string | null }) {
-	const session = await auth();
+export async function getUserAction({ email }: { email: string }) {
 	try {
 		const existUser = await prisma.user.findUnique({
-			where: { email: email ?? session?.user.email },
+			where: { email: email },
 		});
 
 		if (existUser) {
@@ -18,7 +16,7 @@ export async function getUserAction({ email }: { email: string | null }) {
 			//enviar e-mail de confirmação de cadastro
 			return {
 				success: true,
-				message: 'Usuário cadastrado com sucesso',
+				message: 'Usuário encontrado com sucesso',
 				user: existUser,
 			};
 		}

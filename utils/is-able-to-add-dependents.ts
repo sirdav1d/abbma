@@ -3,6 +3,9 @@
 import { Ticket } from '@prisma/client';
 
 export function howMuchIsAble(Dependentsquantity: number, activePlan: Ticket) {
+	if (!activePlan) {
+		return false;
+	}
 	let dependentsAble = 0;
 	if (activePlan.type == 'TELEMEDICINE_FAMILY' && activePlan.quantity) {
 		dependentsAble =

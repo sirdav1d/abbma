@@ -18,9 +18,15 @@ import { teleCouple, teleFamily, teleIndividual } from '@/constants/tele-plans';
 import { ArrowRight, CircleCheckBig, CircleSlash2 } from 'lucide-react';
 import Link from 'next/link';
 import { benefits } from './_constants/benefits';
+import { auth } from '@/lib/auth/auth';
+import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
-	const tickets = await GetAllTicketsAction({ email: null });
+	const session = await auth();
+	if (!session) {
+		redirect('/login');
+	}
+	const tickets = await GetAllTicketsAction({ email: session.user.email });
 
 	const activeTickets = tickets.data?.filter((item) => item.isActive);
 

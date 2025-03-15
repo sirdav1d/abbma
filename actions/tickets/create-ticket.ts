@@ -28,14 +28,15 @@ export async function createTicketAction({
 }: CreateTicketProps) {
 	try {
 		let newTicket;
-		const dependent = await prisma.dependent.findUnique({
-			where: { id: userId },
-		});
 
-		if (!dependent) {
-			return { success: false, message: 'Dependente não encontrado' };
-		}
 		if (isDependent) {
+			const dependent = await prisma.dependent.findUnique({
+				where: { id: userId },
+			});
+
+			if (!dependent) {
+				return { success: false, message: 'Dependente não encontrado' };
+			}
 			newTicket = await prisma.ticket.create({
 				data: {
 					dependentId: userId,
@@ -44,6 +45,7 @@ export async function createTicketAction({
 					isActive: true,
 					stripeId: stripeId ?? '',
 					status: 'PENDING',
+					quantity: 1,
 				},
 			});
 
@@ -98,6 +100,7 @@ export async function createTicketAction({
 					isActive: true,
 					stripeId: stripeId ?? '',
 					status: 'PENDING',
+					quantity: 1,
 				},
 			});
 
