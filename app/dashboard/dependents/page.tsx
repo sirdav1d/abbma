@@ -36,7 +36,6 @@ export default async function DependentsPage() {
 	});
 
 	const data = await res.json();
-	console.log(data);
 
 	if (!data.success || !data.user.tickets) {
 		return (
@@ -48,9 +47,7 @@ export default async function DependentsPage() {
 
 	const tickets: Ticket[] = data.user.tickets;
 
-	const activeTicket = tickets?.find(
-		(item: Ticket) => item.isActive,
-	);
+	const activeTicket = tickets?.find((item: Ticket) => item.isActive);
 
 	const activeDependents: Dependent[] = data.user.Dependent.filter(
 		(dependent: Dependent) => dependent.isActive === true,
