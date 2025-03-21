@@ -1,4 +1,6 @@
 {
   "WillLuke.nextjs.addTypesOnSave": true,
-  "WillLuke.nextjs.hasPrompted": true
+  "WillLuke.nextjs.hasPrompted": true,
+  "tailwindcss-intellisense.trace.server": "verbose",
+  "tailwindCSS.emmetCompletions": true
 }
