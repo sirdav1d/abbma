@@ -3,34 +3,38 @@
 import { Ticket } from '@prisma/client';
 
 export function howMuchIsAble(Dependentsquantity: number, activePlan: Ticket) {
-	if (!activePlan) {
+	if (!activePlan || !activePlan.quantity) {
 		return false;
 	}
 	let dependentsAble = 0;
-	if (activePlan.type == 'TELEMEDICINE_FAMILY' && activePlan.quantity) {
-		dependentsAble =
-			3 + (activePlan.quantity > 1 ? activePlan.quantity - 1 : 0);
-		if (Dependentsquantity >= dependentsAble) {
-			return false;
-		} else {
-			return true;
-		}
-	} else if (activePlan.type == 'TELEMEDICINE_COUPLE' && activePlan.quantity) {
-		dependentsAble =
-			1 + (activePlan.quantity > 1 ? activePlan.quantity - 1 : 0);
-		if (Dependentsquantity >= dependentsAble) {
-			return false;
-		} else {
-			return true;
-		}
-	} else if (activePlan.quantity) {
-		dependentsAble = activePlan.quantity - 1;
-		if (Dependentsquantity >= dependentsAble) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 
-	return false;
+	switch (activePlan.type) {
+		case 'TELEMEDICINE_FAMILY':
+			dependentsAble =
+				3 + (activePlan.quantity > 1 ? activePlan.quantity - 1 : 0);
+			if (Dependentsquantity >= dependentsAble) {
+				return false;
+			} else {
+				return true;
+			}
+		case 'TELEMEDICINE_COUPLE':
+			dependentsAble =
+				1 + (activePlan.quantity > 1 ? activePlan.quantity - 1 : 0);
+			if (Dependentsquantity >= dependentsAble) {
+				return false;
+			} else {
+				return true;
+			}
+
+		default:
+			if (activePlan.quantity) {
+				dependentsAble = activePlan.quantity - 1;
+				if (Dependentsquantity >= dependentsAble) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+			break;
+	}
 }
