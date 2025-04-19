@@ -61,6 +61,7 @@ export async function createDependentAction({
 				phone: phone,
 				userId: userId,
 				isActive: true,
+				ticketId: ticket.id,
 			},
 		});
 		console.log('depedente cadastrado');

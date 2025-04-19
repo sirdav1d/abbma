@@ -41,10 +41,11 @@ type Ticket = {
 	type: string;
 	status: string;
 	createdAt: Date;
-	dependents: string[];
+	hasDependent: boolean;
 };
 
 export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
+	console.log('initialTickets', initialTickets);
 	const [tickets] = useState(initialTickets);
 	const [statusFilter, setStatusFilter] = useState('Todos');
 	const [benefitFilter, setBenefitFilter] = useState('Todos');
@@ -111,13 +112,7 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 				);
 			},
 		},
-		// {
-		// 	accessorKey: 'dependents',
-		// 	header: 'Dependente',
-		// 	cell: ({ row }) => (
-		// 		<div className='text-left'>{row.getValue('dependents')}</div>
-		// 	),
-		// },
+
 		{
 			accessorKey: 'status',
 			header: 'Status',
@@ -136,6 +131,20 @@ export function TicketList({ initialTickets }: { initialTickets: Ticket[] }) {
 						{status === 'Em Andamento' && <Clock className='mr-1 h-3 w-3' />}
 						{status === 'Concluído' && <CheckCircle className='mr-1 h-3 w-3' />}
 						{status}
+					</Badge>
+				);
+			},
+		},
+		{
+			accessorKey: 'hasDependent',
+			header: () => <p className='text-center text-nowrap'>Tem Dependente?</p>,
+			cell: ({ row }) => {
+				const hasDeps = row.getValue('hasDependent') as string;
+				return (
+					<Badge
+						variant={hasDeps ? 'success' : 'destructive'}
+						className='text-center'>
+						{hasDeps ? 'Sim' : 'Não'}
 					</Badge>
 				);
 			},

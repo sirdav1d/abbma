@@ -42,6 +42,7 @@ export default async function OperatorTicketDetailPage({
 			(a: Ticket, b: Ticket) =>
 				new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
 		),
+		
 	};
 
 	return (

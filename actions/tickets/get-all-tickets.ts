@@ -16,6 +16,7 @@ export default async function GetAllTicketsAction({
 				tickets: true,
 			},
 		});
+
 		return { success: true, message: `Deu certo`, data: tickets?.tickets };
 	} catch (error) {
 		return {
